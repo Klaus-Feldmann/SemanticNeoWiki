@@ -29,3 +29,7 @@ The preceding runtime was live-tested in AufEinWort. The renamed extension/Compo
 ## Optional companion files
 
 Import/adapt only the wiki pages documented under integrations/smw. Existing current modules need not be replaced for the extension rename. Load AewiWikidataRegistrierung.php once if this helper is used; its Magic Words file is registered by that PHP file. The optional SMW statistics patch is constrained to exact 7.3.1 source hashes and applied only when relevant to your SPARQL-store setup. Keep the already required Wikibase/simple-cache and DataTransfer compatibility adjustments; do not infer that Composer repairs those automatically.
+
+## Distribution files
+
+GitHub/Composer archives exclude the inherited DemoData and Docker directories through .gitattributes. These are not part of the supported production install and can trigger legacy system-unzip filename handling on macOS. The install inventory is publication/DISTRIBUTION-SHA256SUMS; publication/SHA256SUMS describes the full source tree. The inventories do not hash themselves or each other.

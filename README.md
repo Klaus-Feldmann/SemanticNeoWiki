@@ -29,7 +29,7 @@ External source changes alone do not guarantee immediate propagation to stored S
 
 ## Installation: Composer only
 
-This candidate is for an existing MediaWiki server. **No Docker image, Docker demo or alternate application installer is supplied or supported.** Built Data UI/Graph assets are included; npm is not an installation requirement.
+This candidate is for an existing MediaWiki server. **No Docker image, Docker demo or alternate application installer is supplied or supported.** Built Data UI/Graph assets are included; npm is not an installation requirement. Inherited demo data and Docker reference files remain in Git history/source browsing but are excluded from GitHub/Composer distribution archives.
 
 In the MediaWiki root, merge the following into your existing `composer.local.json` without replacing other settings:
 

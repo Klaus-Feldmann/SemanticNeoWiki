@@ -35,3 +35,7 @@ SemanticNeoWiki 0.1.9-test / Bridge 0.18.0-test renames the registry, ResourceLo
 Repeated PHP 494/784 and Lua checks passed, as did REST/page/Wikitext contracts and a registry/asset/path rename contract. The updated MCP patch passed typecheck, build and 2,454 tests. Its installer was checked on the official distribution and the earlier complete-view-patched state. The SMW correction was compared with official 7.3.1 and tested for dry-run, backup application and idempotence.
 
 A local Composer path-repository installation into an isolated root installed the package in extensions/SemanticNeoWiki and loaded its domain classes through Composer. This verifies packaging, not a MediaWiki server boot. GitHub retrieval and production migration are separate checks.
+
+## GitHub Composer check
+
+The published 0.1.9 candidate was fetched through Composer from GitHub and installed in extensions/SemanticNeoWiki; all 2,320 initially inventoried files matched and Composer autoload resolved the domain classes. macOS system unzip warned on an inherited demo-data filename, then Composer ZipArchive completed successfully. The distribution was refined to omit demo/Docker-only directories; a fresh check of that refined archive is recorded in the local publication report. This still does not boot or update the production MediaWiki.
