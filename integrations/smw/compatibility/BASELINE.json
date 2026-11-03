@@ -1,0 +1,8 @@
+{
+  "project": "SemanticMediaWiki/SemanticMediaWiki",
+  "version": "7.3.1",
+  "path": "src/Maintenance/PropertyStatisticsRebuilder.php",
+  "before": "474d49e8a9d7de73efb87e9cd7c0a4f59336f2975df8c8c24ad63dab72781a8c",
+  "after": "e5a19d3990b61d5d23f98a314f3e8e0cbbdae5efbee2ae81fc6dfb7842ce7624",
+  "source": "https://github.com/SemanticMediaWiki/SemanticMediaWiki/blob/7.3.1/src/Maintenance/PropertyStatisticsRebuilder.php"
+}

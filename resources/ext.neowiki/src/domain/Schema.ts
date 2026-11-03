@@ -1,3 +1,4 @@
+import { isSchemaExecution } from './propertyTypes/Wikitext';
 import type { PropertyDefinition } from '@/domain/PropertyDefinition';
 import { PropertyName } from '@/domain/PropertyDefinition';
 import { PropertyDefinitionList } from '@/domain/PropertyDefinitionList';
@@ -79,7 +80,7 @@ export class Schema {
 
 	public statementsFrom( existing: StatementList ): StatementList {
 		return new StatementList(
-			[ ...this.properties ].map( ( definition ) =>
+			[ ...this.properties ].filter( ( definition ) => !isSchemaExecution( definition ) ).map( ( definition ) =>
 				existing.has( definition.name ) ?
 					existing.get( definition.name ) :
 					new Statement( definition.name, definition.type, undefined ),
@@ -98,7 +99,7 @@ export class Schema {
 	public statementsAfterEdit( existing: StatementList, edited: StatementList ): StatementList {
 		return new StatementList( [
 			...edited,
-			...[ ...existing ].filter( ( statement ) => !this.properties.has( statement.propertyName ) ),
+			...[ ...existing ].filter( ( statement ) => !this.properties.has( statement.propertyName ) || isSchemaExecution( this.properties.get( statement.propertyName ) ) ),
 		] );
 	}
 

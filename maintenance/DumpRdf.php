@@ -25,7 +25,7 @@ class DumpRdf extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 
-		$this->requireExtension( 'NeoWiki' );
+		$this->requireExtension( 'SemanticNeoWiki' );
 		$this->addDescription(
 			'Streams an RDF projection of every page on the wiki to stdout as TriG, one named graph per '
 			. 'page. Progress is written to stderr so stdout stays a clean RDF document.'

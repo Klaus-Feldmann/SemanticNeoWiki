@@ -135,6 +135,7 @@ import { useSubjectStore } from '@/stores/SubjectStore.ts';
 import { useChangeDetection } from '@/composables/useChangeDetection.ts';
 import { useSubjectValidation } from '@/composables/useSubjectValidation.ts';
 import { NeoWikiExtension } from '@/NeoWikiExtension.ts';
+import { ImageSubjectContext } from '@/components/Value/ImageSubjectContext';
 import { RelationTargetEditingKey } from '@/components/Value/ValueInputContract.ts';
 import { DependentSubjectViolationsKey, PaneWritesKey } from '@/components/SubjectEditor/DependentSubjectEditing.ts';
 import { withoutMissingValueViolations, withoutUnsavedTargetViolations, type SubjectViolation } from '@/domain/SubjectViolation';
@@ -162,6 +163,7 @@ const emit = defineEmits<{
 }>();
 
 provide( RelationTargetEditingKey, true );
+provide( ImageSubjectContext, computed( () => props.isNew ? undefined : props.subject ) );
 
 const dependentSubjectViolations = shallowRef<readonly SubjectViolation[]>( [] );
 

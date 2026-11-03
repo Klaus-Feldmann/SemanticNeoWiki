@@ -45,7 +45,7 @@ const getSchemaMock = vi.fn();
 let pinia: ReturnType<typeof createPinia>;
 
 function mountComponent( schema: Schema ): VueWrapper {
-	setupMwMock( { functions: [ 'msg' ] } );
+	setupMwMock( { functions: [ 'msg', 'util' ] } );
 
 	return mount( SchemaDisplay, {
 		props: { schema },

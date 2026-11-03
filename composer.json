@@ -1,8 +1,8 @@
 {
-	"name": "neowiki/neowiki",
+	"name": "aufeinwort/semantic-neowiki",
 	"type": "mediawiki-extension",
 	"license": "GPL-2.0-or-later",
-	"description": "Collaborative knowledge graph: model it with schemas, edit it in generated forms, query it in Neo4j or SPARQL stores, and open it to AI agents via API or MCP. Built on MediaWiki.",
+	"description": "Independent NeoWiki fork for research: Wikidata/Wikibase sources, schema-driven SMW annotations and MCP access.",
 	"keywords": [
 		"MediaWiki",
 		"knowledge graph",
@@ -15,7 +15,7 @@
 		"SPARQL",
 		"Neo4j"
 	],
-	"homepage": "https://neowiki.ai",
+	"homepage": "https://github.com/Klaus-Feldmann/SemanticNeoWiki",
 	"authors": [
 		{
 			"name": "Professional.Wiki",
@@ -33,10 +33,17 @@
 		{
 			"name": "Alistair3149",
 			"homepage": "https://www.mediawiki.org/wiki/User:Alistair3149"
+		},
+		{
+			"name": "Klaus Feldmann",
+			"email": "info@aufeinwort.info",
+			"homepage": "https://aufeinwort.info"
 		}
 	],
 	"support": {
-		"docs": "https://neowiki.ai/docs/"
+		"issues": "https://github.com/Klaus-Feldmann/SemanticNeoWiki/issues",
+		"source": "https://github.com/Klaus-Feldmann/SemanticNeoWiki",
+		"email": "info@aufeinwort.info"
 	},
 	"require": {
 		"php": "^8.3",
@@ -68,7 +75,7 @@
 	"scripts": {
 		"phpunit": [
 			"Composer\\Config::disableProcessTimeout",
-			"cd ${MW_INSTALL_PATH:-../..} && if [ -f phpunit.xml.template ]; then composer phpunit:config; fi && vendor/bin/phpunit -c extensions/NeoWiki/phpunit.xml.dist --bootstrap tests/phpunit/bootstrap.php"
+			"cd ${MW_INSTALL_PATH:-../..} && if [ -f phpunit.xml.template ]; then composer phpunit:config; fi && vendor/bin/phpunit -c extensions/SemanticNeoWiki/phpunit.xml.dist --bootstrap tests/phpunit/bootstrap.php"
 		],
 		"dbschema": [
 			"php ../../maintenance/run.php generateSchemaSql --json sql/neowiki_rebuild_runs.json --sql sql/mysql/neowiki_rebuild_runs.sql --type mysql",
@@ -99,6 +106,12 @@
 		}
 	},
 	"extra": {
-		"installer-name": "NeoWiki"
+		"installer-name": "SemanticNeoWiki",
+		"branch-alias": {
+			"dev-semantic-0.1.9-test": "0.1.x-dev"
+		}
+	},
+	"conflict": {
+		"neowiki/neowiki": "*"
 	}
 }

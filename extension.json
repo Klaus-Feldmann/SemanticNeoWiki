@@ -1,63 +1,52 @@
 {
-	"name": "NeoWiki",
-
-	"version": "0.1.0",
-
+	"name": "SemanticNeoWiki",
+	"version": "0.1.9-test+2026-11-03",
 	"author": [
 		"[https://Professional.Wiki/ Professional Wiki]",
 		"[https://www.EntropyWins.wtf/mediawiki Jeroen De Dauw]",
 		"Morne Alberts",
 		"[https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149]",
-		"[https://github.com/ProfessionalWiki/NeoWiki/graphs/contributors?all=1 ...]"
+		"[https://github.com/ProfessionalWiki/NeoWiki/graphs/contributors?all=1 ...]",
+		"[https://aufeinwort.info/ Klaus Feldmann / AufEinWort]"
 	],
-
-	"url": "https://neowiki.ai",
-
+	"url": "https://github.com/Klaus-Feldmann/SemanticNeoWiki",
 	"license-name": "GPL-2.0-or-later",
-
 	"descriptionmsg": "neowiki-description",
-
 	"requires": {
-		"MediaWiki": ">= 1.43.0",
+		"MediaWiki": ">= 1.47.0-wmf.24",
 		"platform": {
 			"php": ">= 8.3"
 		}
 	},
-
 	"callback": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::onExtensionRegistration",
-
 	"MessagesDirs": {
 		"NeoWiki": [
 			"i18n"
 		]
 	},
-
 	"AutoloadNamespaces": {
 		"ProfessionalWiki\\NeoWiki\\": "src/"
 	},
-
 	"AutoloadClasses": {
 		"ProfessionalWiki\\NeoWiki\\Maintenance\\RebuildSubjectPageIndex": "maintenance/RebuildSubjectPageIndex.php",
 		"ProfessionalWiki\\NeoWiki\\Maintenance\\RebuildPublishedSubjectIndex": "maintenance/RebuildPublishedSubjectIndex.php"
 	},
-
 	"TestAutoloadNamespaces": {
 		"ProfessionalWiki\\NeoWiki\\Tests\\": "tests/phpunit",
 		"ProfessionalWiki\\RedHerb\\": "tests/RedHerb/src"
 	},
-
 	"Hooks": {
 		"MediaWikiServices": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onMediaWikiServices",
-
 		"LoadExtensionSchemaUpdates": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onLoadExtensionSchemaUpdates",
-
 		"ParserOptionsRegister": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onParserOptionsRegister",
 		"PageRenderingHash": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onPageRenderingHash",
 		"ParserFirstCallInit": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onParserFirstCallInit",
-		"ContentAlterParserOutput": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onContentAlterParserOutput",
+		"ParserAfterTidy": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onParserAfterTidy",
 		"OutputPageParserOutput": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onOutputPageParserOutput",
-
-		"RevisionFromEditComplete": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onRevisionFromEditComplete",
+		"RevisionFromEditComplete": [
+			"ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onRevisionFromEditComplete",
+			"ProfessionalWiki\\NeoWiki\\EntryPoints\\SchemaWikitextHooks::onRevisionFromEditComplete"
+		],
 		"SearchIndexFields": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onSearchIndexFields",
 		"SearchDataForIndex2": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onSearchDataForIndex2",
 		"ShowSearchHitTitle": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onShowSearchHitTitle",
@@ -70,33 +59,27 @@
 		"LinksUpdateComplete": "ProfessionalWiki\\NeoWiki\\EntryPoints\\LinksRefreshHandler::onLinksUpdateComplete",
 		"BlockIpComplete": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onBlockIpComplete",
 		"UnblockUserComplete": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onUnblockUserComplete",
-
 		"CodeEditorGetPageLanguage": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onCodeEditorGetPageLanguage",
-
 		"BeforePageDisplay": [
 			"ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onBeforePageDisplay",
 			"ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onConfigPageBeforePageDisplay"
 		],
 		"DifferenceEngineRenderRevisionAddParserOutput": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onDifferenceEngineRenderRevisionAddParserOutput",
-
 		"SpecialPage_initList": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onSpecialPageInitList",
-
 		"ContentModelCanBeUsedOn": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onContentModelCanBeUsedOn",
-
 		"ContentHandlerDefaultModelFor": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onContentHandlerDefaultModelFor",
 		"EditFilter": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onEditFilter",
 		"AlternateEdit": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onAlternateEdit",
-
 		"SidebarBeforeOutput": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onSidebarBeforeOutput",
 		"SkinTemplateNavigation::Universal": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onSkinTemplateNavigationUniversal",
 		"ScribuntoExternalLibraries": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onScribuntoExternalLibraries",
-
 		"HtmlPageLinkRendererBegin": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onHtmlPageLinkRendererBegin",
 		"ChangesListInitRows": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onChangesListInitRows",
 		"getUserPermissionsErrors": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onGetUserPermissionsErrors",
-		"ChangesListSpecialPageStructuredFilters": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onChangesListSpecialPageStructuredFilters"
+		"ChangesListSpecialPageStructuredFilters": "ProfessionalWiki\\NeoWiki\\EntryPoints\\NeoWikiHooks::onChangesListSpecialPageStructuredFilters",
+		"MakeGlobalVariablesScript": "ProfessionalWiki\\NeoWiki\\EntryPoints\\Hook\\ImageConfigHook::onMakeGlobalVariablesScript",
+		"ParserBeforeInternalParse": "ProfessionalWiki\\NeoWiki\\EntryPoints\\SchemaWikitextHooks::onParserBeforeInternalParse"
 	},
-
 	"JobClasses": {
 		"neowikiGraphRebuild": {
 			"class": "ProfessionalWiki\\NeoWiki\\EntryPoints\\Jobs\\GraphRebuildJob",
@@ -105,23 +88,29 @@
 		"neowikiRebuildLastEditorPages": {
 			"class": "ProfessionalWiki\\NeoWiki\\EntryPoints\\Jobs\\RebuildLastEditorPagesJob",
 			"needsPage": false
-		}
+		},
+		"neowikiSchemaWikitextRefresh": "ProfessionalWiki\\NeoWiki\\EntryPoints\\Jobs\\SchemaWikitextRefreshJob"
 	},
-
 	"ContentHandlers": {
 		"NeoWikiSubject": "ProfessionalWiki\\NeoWiki\\EntryPoints\\Content\\SubjectContentHandler",
 		"NeoWikiSchema": "ProfessionalWiki\\NeoWiki\\EntryPoints\\Content\\SchemaContentHandler",
 		"NeoWikiLayout": "ProfessionalWiki\\NeoWiki\\EntryPoints\\Content\\LayoutContentHandler",
 		"NeoWikiMapping": "ProfessionalWiki\\NeoWiki\\EntryPoints\\Content\\MappingContentHandler"
 	},
-
 	"SearchMappings": {
-		"SearchMySQL": { "class": "ProfessionalWiki\\NeoWiki\\EntryPoints\\Search\\SearchMySQLWithSubjects" },
-		"SearchSqlite": { "class": "ProfessionalWiki\\NeoWiki\\EntryPoints\\Search\\SearchSqliteWithSubjects" },
-		"MediaWiki\\Search\\SearchMySQL": { "class": "ProfessionalWiki\\NeoWiki\\EntryPoints\\Search\\SearchMySQLWithSubjects" },
-		"MediaWiki\\Search\\SearchSqlite": { "class": "ProfessionalWiki\\NeoWiki\\EntryPoints\\Search\\SearchSqliteWithSubjects" }
+		"SearchMySQL": {
+			"class": "ProfessionalWiki\\NeoWiki\\EntryPoints\\Search\\SearchMySQLWithSubjects"
+		},
+		"SearchSqlite": {
+			"class": "ProfessionalWiki\\NeoWiki\\EntryPoints\\Search\\SearchSqliteWithSubjects"
+		},
+		"MediaWiki\\Search\\SearchMySQL": {
+			"class": "ProfessionalWiki\\NeoWiki\\EntryPoints\\Search\\SearchMySQLWithSubjects"
+		},
+		"MediaWiki\\Search\\SearchSqlite": {
+			"class": "ProfessionalWiki\\NeoWiki\\EntryPoints\\Search\\SearchSqliteWithSubjects"
+		}
 	},
-
 	"namespaces": [
 		{
 			"id": 7474,
@@ -181,7 +170,6 @@
 			"name": "Subject_talk"
 		}
 	],
-
 	"AvailableRights": [
 		"neowiki-schema-edit",
 		"neowiki-layout-edit",
@@ -189,7 +177,6 @@
 		"neowiki-query",
 		"neowiki-admin"
 	],
-
 	"GroupPermissions": {
 		"*": {
 			"neowiki-query": true
@@ -203,7 +190,6 @@
 			"neowiki-admin": true
 		}
 	},
-
 	"GrantPermissions": {
 		"basic": {
 			"neowiki-query": true
@@ -214,15 +200,22 @@
 			"neowiki-mapping-edit": true
 		}
 	},
-
 	"RateLimits": {
 		"neowiki-query": {
-			"anon": [ 10, 60 ],
-			"user": [ 60, 60 ],
-			"bot": [ 1000, 60 ]
+			"anon": [
+				10,
+				60
+			],
+			"user": [
+				60,
+				60
+			],
+			"bot": [
+				1000,
+				60
+			]
 		}
 	},
-
 	"SpecialPages": {
 		"NeoJson": "ProfessionalWiki\\NeoWiki\\EntryPoints\\SpecialPages\\SpecialNeoJson",
 		"Schemas": "ProfessionalWiki\\NeoWiki\\EntryPoints\\SpecialPages\\SpecialSchemas",
@@ -234,11 +227,9 @@
 		"Subject": "ProfessionalWiki\\NeoWiki\\EntryPoints\\SpecialPages\\SpecialSubject",
 		"NeoWiki": "ProfessionalWiki\\NeoWiki\\EntryPoints\\SpecialPages\\SpecialNeoWiki"
 	},
-
 	"Actions": {
 		"subjects": "ProfessionalWiki\\NeoWiki\\EntryPoints\\Actions\\SubjectsAction"
 	},
-
 	"config": {
 		"NeoWikiEnableDevelopmentUI": {
 			"description": "Whether development UIs should be enabled",
@@ -259,7 +250,7 @@
 		"NeoWikiAutoRenderMainSubject": {
 			"description": "Whether a page's Main Subject is automatically rendered on content pages: as an infobox, or in full on a subject-first wiki.",
 			"value": true
-    },
+		},
 		"NeoWikiValidationDebounceMs": {
 			"description": "Debounce delay in milliseconds before the subject editor sends a server-side dry-run validation request. 0 disables the timer, so validation only runs on blur or pre-save.",
 			"value": 300
@@ -267,8 +258,14 @@
 		"NeoWikiQueryLimits": {
 			"description": "Per-tier per-query resource caps. Keys: 'default' (users without apihighlimits) and 'expensive' (users with apihighlimits). Each value: { timeoutSeconds, maxRows }.",
 			"value": {
-				"default": { "timeoutSeconds": 30, "maxRows": 5000 },
-				"expensive": { "timeoutSeconds": 300, "maxRows": 50000 }
+				"default": {
+					"timeoutSeconds": 30,
+					"maxRows": 5000
+				},
+				"expensive": {
+					"timeoutSeconds": 300,
+					"maxRows": 50000
+				}
 			}
 		},
 		"NeoWikiNeo4jInternalWriteUrl": {
@@ -300,210 +297,280 @@
 			"value": false
 		},
 		"NeoWikiSparqlStores": {
-			"description": "SPARQL 1.1 graph stores to keep in sync with page changes and to query, in addition to any Neo4j backend. A list of objects, each with: 'updateUrl' (required, the store's SPARQL 1.1 Update endpoint, e.g. a QLever instance); 'queryUrl' (optional, the store's SPARQL 1.1 Query endpoint the read surfaces use; defaults to 'updateUrl', which is correct for QLever where the two are the same); 'accessToken' (optional, sent as an HTTP Bearer token on both update and query requests, e.g. for a QLever access token or a read-protected endpoint); 'updateTimeoutSeconds' (optional, how long one page's update may take before it counts as failed; 10 by default); 'projection' (optional, the RDF vocabulary written to the store: 'native' by default, or any configured Mapping target); and 'name' (optional, what to call this store when rebuilding it, defaulting to the projection, and unique across entries). The query surfaces (the {{#sparql_raw}} parser function, nw.sparqlQuery() in Lua, and POST /neowiki/v0/query/sparql) target the first configured store. Works with QLever and any SPARQL 1.1 store. Empty by default.",
+			"description": "SPARQL 1.1 graph stores to keep in sync with page changes and to query, in addition to any Neo4j backend. A list of objects, each with: 'updateUrl' (required, the store's SPARQL 1.1 Update endpoint, e.g. a QLever instance); 'queryUrl' (optional, the store's SPARQL 1.1 Query endpoint the read surfaces use; defaults to 'updateUrl', which is correct for QLever where the two are the same); 'accessToken' (optional, sent as an HTTP Bearer token on both update and query requests, e.g. for a QLever access token or a read-protected endpoint); 'projection' (optional, the RDF vocabulary written to the store: 'native' by default, or any configured Mapping target); and 'name' (optional, what to call this store when rebuilding it, defaulting to the projection, and unique across entries). The query surfaces (the {{#sparql_raw}} parser function, nw.sparqlQuery() in Lua, and POST /neowiki/v0/query/sparql) target the first configured store. Works with QLever and any SPARQL 1.1 store. Empty by default.",
 			"value": []
 		}
 	},
-
 	"ExtensionMessagesFiles": {
 		"NeoWikiAliases": "i18n/_Aliases.php",
 		"NeoWikiNamespaces": "i18n/_Namespaces.php",
 		"NeoWikiMagic": "i18n/_Magic.php"
 	},
-
 	"RestRoutes": [
 		{
 			"path": "/neowiki/v0/page/{pageId}/mainSubject",
-			"method": [ "POST" ],
+			"method": [
+				"POST"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newCreateMainSubjectApi"
 		},
 		{
 			"path": "/neowiki/v0/page/{pageId}/subjects",
-			"method": [ "POST" ],
+			"method": [
+				"POST"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newCreateOtherSubjectApi"
 		},
 		{
 			"path": "/neowiki/v0/page/{pageId}/subjects",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newGetPageSubjectsApi"
 		},
 		{
 			"path": "/neowiki/v0/page/{pageId}/mainSubject",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newGetMainSubjectApi"
 		},
 		{
 			"path": "/neowiki/v0/page/{pageId}/editNotices",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newGetSubjectEditNoticesApi"
 		},
 		{
 			"path": "/neowiki/v0/page/{pageId}/rdf",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newExportPageRdfApi"
 		},
 		{
 			"path": "/neowiki/v0/page/{pageId}/mainSubject",
-			"method": [ "PUT" ],
+			"method": [
+				"PUT"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newSetMainSubjectApi"
 		},
 		{
 			"path": "/neowiki/v0/page/{pageId}/subjectsOrdering",
-			"method": [ "PUT" ],
+			"method": [
+				"PUT"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newSetSubjectsOrderingApi"
 		},
 		{
 			"path": "/neowiki/v0/subject/{subjectId}",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newGetSubjectApi"
 		},
 		{
 			"path": "/neowiki/v0/subject/{subjectId}",
-			"method": [ "PUT" ],
+			"method": [
+				"PUT"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newReplaceSubjectApi"
 		},
 		{
 			"path": "/neowiki/v0/subject/{subjectId}",
-			"method": [ "DELETE" ],
+			"method": [
+				"DELETE"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newDeleteSubjectApi"
 		},
 		{
 			"path": "/neowiki/v0/subject/{subjectId}/move",
-			"method": [ "POST" ],
+			"method": [
+				"POST"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newMoveSubjectApi"
 		},
 		{
 			"path": "/neowiki/v0/subject/{subjectId}/statements/{propertyName}",
-			"method": [ "PUT" ],
+			"method": [
+				"PUT"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newSetStatementApi"
 		},
 		{
 			"path": "/neowiki/v0/subject/{subjectId}/statements/{propertyName}",
-			"method": [ "DELETE" ],
+			"method": [
+				"DELETE"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newRemoveStatementApi"
 		},
 		{
 			"path": "/neowiki/v0/subject/{subjectId}/rdf",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newExportSubjectRdfApi"
 		},
 		{
 			"path": "/neowiki/v0/entity/{subjectId}",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newResolveSubjectIriApi"
 		},
 		{
 			"path": "/neowiki/v0/schema/{schemaName}",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newGetSchemaApi"
 		},
 		{
 			"path": "/neowiki/v0/schema/{schemaName}",
-			"method": [ "PUT" ],
+			"method": [
+				"PUT"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newSaveSchemaApi"
 		},
 		{
 			"path": "/neowiki/v0/schema/{schemaName}",
-			"method": [ "DELETE" ],
+			"method": [
+				"DELETE"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newDeleteSchemaApi"
 		},
 		{
 			"path": "/neowiki/v0/schema/{schemaName}/json-schema",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newGetJsonSchemaApi"
 		},
 		{
 			"path": "/neowiki/v0/layout/{layoutName}",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newGetLayoutApi"
 		},
 		{
 			"path": "/neowiki/v0/layouts",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newGetLayoutSummariesApi"
 		},
 		{
 			"path": "/neowiki/v0/schema-names/{search}",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newGetSchemaNamesApi"
 		},
 		{
 			"path": "/neowiki/v0/recently-edited-subjects",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newGetRecentlyEditedSubjectsApi"
 		},
 		{
 			"path": "/neowiki/v0/subject-labels",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newGetSubjectLabelsApi"
 		},
 		{
 			"path": "/neowiki/v0/schemas",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newGetSchemaSummariesApi"
 		},
 		{
 			"path": "/neowiki/v0/mappings",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newGetMappingSummariesApi"
 		},
 		{
 			"path": "/neowiki/v0/subject-ids",
-			"method": [ "POST" ],
+			"method": [
+				"POST"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newMintSubjectIdsApi"
 		},
 		{
 			"path": "/neowiki/v0/subjects",
-			"method": [ "POST" ],
+			"method": [
+				"POST"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newCreateSubjectPageApi"
 		},
 		{
 			"path": "/neowiki/v0/subjects",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newGetSubjectSummariesApi"
 		},
 		{
 			"path": "/neowiki/v0/subject-counts",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newGetSubjectCountsApi"
 		},
 		{
 			"path": "/neowiki/v0/subject/validate",
-			"method": [ "POST" ],
+			"method": [
+				"POST"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newValidateSubjectApi"
 		},
 		{
 			"path": "/neowiki/v0/subject/{subjectId}/validate",
-			"method": [ "POST" ],
+			"method": [
+				"POST"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newValidateSubjectUpdateApi"
 		},
 		{
 			"path": "/neowiki/v0/graph-stores",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newGetGraphStoresApi"
 		},
 		{
 			"path": "/neowiki/v0/graph-stores/{name}/rebuild",
-			"method": [ "POST" ],
+			"method": [
+				"POST"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newStartGraphStoreRebuildApi"
 		},
 		{
 			"path": "/neowiki/v0/graph-stores/{name}/rebuild",
-			"method": [ "DELETE" ],
+			"method": [
+				"DELETE"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newCancelGraphStoreRebuildApi"
 		},
 		{
 			"path": "/neowiki/v0/subject/{subjectId}/referencingSubjects",
-			"method": [ "GET" ],
+			"method": [
+				"GET"
+			],
 			"factory": "ProfessionalWiki\\NeoWiki\\NeoWikiExtension::newGetReferencingSubjectsApi"
 		}
 	],
-
 	"ResourceFileModulePaths": {
 		"localBasePath": "",
-		"remoteExtPath": "NeoWiki"
+		"remoteExtPath": "SemanticNeoWiki"
 	},
-
 	"ResourceModules": {
 		"ext.neowiki": {
 			"class": "MediaWiki\\ResourceLoader\\CodexModule",
@@ -513,7 +580,8 @@
 				"mediawiki.user",
 				"mediawiki.storage",
 				"mediawiki.jqueryMsg",
-				"mediawiki.util"
+				"mediawiki.util",
+				"mediawiki.Title"
 			],
 			"codexComponents": [
 				"CdxAccordion",
@@ -590,12 +658,20 @@
 						"cdxIconLayout",
 						"cdxIconDatabase",
 						"cdxIconSettings",
-						"cdxIconNext"
+						"cdxIconNext",
+						"cdxIconImage"
 					]
 				}
 			],
 			"messages": [
 				"neowiki-name",
+				"neowiki-auto-identity-wikidata",
+				"neowiki-auto-identity-wikibase-local",
+				"neowiki-auto-identity-historical",
+				"neowiki-auto-identity-unavailable",
+				"neowiki-auto-identity-status-missing",
+				"neowiki-auto-identity-status-unavailable",
+				"neowiki-auto-identity-status-error",
 				"neowiki-special-schemas",
 				"neowiki-property-type-text",
 				"neowiki-property-type-url",
@@ -835,6 +911,7 @@
 				"neowiki-subject-editor-save-scope",
 				"neowiki-subject-editor-save-scope-subject-first",
 				"neowiki-subject-editor-open-subjects",
+				"neowiki-subject-editor-resize-navigator",
 				"neowiki-dependent-subject-add",
 				"neowiki-dependent-subject-add-choose",
 				"neowiki-dependent-subject-remove",
@@ -1050,7 +1127,6 @@
 				"neowiki-subjects-column-edited",
 				"neowiki-subjects-empty",
 				"neowiki-subjects-empty-schema",
-				"neowiki-subjects-empty-recent",
 				"neowiki-subjects-no-match",
 				"neowiki-subjects-all-schemas",
 				"neowiki-subjects-schema-label",
@@ -1074,7 +1150,95 @@
 				"neowiki-overview-configuration",
 				"neowiki-overview-configuration-description",
 				"neowiki-overview-schemas-description",
-				"neowiki-overview-first-steps"
+				"neowiki-overview-first-steps",
+				"neowiki-property-type-historicaldate",
+				"neowiki-historical-year",
+				"neowiki-historical-month",
+				"neowiki-historical-day",
+				"neowiki-historical-era",
+				"neowiki-historical-ce",
+				"neowiki-historical-bce",
+				"neowiki-historical-invalid",
+				"neowiki-link-label",
+				"neowiki-link-values",
+				"neowiki-link-namespace",
+				"neowiki-link-label-target",
+				"neowiki-id-enable",
+				"neowiki-id-source",
+				"neowiki-id-property",
+				"neowiki-id-local",
+				"neowiki-id-placeholder",
+				"neowiki-id-loading",
+				"neowiki-id-no-results",
+				"neowiki-id-unavailable",
+				"neowiki-id-confirm",
+				"neowiki-id-help",
+				"neowiki-id-saved",
+				"neowiki-derived-own",
+				"neowiki-derived-loading",
+				"neowiki-derived-unavailable",
+				"neowiki-derived-unsupported",
+				"neowiki-derived-novalue",
+				"neowiki-derived-somevalue",
+				"neowiki-external-link-target",
+				"neowiki-external-link-source",
+				"neowiki-external-link-local",
+				"neowiki-external-link-help",
+				"neowiki-property-type-image",
+				"neowiki-image-repository",
+				"neowiki-image-local",
+				"neowiki-image-commons",
+				"neowiki-image-search",
+				"neowiki-image-loading",
+				"neowiki-image-unavailable",
+				"neowiki-image-missing",
+				"neowiki-image-no-results",
+				"neowiki-image-confirm",
+				"neowiki-image-remove",
+				"neowiki-image-invalid-query",
+				"neowiki-field-invalid-image",
+				"neowiki-field-image-single",
+				"neowiki-image-source",
+				"neowiki-image-configure-source",
+				"neowiki-image-save-subject",
+				"neowiki-image-no-claim",
+				"neowiki-image-own-priority",
+				"neowiki-derived-manual",
+				"neowiki-date-bce-de",
+				"neowiki-date-bce-en",
+				"neowiki-date-calendar-note",
+				"neowiki-url-address",
+				"neowiki-url-label",
+				"neowiki-url-caption",
+				"neowiki-url-caption-page",
+				"neowiki-url-add",
+				"neowiki-url-remove",
+				"neowiki-url-page-hint",
+				"neowiki-url-needs-address",
+				"neowiki-url-invalid-address",
+				"neowiki-url-invalid-page",
+				"neowiki-field-invalid-url-caption-page",
+				"neowiki-property-type-page",
+				"neowiki-page-namespace",
+				"neowiki-page-all-namespaces",
+				"neowiki-page-main-namespace",
+				"neowiki-page-no-results",
+				"neowiki-page-search-failed",
+				"neowiki-page-missing",
+				"neowiki-invalid-page",
+				"neowiki-page-add",
+				"neowiki-page-remove",
+				"neowiki-field-invalid-page",
+				"neowiki-property-type-wikitext",
+				"neowiki-wikitext-execute",
+				"neowiki-wikitext-mode-help",
+				"neowiki-wikitext-empty",
+				"neowiki-wikitext-error",
+				"neowiki-wikitext-add",
+				"neowiki-wikitext-remove",
+				"neowiki-auto-identity-page",
+				"neowiki-managesubjects-export-complete",
+				"neowiki-managesubjects-export-stored-projection"
 			],
 			"@group:": "TODO: Load code separately while in development. Remove later.",
 			"group": "ext.neowiki"
@@ -1091,6 +1255,8 @@
 			]
 		}
 	},
-
-	"manifest_version": 2
+	"manifest_version": 2,
+	"APIModules": {
+		"neowikiimages": "ProfessionalWiki\\NeoWiki\\EntryPoints\\Api\\ApiImages"
+	}
 }

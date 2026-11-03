@@ -1,3 +1,4 @@
+import { newWikitextValue } from '@/domain/propertyTypes/Wikitext';
 import { PropertyTypeRegistry } from '@/domain/PropertyType';
 import {
 	newBooleanValue,
@@ -5,6 +6,7 @@ import {
 	newNumberValue,
 	newRelation,
 	newStringValue,
+	newUrlValue,
 	newUnregisteredTypeValue,
 	RelationValue,
 	Value,
@@ -30,7 +32,13 @@ export class ValueDeserializer {
 			return newUnregisteredTypeValue( propertyTypeName, json );
 		}
 
+		if ( propertyTypeName === 'wikitext' ) {
+			if ( !Array.isArray( json ) || json.some( ( part: unknown ) => typeof part !== 'string' ) ) { throw new Error( 'Invalid wikitext value' ); }
+			return newWikitextValue( ...json );
+		}
 		switch ( this.propertyTypeNameToValueType( propertyTypeName ) ) {
+			case ValueType.Url:
+				return newUrlValue( json );
 			case ValueType.String:
 				return newStringValue( json );
 			case ValueType.Number:

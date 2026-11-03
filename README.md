@@ -1,163 +1,96 @@
-# NeoWiki
+# SemanticNeoWiki
 
-[NeoWiki](https://neowiki.ai) is a collaborative knowledge management system on top of MediaWiki and graph databases.
+A research-oriented, independent fork of [NeoWiki](https://github.com/ProfessionalWiki/NeoWiki): schema-based data entry, Wikidata and local Wikibase sources, optional Semantic MediaWiki annotations, knowledge graphs and AI access through MCP.
 
-[Website](https://neowiki.ai) · [Documentation](https://neowiki.ai/docs/) · [Try it at neowiki.dev](https://neowiki.dev) · [Get a demo](https://neowiki.ai/demo)
+**Maintainer:** Klaus Feldmann / AufEinWort · **Contact:** [info@aufeinwort.info](mailto:info@aufeinwort.info) · **Research wiki:** [aufeinwort.info](https://aufeinwort.info)
 
-[![Mastodon](https://img.shields.io/mastodon/follow/116122313808578574)](https://mastodon.social/@NeoWiki)
-[![Bluesky](https://img.shields.io/bluesky/followers/neowiki.ai)](https://bsky.app/profile/neowiki.ai)
-[![X](https://img.shields.io/twitter/follow/NeoWikiAI)](https://x.com/NeoWikiAI)
+**This fork is not maintained or supported by Jeroen De Dauw or Professional Wiki.** Please report fork-specific issues in [this repository](https://github.com/Klaus-Feldmann/SemanticNeoWiki/issues), not to the original NeoWiki project. Original authorship and licenses are retained.
 
-## Installation
+## Version and supported environment
 
-NeoWiki is not production ready yet. You can install it in three ways:
+The candidate is **SemanticNeoWiki 0.1.9-test+2026-11-03**, with **NeoWikiBaseBridge 0.18.0-test+2026-11-03**. The complete candidate is published on `master` and the named test branch `semantic-0.1.9-test`. Use the named branch for the Composer test. It is based on NeoWiki 0.1.0; newer upstream development is not implicitly merged. The fork's initial upstream commit remains in Git history.
 
-* A **Docker demo** for evaluation and experimentation. See
-  [Try NeoWiki in Docker](docs/operations/installation.md#try-neowiki-in-docker).
-* **On an existing MediaWiki**, with Composer. See
-  [Add NeoWiki to an existing wiki](docs/operations/installation.md#add-neowiki-to-an-existing-wiki).
-* A **development environment** with configuration and tools for enhancing NeoWiki. See [Development](#development).
+The preceding NeoWiki-named runtime (0.1.8-aewi / Bridge 0.17.0) runs on the production research server AufEinWort. The renamed candidate preserves its data model and features. **Composer packaging has been checked locally; installation from GitHub on that production server is the next live test.** Do not interpret the prior production use as a completed live test of the rename.
 
-## Technical Documentation
+Support is limited to the tested setup: **MediaWiki 1.47.0-wmf.24, PHP 8.3.36, the legacy parser, UnlinkedWikibase 3.0.0, Semantic MediaWiki 7.3.1, Semantic Scribunto 3.0.0, local Wikibase, Scribunto and a Fuseki/SPARQL-backed Graph Explorer.** Earlier MediaWiki versions and other parser/backend combinations are not supported or tested by this fork. Later versions require their own verification. Additional reported versions are in [the environment snapshot](publication/TESTED-ENVIRONMENT.json).
 
-See [docs/](./docs/), especially [docs/glossary.md](./docs/glossary.md).
+## Added capabilities
 
-## Development
+- Source-qualified Wikidata/local Wikibase Q identities and schema-level P lookup by ID or label.
+- Read-only source values with explicit own-value precedence and configurable local/source links.
+- Historical BCE dates with precision/calendar information and year links.
+- Images from local files, Commons or bound source properties, including Data/Graph thumbnails.
+- Local page selection, structured source URLs and display names, passive Wikitext and centrally executed schema Wikitext.
+- Optional schema-driven SMW annotations through Lua; relevant subject/schema saves trigger page processing rather than requiring an additional manual article save.
+- Complete Data-view JSON, Turtle and TriG downloads and a separately supplied MCP read-tool patch.
+- Readable select values, ordered fields, configured links and preferred descriptions in Graph Explorer.
 
-Prerequisites:
+External source changes alone do not guarantee immediate propagation to stored SMW annotations; affected pages must be processed. Existing SMW property types and research decisions remain under the administrator's control.
 
-- Docker (or a compatible runtime such as Podman)
-- Docker Compose v2+ (with the `docker compose` subcommand, not the legacy standalone `docker-compose` v1. Verify with `docker compose version`)
-- GNU Make
+## Installation: Composer only
 
-To work on NeoWiki (edit code, run tests, see changes live), bring up the bundled dev stack:
+This candidate is for an existing MediaWiki server. **No Docker image, Docker demo or alternate application installer is supplied or supported.** Built Data UI/Graph assets are included; npm is not an installation requirement.
 
-```bash
-make dev
+In the MediaWiki root, merge the following into your existing `composer.local.json` without replacing other settings:
+
+```json
+{
+  "repositories": [
+    { "type": "vcs", "url": "https://github.com/Klaus-Feldmann/SemanticNeoWiki" }
+  ],
+  "require": {
+    "aufeinwort/semantic-neowiki": "dev-semantic-0.1.9-test"
+  },
+  "config": {
+    "allow-plugins": { "composer/installers": true }
+  }
+}
 ```
 
-This builds a dev-mode image, brings up the stack (mediawiki, db, the qlever graph store,
-node watcher, mailcatcher), runs first-time install and seed, and waits until the wiki is
-reachable. It prints the URL when ready (the default is `http://localhost:8484` but
-the actual port is auto-allocated; see [Reserved ports](Docker/README.md#reserved-host-ports)).
-To run a different selection of these services, see
-[Optional services](Docker/README.md#optional-services).
+Use the MediaWiki root Composer workflow, which merges `composer.local.json`; do not run this local configuration file as a separate Composer project. An existing requirement for `neowiki/neowiki` must be removed for the switch. Remove an obsolete merge include of `extensions/NeoWiki/composer.json`, if present. Preserve existing compatibility work for Wikibase/DataTransfer; the fork does not automatically modify those packages.
 
-Mailcatcher web UI is at the port `make dev` printed (default `8025`,
-configurable via `MAILCATCHER_PORT` in `Docker/.env`).
+Then, from the MediaWiki root:
 
-The `node` sidecar runs `npm run build:watch`, so TypeScript changes under
-`resources/ext.neowiki/` rebuild automatically. The watcher transpiles but does not
-type-check — for that, rely on your IDE while editing, and on `make ts-build` (or
-`make tsci`) and CI before pushing. `npm run tsc:watch` runs a standalone type-check
-watcher if you want one.
-
-To also expose the graph stores to the host (single-worktree use), use `make dev-tools`
-instead. URLs print when the stack comes up.
-
-### Running tests and tools
-
-```bash
-make phpunit              # full PHPUnit suite
-make phpunit filter=Foo   # single test class
-make cs                   # phpcs + phpstan
-make tsci                 # vitest + build + lint
-make browser-test         # Playwright against the dev wiki
-make bash                 # shell into the mediawiki container
-make logs                 # tail logs
-make reset                # wipe the stack's data and reseed demo data
-make import-demo-data     # load the latest demo data, overriding your changes
-make test-backends-stop   # stop the test-only backends (make phpunit starts them again on demand)
+```sh
+composer update aufeinwort/semantic-neowiki --with-dependencies --no-dev --prefer-dist --no-scripts
 ```
 
-The first `make phpunit` after `make dev` starts the test-only backends, so it is slower than
-later runs.
+The package installs to `extensions/SemanticNeoWiki`. It conflicts with a simultaneously installed official `neowiki/neowiki` package. Back up Composer files, existing extension files, LocalSettings and deployment-specific graph configuration before changing a working wiki. The [installation and migration guide](publication/INSTALLATION.md) covers the rest.
 
-For all targets, run `make help`.
+## LocalSettings.php and existing data
 
-### Performance test data
-
-Build a large synthetic wiki to measure against the targets in
-[ADR 29](docs/adr/029-scalability-targets.md):
-
-```bash
-make perf-generate pages=1000   # write perf/dump.xml
-make perf-import                # import it, timing the write path
-make perf-snapshot              # save MariaDB + Neo4j to perf/snapshot/
-make perf-restore               # load perf/snapshot/ over this stack's data
-```
-
-`perf-generate` also takes `subjects` (default 10) and `seed` (default 1). It emits one Schema and
-`pages` × `subjects` Subjects carrying 12 Statements each, three of them relations to Subjects on
-other pages. The same options always produce the same dump, and no two seeds produce the same
-Subject page titles or Subject ids, so dumps from different seeds can share one wiki. Pages are
-written as a save would store them, so budget about 27 KB of dump per page.
-
-`perf-import` runs with link table updates off, so `Special:Search` and WhatLinksHere will not find
-the imported pages. Everything NeoWiki reads is projected during the import, so the wiki it produces
-is fit for measuring reads as well; the number the last line reports is a write-path cost.
-`make reset` returns the stack to demo data.
-
-`perf-snapshot` and `perf-restore` need the stack's Neo4j, so start the stack with `neo` in `services=`.
-Snapshot a wiki nothing else is writing to — the MariaDB and Neo4j halves are not captured at the
-same instant. A snapshot restores into any worktree stack, since they all use the same database
-name. After `perf-restore`:
-
-- Run `make update-dot-php`: the MediaWiki schema is the snapshot's, not this checkout's.
-- The SPARQL stores are not part of the snapshot, and `make rebuild-graph-databases` only adds to
-  them, so a SPARQL store that has to match the restored wiki must start empty. `make remove` clears
-  them along with the wiki's own data; to empty only QLever, drop its volume while the stack is
-  down (Oxigraph's is `<project>_oxigraph-data`):
-
-  ```bash
-  make down                                     # also removes the qlever container
-  docker volume rm <project>_qlever-index-data  # <project> is the name `make dev` prints
-  make dev services=qlever,neo
-  make perf-restore
-  make rebuild-graph-databases
-  ```
-
-### Per-worktree dev environments
-
-Each clone or worktree is a self-contained stack. Run `make dev` from any NeoWiki
-checkout and it will allocate its own port and project namespace, so multiple worktrees
-can run side by side without collision. See [Reserved host ports](Docker/README.md#reserved-host-ports)
-for the auto-allocation ranges.
-
-To override the MediaWiki port: `make dev port=8488` or `MW_SERVER_PORT=8488 make dev`.
-
-### Customizing dev config
-
-Create `Docker/LocalSettings.local.php` (gitignored) for per-worktree overrides. Common
-uses:
-
-- Loading additional MediaWiki extensions for an integration test
-- Custom debug toggles
-- Hook overrides for a specific feature branch
-
-Example:
+After the prerequisite extensions, use:
 
 ```php
-<?php
-wfLoadExtension( 'SomeExtension' );
-$wgDebugLogGroups['NeoWiki'] = '/tmp/neowiki-debug.log';
+wfLoadExtension( 'SemanticNeoWiki' );
+wfLoadExtension( 'NeoWikiBaseBridge', "$IP/extensions/SemanticNeoWiki/NeoWikiBaseBridge/extension.json" );
+
+$wgUseParsoidParser = false;
+$wgUseParsoidLinksUpdate = false;
+$wgNeoWikiAutoRenderMainSubject = false;
+$wgNeoWikiSubjectFirst = false;
+
+// Optional AufEinWort registration helper; replace the old include, do not duplicate it:
+$wgAewiWikidataAutoNamespaces = [ 0 ];
+$wgAewiWikidataSmwProperty = 'Wikidata';
+require_once "$IP/extensions/SemanticNeoWiki/integrations/registration/AewiWikidataRegistrierung.php";
 ```
 
-The stack already routes the `NeoWiki` channel ([Logging](docs/operations/installation.md#logging)), so setting
-`$wgDebugLogGroups['NeoWiki']` here replaces that destination rather than adding to it.
+Remove the former `wfLoadExtension( 'NeoWiki' )` and old Bridge include for the switch; never load both implementations. Existing schema/subject content models, namespace IDs, `mw.neowiki`, `neowiki*` APIs, `NeoWiki*` settings, custom hooks and `MediaWiki:NeoWiki` are deliberately retained. **Do not rename stored data or these settings just because the extension folder changed.**
 
-### Try-it-out and server deployment
+See the commented [LocalSettings example](publication/LocalSettings.SemanticNeoWiki.example.php), [graph configuration](graph-explorer/config.js), and [integration guide](publication/INSTALLATION.md). Keep the existing RDF base IRI and graph-store endpoints. The new graph page is under `/w/extensions/SemanticNeoWiki/graph-explorer/envendpoint.html` on a `/w` deployment; update old links/redirects deliberately. The SPARQL service remains external. The tested NeoWiki graph dataset (port 3331) and SMW SPARQLStore dataset (port 3030) are distinct; the example preserves that separation.
 
-For the prebuilt try-it-out stack or server deployment with Caddy, see
-[Installation](docs/operations/installation.md).
+## Included integration material
 
-## Behind NeoWiki
+- [SMW modules and templates](integrations/smw/README.md), with current wiki revision provenance. Their existing names remain NeoWiki; central executable schema Wikitext can continue invoking `{{NeoWiki}}`.
+- [Wikidata registration helper](integrations/registration/README.md): AewiWikidataRegistrierung.php and its Magic Words file. Existing Q-registration templates can stay; the example helper's automatic title search uses German Wikipedia and is namespace-controlled.
+- [Optional SMW 7.3.1 statistics correction](integrations/smw/compatibility/README.md): exact-source patch for SPARQLStore, with a checked backup/apply script. It is not applied by Composer and is not needed for every SMW setup.
+- [MCP source/runtime patch](integrations/mcp/README.md): complete Data-view tool and recognition of the SemanticNeoWiki extension name. Apply before changing extension identity if MCP must retain the existing NeoWiki tools. It targets MCP 0.20.1, with checked compatible 0.20.0 runtime files; it contains no authentication data.
 
-NeoWiki is made by [Professional Wiki](https://professional.wiki), a Berlin company building sovereign knowledge infrastructure with MediaWiki, knowledge graphs, and AI, and the maintainer of Semantic MediaWiki. It is free software under the [GPL-2.0-or-later](COPYING).
+## Credits, license and verification
 
-Two key partners back NeoWiki's development:
+NeoWiki is the work of Professional Wiki, Jeroen De Dauw and its other contributors. Their credits and GPL-2.0-or-later license remain; see [COPYING](COPYING). Klaus Feldmann / AufEinWort supplied the research requirements, workflow/interface design and application testing. OpenAI ChatGPT/Codex assisted with implementation, tests and documentation. Publication does not imply endorsement by the original developers.
 
-- **[ECHOLOT](https://echolot-eccch.eu/)**, the EU Horizon Europe consortium for cultural heritage data, uses NeoWiki as its core system. <img src="https://neowiki.ai/images/logos/eu-emblem.svg" alt="Flag of the European Union" width="24" height="16" /> ECHOLOT is funded by the European Union under grant agreement Nº 101233096. [More on ECHOLOT and EU funding](https://neowiki.ai/partners/echolot).<br>
-  <sub>Views and opinions expressed are those of the author(s) only and do not necessarily reflect those of the European Union or the European Research Executive Agency. Neither the European Union nor the granting authority can be held responsible for them.</sub>
-- **[Hallo Welt!](https://neowiki.ai/partners/bluespice)**, creators of BlueSpice, are integrating NeoWiki into BlueSpice Galaxy, the next major version of the enterprise MediaWiki distribution.
+Zazuko Graph Explorer retains its LGPL notice, original sources and dependency notices; the separate MCP patch retains the MCP project's license. See [third-party provenance](publication/THIRD-PARTY.md).
 
+[Verification and limits](publication/VERIFICATION.md) · [German overview](publication/LESEMICH.md) · [Contributing](CONTRIBUTING.md) · [Original NeoWiki documentation](README-UPSTREAM.md)

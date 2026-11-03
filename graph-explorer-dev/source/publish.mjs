@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const target=path.resolve(root,'../graph-explorer');
+fs.mkdirSync(path.join(target,'assets'),{recursive:true});
+fs.copyFileSync(path.join(root,'Ausgangsstand/common-BzxewltY.css'),path.join(root,'Graph-Explorer/assets/common-BzxewltY.css'));
+for(const name of fs.readdirSync(path.join(target,'assets'))) if(/^(neowiki-qids-|common-qids-|envendpoint-qids-)/.test(name)) fs.unlinkSync(path.join(target,'assets',name));
+fs.cpSync(path.join(root,'Graph-Explorer/assets'),path.join(target,'assets'),{recursive:true});
+fs.copyFileSync(path.join(root,'Graph-Explorer/envendpoint.html'),path.join(target,'envendpoint.html'));
+if(!fs.existsSync(path.join(target,'config.js')))fs.copyFileSync(path.join(root,'Graph-Explorer/config.js'),path.join(target,'config.js'));
+console.log('Graph build published; deployment config preserved.');

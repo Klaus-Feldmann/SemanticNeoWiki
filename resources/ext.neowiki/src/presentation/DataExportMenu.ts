@@ -2,10 +2,19 @@ import type { MenuItemData } from '@wikimedia/codex';
 
 /**
  * What the Subject UI's export controls offer, for a single Subject or for all Subjects on a page: the
- * JSON URL, the projections worth offering RDF in, and the RDF menu's items.
+ * JSON URL, the complete read-view export when available, and named stored-data projections.
  */
 
 const NATIVE_PROJECTION = 'native';
+const COMPLETE_PROJECTION = '__complete_data_view__';
+
+function completeEnabled(): boolean {
+	return mw.config?.get( 'wgNeoWikiCompleteExport' ) === true;
+}
+function completeUrl( endpoint: string, format: string ): string {
+	const language = String( mw.config.get( 'wgUserLanguage' ) || mw.config.get( 'wgContentLanguage' ) || 'de' );
+	return `${ endpoint }?format=${ format }&language=${ encodeURIComponent( language ) }`;
+}
 
 type RdfFormat = 'turtle' | 'trig';
 
@@ -27,6 +36,12 @@ function restApiBase(): string {
 }
 
 function projectionLabel( projection: string ): string {
+	if ( projection === COMPLETE_PROJECTION ) {
+		return mw.msg( 'neowiki-managesubjects-export-complete' );
+	}
+	if ( completeEnabled() && projection !== NATIVE_PROJECTION ) {
+		return mw.msg( 'neowiki-managesubjects-export-stored-projection', projection );
+	}
 	return projection === NATIVE_PROJECTION ?
 		mw.msg( 'neowiki-managesubjects-export-native' ) :
 		projection;
@@ -37,22 +52,23 @@ export interface ExportUrls {
 	rdfUrl( projection: string, format: RdfFormat ): string;
 }
 
-function exportUrls( jsonUrl: string, rdfEndpoint: string ): ExportUrls {
+function exportUrls( jsonUrl: string, rdfEndpoint: string, completeEndpoint: string ): ExportUrls {
 	return {
-		jsonUrl,
+		jsonUrl: completeEnabled() ? completeUrl( completeEndpoint, 'json' ) : jsonUrl,
 		rdfUrl: ( projection, format ) =>
-			`${ rdfEndpoint }?projection=${ encodeURIComponent( projection ) }&format=${ format }`,
+			projection === COMPLETE_PROJECTION && completeEnabled() ? completeUrl( completeEndpoint, format ) :
+				`${ rdfEndpoint }?projection=${ encodeURIComponent( projection ) }&format=${ format }`,
 	};
 }
 
 export function subjectExportUrls( subjectId: string ): ExportUrls {
 	const base = `${ restApiBase() }/neowiki/v0/subject/${ encodeURIComponent( subjectId ) }`;
-	return exportUrls( base, `${ base }/rdf` );
+	return exportUrls( base, `${ base }/rdf`, `${ restApiBase() }/neowikibase/v1/subject/${ encodeURIComponent( subjectId ) }/export` );
 }
 
 export function pageExportUrls( pageId: number ): ExportUrls {
 	const base = `${ restApiBase() }/neowiki/v0/page/${ pageId }`;
-	return exportUrls( `${ base }/subjects`, `${ base }/rdf` );
+	return exportUrls( `${ base }/subjects`, `${ base }/rdf`, `${ restApiBase() }/neowikibase/v1/page/${ pageId }/export` );
 }
 
 /**
@@ -65,7 +81,7 @@ export function rdfProjectionsFor( schemaNames: readonly string[] ): string[] {
 	const mappings = ( mw.config.get( 'wgNeoWikiMappings' ) as MappingSummary[] | null ) ?? [];
 
 	return [
-		NATIVE_PROJECTION,
+		completeEnabled() ? COMPLETE_PROJECTION : NATIVE_PROJECTION,
 		...mappings
 			.filter( ( mapping ) => mapping.schemas.some( ( schema ) => schemaNames.includes( schema ) ) )
 			.map( ( mapping ) => mapping.name ),

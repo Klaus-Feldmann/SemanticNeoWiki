@@ -11,8 +11,7 @@ use Skin;
  * Hook interface for extensions to declare ResourceLoader modules that NeoWiki
  * should load alongside ext.neowiki. Implementations should append module names
  * to $modules. $out and $skin are provided for conditional loading (e.g.
- * per-namespace or per-user). NeoWiki's UI starts once each of these modules has
- * loaded or failed to load.
+ * per-namespace or per-user).
  */
 interface NeoWikiGetFrontendModulesHook {
 

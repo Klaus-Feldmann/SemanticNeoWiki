@@ -15,6 +15,7 @@ use ProfessionalWiki\NeoWiki\Domain\Value\NeoValue;
 use ProfessionalWiki\NeoWiki\Domain\Value\NumberValue;
 use ProfessionalWiki\NeoWiki\Domain\Value\RelationValue;
 use ProfessionalWiki\NeoWiki\Domain\Value\StringValue;
+use ProfessionalWiki\NeoWiki\Domain\Value\UrlValue;
 use ProfessionalWiki\NeoWiki\Domain\Value\UnregisteredTypeValue;
 use ProfessionalWiki\NeoWiki\Domain\Value\ValueType;
 use ProfessionalWiki\NeoWiki\Domain\PropertyType\PropertyTypeLookup;
@@ -49,6 +50,7 @@ class StatementDeserializer {
 			?? ValueType::UnregisteredType;
 
 		return match ( $valueType ) {
+			ValueType::Url => new UrlValue( (array)$value ),
 			ValueType::String => new StringValue( ...array_values( (array)$value ) ),
 			ValueType::Number => new NumberValue( $value ),
 			ValueType::Relation => $this->deserializeRelationValue( $value ),

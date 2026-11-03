@@ -7,6 +7,7 @@ namespace ProfessionalWiki\NeoWiki\Domain\Value;
 enum ValueType: string {
 
 	case String = 'string';
+	case Url = 'url';
 	case Number = 'number';
 	case Boolean = 'boolean';
 	case Relation = 'relation';

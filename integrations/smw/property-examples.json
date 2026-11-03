@@ -1,0 +1,11 @@
+{
+  "note": "Examples only. Use your actual localized SMW Property namespace; do not replace existing property types.",
+  "properties": {
+    "Geburtsort": "[[Has type::Page]]",
+    "Sterbeort": "[[Has type::Page]]",
+    "Quellenangabe": "[[Has type::URL]]",
+    "Geburtsdatum": "[[Has type::Date]]",
+    "Sterbedatum": "[[Has type::Date]]",
+    "Klassenzuordnung": "[[Has type::Page]]"
+  }
+}

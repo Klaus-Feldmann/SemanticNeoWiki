@@ -1,0 +1,163 @@
+# NeoWiki
+
+[NeoWiki](https://neowiki.ai) is a collaborative knowledge management system on top of MediaWiki and graph databases.
+
+[Website](https://neowiki.ai) · [Documentation](https://neowiki.ai/docs/) · [Try it at neowiki.dev](https://neowiki.dev) · [Get a demo](https://neowiki.ai/demo)
+
+[![Mastodon](https://img.shields.io/mastodon/follow/116122313808578574)](https://mastodon.social/@NeoWiki)
+[![Bluesky](https://img.shields.io/bluesky/followers/neowiki.ai)](https://bsky.app/profile/neowiki.ai)
+[![X](https://img.shields.io/twitter/follow/NeoWikiAI)](https://x.com/NeoWikiAI)
+
+## Installation
+
+NeoWiki is not production ready yet. You can install it in three ways:
+
+* A **Docker demo** for evaluation and experimentation. See
+  [Try NeoWiki in Docker](docs/operations/installation.md#try-neowiki-in-docker).
+* **On an existing MediaWiki**, with Composer. See
+  [Add NeoWiki to an existing wiki](docs/operations/installation.md#add-neowiki-to-an-existing-wiki).
+* A **development environment** with configuration and tools for enhancing NeoWiki. See [Development](#development).
+
+## Technical Documentation
+
+See [docs/](./docs/), especially [docs/glossary.md](./docs/glossary.md).
+
+## Development
+
+Prerequisites:
+
+- Docker (or a compatible runtime such as Podman)
+- Docker Compose v2+ (with the `docker compose` subcommand, not the legacy standalone `docker-compose` v1. Verify with `docker compose version`)
+- GNU Make
+
+To work on NeoWiki (edit code, run tests, see changes live), bring up the bundled dev stack:
+
+```bash
+make dev
+```
+
+This builds a dev-mode image, brings up the stack (mediawiki, db, the qlever graph store,
+node watcher, mailcatcher), runs first-time install and seed, and waits until the wiki is
+reachable. It prints the URL when ready (the default is `http://localhost:8484` but
+the actual port is auto-allocated; see [Reserved ports](Docker/README.md#reserved-host-ports)).
+To run a different selection of these services, see
+[Optional services](Docker/README.md#optional-services).
+
+Mailcatcher web UI is at the port `make dev` printed (default `8025`,
+configurable via `MAILCATCHER_PORT` in `Docker/.env`).
+
+The `node` sidecar runs `npm run build:watch`, so TypeScript changes under
+`resources/ext.neowiki/` rebuild automatically. The watcher transpiles but does not
+type-check — for that, rely on your IDE while editing, and on `make ts-build` (or
+`make tsci`) and CI before pushing. `npm run tsc:watch` runs a standalone type-check
+watcher if you want one.
+
+To also expose the graph stores to the host (single-worktree use), use `make dev-tools`
+instead. URLs print when the stack comes up.
+
+### Running tests and tools
+
+```bash
+make phpunit              # full PHPUnit suite
+make phpunit filter=Foo   # single test class
+make cs                   # phpcs + phpstan
+make tsci                 # vitest + build + lint
+make browser-test         # Playwright against the dev wiki
+make bash                 # shell into the mediawiki container
+make logs                 # tail logs
+make reset                # wipe the stack's data and reseed demo data
+make import-demo-data     # load the latest demo data, overriding your changes
+make test-backends-stop   # stop the test-only backends (make phpunit starts them again on demand)
+```
+
+The first `make phpunit` after `make dev` starts the test-only backends, so it is slower than
+later runs.
+
+For all targets, run `make help`.
+
+### Performance test data
+
+Build a large synthetic wiki to measure against the targets in
+[ADR 29](docs/adr/029-scalability-targets.md):
+
+```bash
+make perf-generate pages=1000   # write perf/dump.xml
+make perf-import                # import it, timing the write path
+make perf-snapshot              # save MariaDB + Neo4j to perf/snapshot/
+make perf-restore               # load perf/snapshot/ over this stack's data
+```
+
+`perf-generate` also takes `subjects` (default 10) and `seed` (default 1). It emits one Schema and
+`pages` × `subjects` Subjects carrying 12 Statements each, three of them relations to Subjects on
+other pages. The same options always produce the same dump, and no two seeds produce the same
+Subject page titles or Subject ids, so dumps from different seeds can share one wiki. Pages are
+written as a save would store them, so budget about 27 KB of dump per page.
+
+`perf-import` runs with link table updates off, so `Special:Search` and WhatLinksHere will not find
+the imported pages. Everything NeoWiki reads is projected during the import, so the wiki it produces
+is fit for measuring reads as well; the number the last line reports is a write-path cost.
+`make reset` returns the stack to demo data.
+
+`perf-snapshot` and `perf-restore` need the stack's Neo4j, so start the stack with `neo` in `services=`.
+Snapshot a wiki nothing else is writing to — the MariaDB and Neo4j halves are not captured at the
+same instant. A snapshot restores into any worktree stack, since they all use the same database
+name. After `perf-restore`:
+
+- Run `make update-dot-php`: the MediaWiki schema is the snapshot's, not this checkout's.
+- The SPARQL stores are not part of the snapshot, and `make rebuild-graph-databases` only adds to
+  them, so a SPARQL store that has to match the restored wiki must start empty. `make remove` clears
+  them along with the wiki's own data; to empty only QLever, drop its volume while the stack is
+  down (Oxigraph's is `<project>_oxigraph-data`):
+
+  ```bash
+  make down                                     # also removes the qlever container
+  docker volume rm <project>_qlever-index-data  # <project> is the name `make dev` prints
+  make dev services=qlever,neo
+  make perf-restore
+  make rebuild-graph-databases
+  ```
+
+### Per-worktree dev environments
+
+Each clone or worktree is a self-contained stack. Run `make dev` from any NeoWiki
+checkout and it will allocate its own port and project namespace, so multiple worktrees
+can run side by side without collision. See [Reserved host ports](Docker/README.md#reserved-host-ports)
+for the auto-allocation ranges.
+
+To override the MediaWiki port: `make dev port=8488` or `MW_SERVER_PORT=8488 make dev`.
+
+### Customizing dev config
+
+Create `Docker/LocalSettings.local.php` (gitignored) for per-worktree overrides. Common
+uses:
+
+- Loading additional MediaWiki extensions for an integration test
+- Custom debug toggles
+- Hook overrides for a specific feature branch
+
+Example:
+
+```php
+<?php
+wfLoadExtension( 'SomeExtension' );
+$wgDebugLogGroups['NeoWiki'] = '/tmp/neowiki-debug.log';
+```
+
+The stack already routes the `NeoWiki` channel ([Logging](docs/operations/installation.md#logging)), so setting
+`$wgDebugLogGroups['NeoWiki']` here replaces that destination rather than adding to it.
+
+### Try-it-out and server deployment
+
+For the prebuilt try-it-out stack or server deployment with Caddy, see
+[Installation](docs/operations/installation.md).
+
+## Behind NeoWiki
+
+NeoWiki is made by [Professional Wiki](https://professional.wiki), a Berlin company building sovereign knowledge infrastructure with MediaWiki, knowledge graphs, and AI, and the maintainer of Semantic MediaWiki. It is free software under the [GPL-2.0-or-later](COPYING).
+
+Two key partners back NeoWiki's development:
+
+- **[ECHOLOT](https://echolot-eccch.eu/)**, the EU Horizon Europe consortium for cultural heritage data, uses NeoWiki as its core system. <img src="https://neowiki.ai/images/logos/eu-emblem.svg" alt="Flag of the European Union" width="24" height="16" /> ECHOLOT is funded by the European Union under grant agreement Nº 101233096. [More on ECHOLOT and EU funding](https://neowiki.ai/partners/echolot).<br>
+  <sub>Views and opinions expressed are those of the author(s) only and do not necessarily reflect those of the European Union or the European Research Executive Agency. Neither the European Union nor the granting authority can be held responsible for them.</sub>
+- **[Hallo Welt!](https://neowiki.ai/partners/bluespice)**, creators of BlueSpice, are integrating NeoWiki into BlueSpice Galaxy, the next major version of the enterprise MediaWiki distribution.
+

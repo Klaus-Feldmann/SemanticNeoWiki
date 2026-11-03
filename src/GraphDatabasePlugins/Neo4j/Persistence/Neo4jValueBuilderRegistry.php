@@ -44,12 +44,17 @@ class Neo4jValueBuilderRegistry {
 		$toScalars = static fn( NeoValue $value ): mixed => $value->toScalars();
 
 		$registry->registerBuilder( 'text', $toScalars );
-		$registry->registerBuilder( 'url', $toScalars );
+		$registry->registerBuilder( 'wikitext', $toScalars );
+		$registry->registerBuilder( 'page', $toScalars );
+		$registry->registerBuilder( 'url', static fn ( NeoValue $value ): array => $value instanceof \ProfessionalWiki\NeoWiki\Domain\Value\UrlValue ? $value->urls() : (array)$value->toScalars() );
+		$registry->registerBuilder( 'image', $toScalars );
 		$registry->registerBuilder( 'number', $toScalars );
 		$registry->registerBuilder( 'select', $toScalars );
 		$registry->registerBuilder( 'boolean', $toScalars );
 		$registry->registerBuilder( 'dateTime', self::buildDateTimeNeo4jValue( ... ) );
 		$registry->registerBuilder( 'date', self::buildDateNeo4jValue( ... ) );
+		// Preserve the historical lexical form and its precision; do not invent month/day.
+		$registry->registerBuilder( 'historicalDate', $toScalars );
 		$registry->registerBuilder( 'monolingualText', self::buildMonolingualTextNeo4jValue( ... ) );
 
 		return $registry;

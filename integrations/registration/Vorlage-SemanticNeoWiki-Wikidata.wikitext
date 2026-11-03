@@ -1,0 +1,5 @@
+<includeonly>{{#aewiwikidata:{{{Q|}}}|{{{Titel|}}}|{{{automatisch|1}}}|{{{Fehlkategorie|}}}}}</includeonly><noinclude>
+Minimales Einrichtungsbeispiel für Vorlage:SemanticNeoWiki/Wikidata.
+Aufruf: {{SemanticNeoWiki/Wikidata|Q=Q154751}}.
+Ohne Q-ID wird anhand des angegebenen Titels beziehungsweise des Seitennamens ein deutscher Wikipedia-Sitelink abgefragt; dies gilt nur in den freigegebenen Namensräumen.
+</noinclude>

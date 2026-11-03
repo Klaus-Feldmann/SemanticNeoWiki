@@ -19,6 +19,9 @@ use ProfessionalWiki\NeoWiki\Domain\Rdf\RdfNamespaces;
 use ProfessionalWiki\NeoWiki\Domain\Rdf\RdfValueMapperRegistry;
 use ProfessionalWiki\NeoWiki\Domain\Relation\TypedRelation;
 use ProfessionalWiki\NeoWiki\Domain\Statement;
+use ProfessionalWiki\NeoWiki\Domain\Schema\Property\SelectProperty;
+use ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\SelectType;
+use ProfessionalWiki\NeoWiki\Domain\Value\StringValue;
 use ProfessionalWiki\NeoWiki\Domain\Subject\Subject;
 use ProfessionalWiki\NeoWiki\Domain\Subject\SubjectDisplayName;
 use ProfessionalWiki\NeoWiki\Domain\Subject\SubjectId;
@@ -201,9 +204,26 @@ class RdfPageProjector implements PageProjector {
 	 */
 	private function projectStatements( Subject $subject, Iri $subjectIri, Iri $graph, PageId $pageId ): array {
 		$quads = [];
+		$schema = $this->schemaResolver->getSchema( $subject->getSchemaReference() );
 
 		foreach ( $subject->getStatements()->asArray() as $statement ) {
-			$terms = $this->valueMappers->mapValue( $statement->getPropertyType(), $statement->getValue() );
+			$value = $statement->getValue();
+			$name = $statement->getPropertyName();
+			$definition = $schema !== null && $schema->hasProperty( $name ) ? $schema->getProperty( $name ) : null;
+
+			if ( $definition?->isSchemaExecution() ) { continue; }
+
+			// Resolve only native select values. Stored option IDs and other projections stay unchanged.
+			if ( $statement->getPropertyType() === SelectType::NAME && $definition instanceof SelectProperty
+				&& $value instanceof StringValue
+			) {
+				$value = new StringValue( ...array_map(
+					static fn ( string $id ): string => $definition->getOption( $id )?->getLabel() ?? $id,
+					$value->strings
+				) );
+			}
+
+			$terms = $this->valueMappers->mapValue( $statement->getPropertyType(), $value );
 
 			// null means the Property Type has no RDF mapper (a relation, handled separately, or an
 			// unregistered type). Skip it, matching the Neo4j projection's graceful degradation.
@@ -214,6 +234,17 @@ class RdfPageProjector implements PageProjector {
 			$this->warnOnDroppedValues( $statement, count( $terms ), $pageId );
 
 			$predicate = $this->namespaces->property( $statement->getPropertyName()->text );
+			if ( $value instanceof \ProfessionalWiki\NeoWiki\Domain\Value\UrlValue ) {
+				foreach ( $value->parts as $index => $entry ) {
+					$node = new Iri( $subjectIri->value . '/url/' . rawurlencode( $name->text ) . '/' . $index );
+					$quads[] = new Quad( $subjectIri, new Iri( 'urn:neowiki:aewi:urlEntry' ), $node, $graph );
+					$quads[] = new Quad( $node, new Iri( 'urn:neowiki:aewi:field' ), $predicate, $graph );
+					foreach ( $entry as $key => $text ) {
+						$object = $key === 'url' && Iri::isSafeAbsolute( $text ) ? new Iri( $text ) : RdfLiteralFactory::typed( $text, 'string' );
+						$quads[] = new Quad( $node, new Iri( 'urn:neowiki:aewi:url:' . $key ), $object, $graph );
+					}
+				}
+			}
 
 			foreach ( $terms as $term ) {
 				$quads[] = new Quad( $subjectIri, $predicate, $term, $graph );

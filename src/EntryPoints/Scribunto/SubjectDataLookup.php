@@ -18,6 +18,7 @@ use ProfessionalWiki\NeoWiki\Domain\Value\NeoValue;
 use ProfessionalWiki\NeoWiki\Domain\Value\NumberValue;
 use ProfessionalWiki\NeoWiki\Domain\Value\RelationValue;
 use ProfessionalWiki\NeoWiki\Domain\Value\StringValue;
+use ProfessionalWiki\NeoWiki\Domain\Value\UrlValue;
 
 class SubjectDataLookup {
 
@@ -96,6 +97,8 @@ class SubjectDataLookup {
 			return null;
 		}
 
+		if ( $value instanceof UrlValue ) { return $value->parts[0]['url']; }
+
 		if ( $value instanceof StringValue ) {
 			return $value->strings[0];
 		}
@@ -128,6 +131,8 @@ class SubjectDataLookup {
 		if ( $value->isEmpty() ) {
 			return null;
 		}
+
+		if ( $value instanceof UrlValue ) { return $this->toLuaIndexed( $value->urls() ); }
 
 		if ( $value instanceof StringValue ) {
 			return $this->toLuaIndexed( $value->strings );
@@ -290,6 +295,8 @@ class SubjectDataLookup {
 		if ( $value->isEmpty() ) {
 			return [];
 		}
+
+		if ( $value instanceof UrlValue ) { return $this->toLuaIndexed( $value->parts ); }
 
 		if ( $value instanceof StringValue ) {
 			return $this->toLuaIndexed( $value->strings );

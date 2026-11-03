@@ -26,6 +26,12 @@ use ProfessionalWiki\NeoWiki\Tests\Data\TestSubjectIds;
  */
 class StatementDeserializerTest extends TestCase {
 
+	public function testDeserializesLegacyAndStructuredUrls(): void {
+		$entry = [ 'url' => 'https://example.org/?a=1&b=2', 'label' => 'Title', 'caption' => 'Source', 'captionPage' => 'Vermerk:Quelle' ];
+		$statement = $this->newDeserializer()->deserialize( 'Source', [ 'propertyType' => 'url', 'value' => [ 'https://legacy.org', $entry ] ] );
+		$this->assertSame( [ [ 'url' => 'https://legacy.org' ], $entry ], $statement->getValue()->toScalars() );
+	}
+
 	public function testDeserializesNumber(): void {
 		$this->assertEquals(
 			new Statement(

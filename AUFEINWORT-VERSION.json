@@ -1,0 +1,24 @@
+{
+  "name": "SemanticNeoWiki",
+  "testedNeoWikiVersion": "0.1.8-aewi+2026-11-03",
+  "bridgeVersion": "0.18.0-test+2026-11-03",
+  "prepared": "2026-11-03",
+  "upstreamBase": {
+    "repository": "ProfessionalWiki/NeoWiki",
+    "commit": "92cf0e347d40899647cdbb1312c4f0dc09768ae3",
+    "version": "0.1.0"
+  },
+  "forkMasterAtPreparation": "37f3faac1d42052e6eb6e938b99912c83fd61b40",
+  "branch": "semantic-0.1.9-test",
+  "extensionName": "SemanticNeoWiki",
+  "extensionVersion": "0.1.9-test+2026-11-03",
+  "composerPackage": "aufeinwort/semantic-neowiki",
+  "minimumMediaWiki": "1.47.0-wmf.24",
+  "composerLiveInstallVerified": false,
+  "contact": "info@aufeinwort.info",
+  "composerLocalInstallVerified": true,
+  "publicationBranches": [
+    "master",
+    "semantic-0.1.9-test"
+  ]
+}

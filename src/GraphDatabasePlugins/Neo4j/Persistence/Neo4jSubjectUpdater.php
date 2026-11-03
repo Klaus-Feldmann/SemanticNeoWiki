@@ -128,7 +128,11 @@ class Neo4jSubjectUpdater {
 	private function nodeProperties( Neo4jPageSubject $pageSubject, Page $page ): array {
 		$subject = $pageSubject->subject;
 
-		$properties = $this->statementsToNodeProperties( $subject->getStatements() );
+		$schema = $this->schemaResolver->getSchema( $subject->getSchemaReference() );
+		$statements = new StatementList( array_values( array_filter( $subject->getStatements()->asArray(),
+			static fn ( Statement $statement ): bool => $schema === null || !$schema->hasProperty( $statement->getPropertyName() )
+				|| !$schema->getProperty( $statement->getPropertyName() )->isSchemaExecution() ) ) );
+		$properties = $this->statementsToNodeProperties( $statements );
 
 		// Assigned rather than array_merge()d: a property named like a decimal integer is an int
 		// key by then, and array_merge() renumbers those, which would file its value under a
@@ -166,9 +170,15 @@ class Neo4jSubjectUpdater {
 	 */
 	public function statementsToNodeProperties( StatementList $statements ): array {
 		$nodeProps = [];
+		$urlEntries = [];
 
 		foreach ( $statements->asArray() as $statement ) {
 			$propertyTypeName = $statement->getPropertyType();
+			$value = $statement->getValue();
+			if ( $value instanceof \ProfessionalWiki\NeoWiki\Domain\Value\UrlValue
+				&& array_filter( $value->parts, static fn ( array $entry ): bool => count( $entry ) > 1 ) !== [] ) {
+				$urlEntries[$statement->getPropertyName()->text] = $value->parts;
+			}
 
 			if ( !$this->valueBuilderRegistry->hasBuilder( $propertyTypeName ) ) {
 				continue;
@@ -182,6 +192,11 @@ class Neo4jSubjectUpdater {
 			}
 		}
 
+		// '#' is forbidden in authored property names; this technical key cannot collide
+		// with a newly defined schema field. Direct URL properties stay unchanged.
+		if ( $urlEntries !== [] ) {
+			$nodeProps['#neowiki:urlEntries'] = json_encode( $urlEntries, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR );
+		}
 		return $nodeProps;
 	}
 

@@ -38,7 +38,7 @@
 							:class="{ 'ext-neowiki-dependent-subject-table__header--number': column.type === NumberType.typeName }"
 							scope="col"
 						>
-							{{ column.name.toString() }}
+							<PropertyLabel :property="column" />
 						</th>
 					</tr>
 				</thead>
@@ -56,6 +56,7 @@
 </template>
 
 <script setup lang="ts">
+import PropertyLabel from '@/components/common/PropertyLabel.vue';
 import { computed, onMounted, ref, watch } from 'vue';
 import { useGeneratedId, useResizeObserver } from '@wikimedia/codex';
 import type { Schema } from '@/domain/Schema';

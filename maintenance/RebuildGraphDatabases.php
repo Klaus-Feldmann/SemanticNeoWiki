@@ -56,7 +56,7 @@ class RebuildGraphDatabases extends Maintenance implements RebuildBatchObserver 
 	public function __construct() {
 		parent::__construct();
 
-		$this->requireExtension( 'NeoWiki' );
+		$this->requireExtension( 'SemanticNeoWiki' );
 		$this->addDescription(
 			'Rebuilds the graph databases by re-projecting every page on the wiki from its latest revision. ' .
 			'Useful after a graph database has been wiped or has otherwise drifted from the MediaWiki source of truth.'

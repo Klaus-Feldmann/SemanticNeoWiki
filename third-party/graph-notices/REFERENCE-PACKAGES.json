@@ -1,0 +1,92 @@
+[
+  {
+    "name": "d3-color",
+    "referenceVersion": "3.1.0",
+    "license": "ISC",
+    "referenceTarball": "https://registry.npmjs.org/d3-color/-/d3-color-3.1.0.tgz",
+    "notices": [
+      "third-party/graph-notices/d3-color/LICENSE"
+    ],
+    "sha256": "d41bbcd99dd4f00e696546bffc73fed9b8fb6c3354905b6ea1721bff25f33b42"
+  },
+  {
+    "name": "file-saverjs",
+    "referenceVersion": "1.3.6",
+    "license": "MIT",
+    "referenceTarball": "https://registry.npmjs.org/file-saverjs/-/file-saverjs-1.3.6.tgz",
+    "notices": [
+      "third-party/graph-notices/file-saverjs/LICENSE.md"
+    ],
+    "sha256": "64c4c254fbe618bb12902e02de0a397c712e147ffb57d109f50925ab13587dae"
+  },
+  {
+    "name": "lodash",
+    "referenceVersion": "4.18.1",
+    "license": "MIT",
+    "referenceTarball": "https://registry.npmjs.org/lodash/-/lodash-4.18.1.tgz",
+    "notices": [
+      "third-party/graph-notices/lodash/LICENSE"
+    ],
+    "sha256": "696942c2a488c9d7428e9ca5f12ccf03b52de01dcdbfe4d4751d392f0491ae16"
+  },
+  {
+    "name": "n3",
+    "referenceVersion": "2.1.1",
+    "license": "MIT",
+    "referenceTarball": "https://registry.npmjs.org/n3/-/n3-2.1.1.tgz",
+    "notices": [
+      "third-party/graph-notices/n3/LICENSE.md"
+    ],
+    "sha256": "7159dd3f0114d20ca445917fdc99570db2dffe9705d47eb02563bba980bfe469"
+  },
+  {
+    "name": "react",
+    "referenceVersion": "19.2.7",
+    "license": "MIT",
+    "referenceTarball": "https://registry.npmjs.org/react/-/react-19.2.7.tgz",
+    "notices": [
+      "third-party/graph-notices/react/LICENSE"
+    ],
+    "sha256": "d0065884db7670ffb89046826995cf0d7754a31653d23908532e52671bf83d7d"
+  },
+  {
+    "name": "react-dom",
+    "referenceVersion": "19.2.7",
+    "license": "MIT",
+    "referenceTarball": "https://registry.npmjs.org/react-dom/-/react-dom-19.2.7.tgz",
+    "notices": [
+      "third-party/graph-notices/react-dom/LICENSE"
+    ],
+    "sha256": "e47bae602149b38b90b452c89e53d2d60639fee09361d90374983a6aac62739e"
+  },
+  {
+    "name": "scheduler",
+    "referenceVersion": "0.27.0",
+    "license": "MIT",
+    "referenceTarball": "https://registry.npmjs.org/scheduler/-/scheduler-0.27.0.tgz",
+    "notices": [
+      "third-party/graph-notices/scheduler/LICENSE"
+    ],
+    "sha256": "ab26ce35ce4032f04b78cfc5bbb4cfe13358e9fe7a5433a8aa6315c3debc5095"
+  },
+  {
+    "name": "vite-plugin-node-polyfills",
+    "referenceVersion": "0.28.0",
+    "license": "MIT",
+    "referenceTarball": "https://registry.npmjs.org/vite-plugin-node-polyfills/-/vite-plugin-node-polyfills-0.28.0.tgz",
+    "notices": [
+      "third-party/graph-notices/vite-plugin-node-polyfills/LICENSE"
+    ],
+    "sha256": "c38064a458496d3a7893831629a54a5126536bbaa1e1dd06f13aeba43816d18c"
+  },
+  {
+    "name": "webcola",
+    "referenceVersion": "3.4.0",
+    "license": "MIT",
+    "referenceTarball": "https://registry.npmjs.org/webcola/-/webcola-3.4.0.tgz",
+    "notices": [
+      "third-party/graph-notices/webcola/LICENSE"
+    ],
+    "sha256": "94ea191c50624c05d7f9be7231a43c06021a54991c82dd7ed0ff907918f899cd"
+  }
+]

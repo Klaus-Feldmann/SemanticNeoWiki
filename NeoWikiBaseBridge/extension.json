@@ -1,0 +1,51 @@
+{
+	"name": "NeoWikiBaseBridge",
+	"version": "0.18.0-test+2026-11-03",
+	"author": "AufEinWort",
+	"type": "other",
+	"manifest_version": 2,
+	"requires": {
+		"MediaWiki": ">= 1.47.0-wmf.24",
+		"extensions": {
+			"SemanticNeoWiki": "*"
+		}
+	},
+	"AutoloadNamespaces": {
+		"NeoWikiBaseBridge\\": "src/"
+	},
+	"Hooks": {
+		"NeoWikiRegistration": "NeoWikiBaseBridge\\Hooks::onNeoWikiRegistration",
+		"ScribuntoExternalLibraries": "NeoWikiBaseBridge\\Hooks::onScribuntoExternalLibraries",
+		"BeforePageDisplay": "NeoWikiBaseBridge\\Hooks::onBeforePageDisplay"
+	},
+	"APIModules": {
+		"neowikibaseidentity": "NeoWikiBaseBridge\\ApiIdentity",
+		"neowikibaseproperties": "NeoWikiBaseBridge\\ApiProperties",
+		"neowikibasevalues": "NeoWikiBaseBridge\\ApiExternalValues",
+		"neowikibasedataview": "NeoWikiBaseBridge\\ApiDataView"
+	},
+	"MessagesDirs": {
+		"NeoWikiBaseBridge": [
+			"i18n"
+		]
+	},
+	"config": {
+		"NeoWikiBaseBridgeLocalSiteId": {
+			"value": null,
+			"description": "Optional explicit site ID of this wiki in the local Wikibase repository."
+		}
+	},
+	"descriptionmsg": "neowikibasebridge-desc",
+	"RestRoutes": [
+		{
+			"path": "/neowikibase/v1/page/{pageId}/export",
+			"method": "GET",
+			"class": "NeoWikiBaseBridge\\ExportPageDataViewApi"
+		},
+		{
+			"path": "/neowikibase/v1/subject/{subjectId}/export",
+			"method": "GET",
+			"class": "NeoWikiBaseBridge\\ExportSubjectDataViewApi"
+		}
+	]
+}

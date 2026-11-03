@@ -1,0 +1,25 @@
+{
+  "repository": "https://github.com/zazuko/graph-explorer",
+  "referenceCommit": "a748252d29b40e9f4fd41f18a88c0485d236e991",
+  "referencePackageVersion": "2.1.0",
+  "embeddedApplicationSources": 94,
+  "identicalApplicationSourcesAtReference": 78,
+  "differentApplicationSourcesAtReference": [
+    "images/icons/class.svg",
+    "images/icons/objectProperty.svg",
+    "images/icons/datatypeProperty.svg",
+    "images/icons/person.svg",
+    "images/icons/country.svg",
+    "images/icons/organization.svg",
+    "images/icons/location.svg",
+    "images/icons/event.svg",
+    "images/icons/object.svg",
+    "images/direction-in.png",
+    "images/direction-out.png",
+    "images/tree/expand-toggle.svg",
+    "images/tree/collapse-toggle.svg",
+    "images/tree/leaf-default.svg",
+    "images/tree/leaf-folder.svg"
+  ],
+  "note": "Exact original application sources extracted from the captured bundle source maps are in original-sources/. Reference checkout is for attribution; the existing downstream build transforms captured bundles rather than rebuilding this upstream checkout."
+}

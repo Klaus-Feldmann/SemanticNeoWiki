@@ -70,6 +70,33 @@ class RdfPageProjectorTest extends TestCase {
 		);
 	}
 
+	public function testExecutableWikitextDoesNotExportDormantSubjectValues(): void {
+		$property = \ProfessionalWiki\NeoWiki\Domain\Schema\Property\WikitextProperty::fromPartialJson(
+			new \ProfessionalWiki\NeoWiki\Domain\Schema\PropertyCore( '', false, null ), [ 'execute' => true, 'wikitext' => '{{NeoWiki}}' ] );
+		$schema = TestSchema::build( name: 'Company', properties: new PropertyDefinitions( [ 'Auswertung' => $property ] ) );
+		$subject = TestSubject::build( id: self::ACME_ID, schemaName: new SchemaName( 'Company' ), statements: new StatementList( [
+			TestStatement::build( 'Auswertung', new StringValue( '{{NichtAusfuehren}}' ), 'wikitext' ),
+		] ) );
+		$output = $this->serialize( $this->newProjector( new InMemorySchemaLookup( $schema ) )->projectPage( TestPage::build( id: 42, mainSubject: $subject ) ) );
+		$this->assertStringNotContainsString( 'NichtAusfuehren', $output );
+		$this->assertStringNotContainsString( '{{NeoWiki}}', $output );
+	}
+
+	public function testStructuredUrlsKeepDirectLinksAndEntryMetadataTogether(): void {
+		$entry = [ 'url' => 'https://example.org/?a=1&b=2', 'label' => 'Article', 'caption' => 'Website', 'captionPage' => 'Vermerk:Quelle' ];
+		$subject = TestSubject::build( id: self::ACME_ID, schemaName: new SchemaName( 'Company' ), statements: new StatementList( [
+			TestStatement::build( 'Website', new \ProfessionalWiki\NeoWiki\Domain\Value\UrlValue( [ $entry ] ), 'url' ),
+		] ) );
+		$quads = $this->newProjector( new InMemorySchemaLookup( $this->companySchema() ) )->projectPage( TestPage::build( id: 42, mainSubject: $subject ) );
+		$iri = $this->ns->subject( new SubjectId( self::ACME_ID ) );
+		$this->assertTrue( $quads->contains( $this->quad( $iri, $this->ns->property( 'Website' ), new Iri( $entry['url'] ) ) ) );
+		$node = new Iri( $iri->value . '/url/Website/0' );
+		$this->assertTrue( $quads->contains( $this->quad( $iri, new Iri( 'urn:neowiki:aewi:urlEntry' ), $node ) ) );
+		foreach ( [ 'label', 'caption', 'captionPage' ] as $key ) {
+			$this->assertTrue( $quads->contains( $this->quad( $node, new Iri( 'urn:neowiki:aewi:url:' . $key ), RdfLiteralFactory::typed( $entry[$key], 'string' ) ) ) );
+		}
+	}
+
 	public function testProjectsTheCompleteExampleToTheSpecifiedQuadSet(): void {
 		$schemaLookup = new InMemorySchemaLookup(
 			TestSchema::build(
@@ -89,6 +116,64 @@ class RdfPageProjectorTest extends TestCase {
 			ParsedRdf::canonicalQuads( $output )
 		);
 		$this->logger->assertNoLoggingCallsWhereMade();
+	}
+
+
+	public function testSelectLabelsFollowSchemaWithoutChangingStoredIds(): void {
+		$property = TestProperty::buildSelect( options: [
+			new \ProfessionalWiki\NeoWiki\Domain\Schema\Property\SelectOption( 'o3mCfVwqD2CoPZ2', 'Abschrift' ),
+			new \ProfessionalWiki\NeoWiki\Domain\Schema\Property\SelectOption( 'oYcntVhGv5wRnWL', 'Abhandlung' ),
+		], multiple: true );
+		$value = new StringValue( 'o3mCfVwqD2CoPZ2', 'oYcntVhGv5wRnWL', 'deleted-option' );
+		$subject = TestSubject::build(
+			id: self::ACME_ID,
+			schemaName: new SchemaName( 'Werk' ),
+			statements: new StatementList( [
+				TestStatement::build( 'New field name', $value, 'select' ),
+				TestStatement::build( 'Text', new StringValue( 'Sammlung' ), 'text' ),
+				TestStatement::build( 'Missing definition', new StringValue( 'old-id' ), 'select' ),
+			] )
+		);
+		$page = TestPage::build( id: 42, mainSubject: $subject );
+		foreach ( [ 'Abschrift', 'Neue Bezeichnung' ] as $label ) {
+			$current = $label === 'Abschrift' ? $property : TestProperty::buildSelect( options: [
+				new \ProfessionalWiki\NeoWiki\Domain\Schema\Property\SelectOption( 'o3mCfVwqD2CoPZ2', $label ),
+				new \ProfessionalWiki\NeoWiki\Domain\Schema\Property\SelectOption( 'oYcntVhGv5wRnWL', 'Abhandlung' ),
+			], multiple: true );
+			$lookup = new InMemorySchemaLookup( TestSchema::build(
+				name: 'Werk', properties: new PropertyDefinitions( [ 'New field name' => $current ] )
+			) );
+			$projector = $this->newProjector( $lookup );
+			foreach ( [ $projector->projectPage( $page ), $projector->projectSubject( $page, $subject->id ) ] as $quads ) {
+				$output = $this->serialize( $quads );
+				$this->assertStringContainsString( $label, $output );
+				$this->assertStringContainsString( 'Abhandlung', $output );
+				$this->assertStringContainsString( 'deleted-option', $output );
+				$this->assertStringContainsString( 'Sammlung', $output );
+				$this->assertStringContainsString( 'old-id', $output );
+				$this->assertStringNotContainsString( 'o3mCfVwqD2CoPZ2', $output );
+			}
+		}
+		$this->assertSame( [ 'o3mCfVwqD2CoPZ2', 'oYcntVhGv5wRnWL', 'deleted-option' ], $value->toScalars() );
+	}
+
+	public function testIdenticalFieldAndOptionIdsUseTheirOwnSchema(): void {
+		foreach ( [ 'Werk' => 'Abschrift', 'Other' => 'Andere Bedeutung' ] as $name => $label ) {
+			$lookup = new InMemorySchemaLookup( TestSchema::build(
+				name: $name, properties: new PropertyDefinitions( [ 'Kind' => TestProperty::buildSelect( options: [
+					new \ProfessionalWiki\NeoWiki\Domain\Schema\Property\SelectOption( 'same-id', $label ),
+				] ) ] )
+			) );
+			foreach ( [ new StringValue( 'same-id' ), new StringValue() ] as $value ) {
+				$subject = TestSubject::build( id: self::ACME_ID, schemaName: new SchemaName( $name ),
+					statements: new StatementList( [ TestStatement::build( 'Kind', $value, 'select' ) ] ) );
+				$output = $this->serialize( $this->newProjector( $lookup )->projectPage( TestPage::build( id: 42, mainSubject: $subject ) ) );
+				if ( !$value->isEmpty() ) {
+					$this->assertStringContainsString( $label, $output );
+				}
+				$this->assertStringNotContainsString( 'same-id', $output );
+			}
+		}
 	}
 
 	private function completeExamplePage(): Page {

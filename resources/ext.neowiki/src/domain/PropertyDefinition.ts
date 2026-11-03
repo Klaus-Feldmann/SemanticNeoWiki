@@ -31,6 +31,8 @@ export class PropertyName {
 
 }
 
+export interface ExternalProperty { readonly source: 'wikidata' | 'wikibase-local'; readonly id: string }
+
 export interface PropertyDefinition {
 
 	readonly name: PropertyName;
@@ -38,6 +40,8 @@ export interface PropertyDefinition {
 	readonly description: string;
 	readonly required: boolean;
 	readonly default?: Value;
+	readonly externalProperty?: ExternalProperty;
+	readonly wikiLink?: { values?: boolean; namespace?: string; label?: boolean; labelTarget?: string; externalTarget?: 'source' | 'local'; dateBceDe?: string; dateBceEn?: string };
 
 	/**
 	 * Severity per Constraint name for Constraints written in the object form
@@ -147,6 +151,8 @@ export class PropertyDefinitionDeserializer {
 			type: json.type as string,
 			description: values.description as string ?? '',
 			required: values.required as boolean ?? false,
+			...( values.externalProperty !== undefined ? { externalProperty: values.externalProperty as ExternalProperty } : {} ),
+			...( values.wikiLink !== undefined ? { wikiLink: values.wikiLink as PropertyDefinition['wikiLink'] } : {} ),
 			default: values.default !== undefined && values.default !== null ?
 				this.valueDeserializer.deserialize( values.default, json.type ) :
 				undefined,

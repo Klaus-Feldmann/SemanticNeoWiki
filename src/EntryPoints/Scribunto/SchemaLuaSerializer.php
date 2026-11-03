@@ -36,6 +36,8 @@ class SchemaLuaSerializer {
 			'name' => $name,
 			'type' => $property->getPropertyType(),
 			'required' => $property->isRequired(),
+			...( $property->getWikiLink() === null ? [] : [ 'wikiLink' => $property->getWikiLink() ] ),
+			...( $property->getExternalProperty() === null ? [] : [ 'externalProperty' => $property->getExternalProperty()->toJson() ] ),
 		];
 
 		$description = $property->getDescription();

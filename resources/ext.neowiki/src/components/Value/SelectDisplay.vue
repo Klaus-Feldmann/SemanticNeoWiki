@@ -1,25 +1,28 @@
 <template>
 	<div>
-		{{ displayText }}
+		<!-- Vue 3 supports keyed fragments; avoid wrapper-induced whitespace. -->
+		<!-- eslint-disable-next-line vue/no-v-for-template-key -->
+		<template v-for="( text, index ) in values" :key="index">
+			<template v-if="index > 0">
+				{{ separator }}
+			</template>
+			<WikiPageLink
+				v-if="text !== undefined"
+				:title="text"
+				:namespace="property.wikiLink?.namespace"
+				:enabled="property.wikiLink?.values !== false" />
+			<span v-else>{{ $i18n( 'neowiki-select-unknown-option' ).text() }}</span>
+		</template>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { ValueType } from '@/domain/Value.ts';
+import { ValueType } from '@/domain/Value';
 import { computed } from 'vue';
-import { resolveSelectLabel, SelectProperty } from '@/domain/propertyTypes/Select.ts';
-import { ValueDisplayProps } from '@/components/Value/ValueDisplayContract.ts';
-
+import type { ValueDisplayProps } from './ValueDisplayContract';
+import { resolveSelectLabel, type SelectProperty } from '@/domain/propertyTypes/Select';
+import WikiPageLink from '@/components/common/WikiPageLink.vue';
+const separator = ', ';
 const props = defineProps<ValueDisplayProps<SelectProperty>>();
-
-const displayText = computed( () => {
-	if ( props.value.type !== ValueType.String ) {
-		return '';
-	}
-
-	return props.value.parts
-		.filter( ( part ) => part.trim() !== '' )
-		.map( ( id ) => resolveSelectLabel( props.property, id ) ?? mw.message( 'neowiki-select-unknown-option' ).text() )
-		.join( ', ' );
-} );
+const values = computed( () => props.value.type === ValueType.String ? props.value.parts.filter( ( part ) => part.trim() !== '' ).map( ( id ) => resolveSelectLabel( props.property, id ) ) : [] );
 </script>

@@ -1,0 +1,21 @@
+--- a/src/Maintenance/PropertyStatisticsRebuilder.php
++++ b/src/Maintenance/PropertyStatisticsRebuilder.php
+@@ -168,9 +168,16 @@
+ 			$condition = [ 'p_id' => $pid ];
+ 		}
+ 
+-		$tableFields = $this->store->getDataItemHandlerForDIType( $propertyTable->getDiType() )->getTableFields();
++		// $tableFields = $this->store->getDataItemHandlerForDIType( $propertyTable->getDiType() )->getTableFields();
+ 		$tableName = $propertyTable->getName();
+-
++		// Data item handlers belong to the SQL base store.
++		$sqlStore = $this->store instanceof \SMW\SPARQLStore\SPARQLStore
++			? $this->store->baseStore
++			: $this->store;
++
++		$tableFields = $sqlStore
++			->getDataItemHandlerForDIType( $propertyTable->getDiType() )
++			->getTableFields();
+ 		$usageCount = 0;
+ 		$nullCount = 0;
+ 

@@ -19,7 +19,7 @@ class CorePagePropertyProviderTest extends TestCase {
 		$properties = $this->getPropertiesForContext();
 
 		$this->assertSame(
-			[ 'name', 'namespaceId', 'dbKey', 'creationTime', 'lastUpdated', 'categories', 'lastEditor' ],
+			[ 'name', 'namespaceId', 'creationTime', 'lastUpdated', 'categories', 'lastEditor' ],
 			array_keys( $properties )
 		);
 	}
@@ -34,12 +34,6 @@ class CorePagePropertyProviderTest extends TestCase {
 		$properties = $this->getPropertiesForContext( namespaceId: 12 );
 
 		$this->assertSame( 12, $properties['namespaceId'] );
-	}
-
-	public function testDbKeyMatchesContext(): void {
-		$properties = $this->getPropertiesForContext( pageDbKey: 'Test_Page' );
-
-		$this->assertSame( 'Test_Page', $properties['dbKey'] );
 	}
 
 	public function testCreationTimeIsPageDateTime(): void {
@@ -74,7 +68,6 @@ class CorePagePropertyProviderTest extends TestCase {
 	private function getPropertiesForContext(
 		string $pageTitle = 'Default Title',
 		int $namespaceId = 0,
-		string $pageDbKey = 'Default_Title',
 		string $creationTime = '20230101000000',
 		string $modificationTime = '20230101000000',
 		array $categories = [],
@@ -85,7 +78,6 @@ class CorePagePropertyProviderTest extends TestCase {
 				pageId: new PageId( 1 ),
 				pageTitle: $pageTitle,
 				namespaceId: $namespaceId,
-				pageDbKey: $pageDbKey,
 				creationTime: $creationTime,
 				modificationTime: $modificationTime,
 				categories: $categories,

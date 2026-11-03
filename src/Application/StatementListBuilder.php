@@ -19,6 +19,7 @@ use ProfessionalWiki\NeoWiki\Domain\Value\NeoValue;
 use ProfessionalWiki\NeoWiki\Domain\Value\NumberValue;
 use ProfessionalWiki\NeoWiki\Domain\Value\RelationValue;
 use ProfessionalWiki\NeoWiki\Domain\Value\StringValue;
+use ProfessionalWiki\NeoWiki\Domain\Value\UrlValue;
 use ProfessionalWiki\NeoWiki\Domain\Value\UnregisteredTypeValue;
 use ProfessionalWiki\NeoWiki\Domain\Value\ValueType;
 use ProfessionalWiki\NeoWiki\Infrastructure\IdGenerator;
@@ -55,7 +56,15 @@ readonly class StatementListBuilder {
 				throw new InvalidArgumentException( "Property type of \"{$propertyName}\" must be a string" );
 			}
 
-			$value = $this->deserializeValue( $propertyName, $propertyType, $entry['value'] ?? null );
+			$input = $entry['value'] ?? null;
+			if ( $propertyType === 'page' && is_array( $input ) && array_is_list( $input ) ) {
+				$input = array_map( static function ( mixed $part ): mixed {
+					if ( !is_string( $part ) || trim( $part ) === '' ) { return $part; }
+					return \ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\LocalPageTitle::normalize( $part )
+						?? throw new InvalidArgumentException( 'Invalid local page title' );
+				}, $input );
+			}
+			$value = $this->deserializeValue( $propertyName, $propertyType, $input );
 
 			if ( $value->isEmpty() ) {
 				continue;
@@ -84,7 +93,7 @@ readonly class StatementListBuilder {
 		// error: it would be stored as an object where every reader expects a list, and the graph
 		// projection cannot hold one. The value types cannot tell it apart from a list, so it is
 		// rejected before they see it.
-		if ( in_array( $valueType, [ ValueType::String, ValueType::Relation, ValueType::MonolingualText ], true )
+		if ( in_array( $valueType, [ ValueType::String, ValueType::Url, ValueType::Relation, ValueType::MonolingualText ], true )
 			&& is_array( $value ) && !array_is_list( $value ) ) {
 			throw new InvalidArgumentException(
 				"Value of \"{$propertyName}\" must be a list, not an object"
@@ -122,6 +131,7 @@ readonly class StatementListBuilder {
 
 	private function newValue( ValueType $valueType, string $propertyType, mixed $value ): NeoValue {
 		return match ( $valueType ) {
+			ValueType::Url => new UrlValue( (array)$value ),
 			ValueType::String => new StringValue( ...(array)$value ),
 			ValueType::Number => new NumberValue( $value ),
 			ValueType::Relation => $this->deserializeRelationValue( $value ),

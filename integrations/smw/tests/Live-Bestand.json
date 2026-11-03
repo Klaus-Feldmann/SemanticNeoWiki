@@ -1,0 +1,430 @@
+{
+  "schemas": {
+    "Person": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Bild",
+          "type": "image",
+          "description": "",
+          "required": false,
+          "externalProperty": {
+            "source": "wikidata",
+            "id": "P18"
+          },
+          "imageSource": "wikidata",
+          "multiple": false,
+          "uniqueItems": false
+        },
+        {
+          "name": "Klassenzuordnung",
+          "type": "text",
+          "description": "Mitglied der benannten Klasse",
+          "required": false,
+          "externalProperty": {
+            "source": "wikidata",
+            "id": "P31"
+          },
+          "wikiLink": {
+            "label": true,
+            "values": true,
+            "externalTarget": "local",
+            "namespace": "Vermerk",
+            "labelTarget": "Vermerk:Klassenzuordnung"
+          },
+          "multiple": false,
+          "uniqueItems": false
+        },
+        {
+          "name": "Geburtsname",
+          "type": "text",
+          "description": "Geburtsname, sofern er von der Subjektbezeichnung abweicht.",
+          "required": false,
+          "multiple": false,
+          "uniqueItems": false
+        },
+        {
+          "name": "Namensvarianten",
+          "type": "text",
+          "description": "Weitere Namen und Schreibweisen der Person.",
+          "required": false,
+          "multiple": true,
+          "uniqueItems": true
+        },
+        {
+          "name": "Geburtsdatum",
+          "type": "historicalDate",
+          "description": "Geburtsjahr, Geburtsmonat oder vollständiges Geburtsdatum; auch vor Christus.",
+          "required": false,
+          "externalProperty": {
+            "source": "wikidata",
+            "id": "P569"
+          },
+          "wikiLink": {
+            "labelTarget": "Vermerk: Geburtsdatum",
+            "label": false
+          }
+        },
+        {
+          "name": "Geburtsort",
+          "type": "text",
+          "description": "Geburtsort als Verweis auf eine Wikiseite.",
+          "required": false,
+          "externalProperty": {
+            "source": "wikidata",
+            "id": "P19"
+          },
+          "wikiLink": {
+            "label": true,
+            "labelTarget": "Vermerk:Geburtsort"
+          },
+          "multiple": false,
+          "uniqueItems": false
+        },
+        {
+          "name": "Sterbedatum",
+          "type": "historicalDate",
+          "description": "Sterbejahr, Sterbemonat oder vollständiges Sterbedatum; auch vor Christus.",
+          "required": false,
+          "externalProperty": {
+            "source": "wikidata",
+            "id": "P570"
+          },
+          "wikiLink": {
+            "labelTarget": "Vermerk:Sterbedatum",
+            "label": false
+          }
+        },
+        {
+          "name": "Sterbeort",
+          "type": "text",
+          "description": "Sterbeort als Verweis auf eine Wikiseite.",
+          "required": false,
+          "externalProperty": {
+            "source": "wikidata",
+            "id": "P20"
+          },
+          "wikiLink": {
+            "label": true,
+            "labelTarget": "Vermerk:Sterbeort"
+          },
+          "multiple": false,
+          "uniqueItems": false
+        },
+        {
+          "name": "Tätigkeit",
+          "type": "text",
+          "description": "Tätigkeiten oder Berufe der Person.",
+          "required": false,
+          "externalProperty": {
+            "source": "wikidata",
+            "id": "P106"
+          },
+          "wikiLink": {
+            "labelTarget": "Vermerk:tätig als",
+            "externalTarget": "local",
+            "namespace": "Vermerk"
+          },
+          "multiple": true,
+          "uniqueItems": true
+        },
+        {
+          "name": "Forschungsnotiz",
+          "type": "text",
+          "description": "Platz für eine ausdrücklich eigene Anmerkung",
+          "required": false,
+          "wikiLink": {
+            "values": false
+          },
+          "multiple": false,
+          "uniqueItems": false
+        },
+        {
+          "name": "Quellenangabe",
+          "type": "url",
+          "description": "Quelle des maßgebenden Inhalt der Seite",
+          "required": false,
+          "multiple": false,
+          "uniqueItems": false
+        }
+      ]
+    },
+    "Werk": {
+      "name": "Werk",
+      "properties": [
+        {
+          "name": "Benennung",
+          "type": "text",
+          "description": "Untertitel, usätzliche oder anders lautende Benennung",
+          "required": false,
+          "multiple": false,
+          "uniqueItems": false
+        },
+        {
+          "name": "Ausgabenummer",
+          "type": "text",
+          "description": "Kennzeichnung oder Nummer der vorliegenden Ausgabe oder Fassung. Entspricht dem bisherigen Vorlagenparameter Nummer; kann auch nichtnumerische Zeichen enthalten.",
+          "required": false,
+          "multiple": false,
+          "uniqueItems": false
+        },
+        {
+          "name": "Werkform",
+          "type": "select",
+          "description": "Form des Werk, Von der Werkart einer Abschrift oder Übersetzung zu unterscheiden.",
+          "required": false,
+          "default": [
+            "oJoziALqoH8hXQm"
+          ],
+          "options": [
+            {
+              "id": "oJoziALqoH8hXQm",
+              "label": "Buch"
+            },
+            {
+              "id": "oYcntVhGv5wRnWL",
+              "label": "Abhandlung"
+            },
+            {
+              "id": "ox7NkYpyXQxhHLM",
+              "label": "Traktat"
+            },
+            {
+              "id": "ox93fENtnPk7LGg",
+              "label": "Anmerkung"
+            },
+            {
+              "id": "o2qVJZEfTkh3RE8",
+              "label": "Notiz"
+            }
+          ],
+          "multiple": false
+        },
+        {
+          "name": "Werkart",
+          "type": "select",
+          "description": "Beziehung zum Urwerk, beispielsweise Abschrift, Übersetzung, Bearbeitung oder Neuausgabe.",
+          "required": true,
+          "options": [
+            {
+              "id": "o8XfKNkREEJut51",
+              "label": "Erstwerk"
+            },
+            {
+              "id": "o3mCfVwqD2CoPZ2",
+              "label": "Abschrift"
+            },
+            {
+              "id": "o9NBzB279Un5Cnd",
+              "label": "Übersetzung"
+            },
+            {
+              "id": "oTfQhLPxPB29Ziv",
+              "label": "Überarbeitung"
+            }
+          ],
+          "multiple": false
+        },
+        {
+          "name": "Sammlung",
+          "type": "relation",
+          "description": "Übergeordnetes Werk oder Sammlung, zu dem die vorliegende Einheit gehört.",
+          "required": false,
+          "targetSchemas": [
+            "Werk"
+          ],
+          "multiple": false
+        },
+        {
+          "name": "Urheber",
+          "type": "text",
+          "description": "Personen oder Körperschaften, die die konkret vorliegende Fassung hergestellt haben. Beispielsweise die Urheberin einer Abschrift oder Übersetzung.",
+          "required": false,
+          "multiple": true,
+          "uniqueItems": true
+        },
+        {
+          "name": "Urwerk",
+          "type": "text",
+          "description": "Ursprünglicher oder eigentlicher Name des Urwerk",
+          "required": false,
+          "multiple": false,
+          "uniqueItems": false
+        },
+        {
+          "name": "Urheberdatum",
+          "wikiLink": {
+            "namespace": "Werk",
+            "labelTarget": "Hilfe"
+          },
+          "type": "historicalDate",
+          "description": "Datum der Herausgabe der konkret vorliegenden Abschrift, Übersetzung, Bearbeitung oder Neuausgabe durch deren Urheber. Kein Datum der eigenen Wiki-Erfassung.",
+          "required": false
+        },
+        {
+          "name": "Ururheber",
+          "type": "text",
+          "description": "Eigentliche Urheber des ursprünglichen Werks, auf dem die vorliegende Fassung beruht. Getrennt von den Herstellern der vorliegenden Fassung. Vorläufig vollständige Wiki-Seitenbezeichnungen.",
+          "required": false,
+          "multiple": true,
+          "uniqueItems": true
+        },
+        {
+          "name": "Ururwerk",
+          "type": "text",
+          "description": "",
+          "required": false,
+          "multiple": false,
+          "uniqueItems": false
+        },
+        {
+          "name": "Urwerkdatum",
+          "type": "date",
+          "description": "Belegte Datierung des ursprünglichen Werks. Von der Herausgabe der vorliegenden Fassung und der eigenen Erfassung im Wiki zu unterscheiden. ",
+          "required": false
+        },
+        {
+          "name": "Erstelldatum",
+          "type": "dateTime",
+          "description": "Datum der eigenen erstmaligen Erfassung und anfänglichen Aufbereitung dieser Fassung in AufEinWort.",
+          "required": false
+        },
+        {
+          "name": "Werkausgabe",
+          "type": "text",
+          "description": "Bezeichnung beziehungsweise vollständiger Wikiseitentitel der vorliegenden Ausgabe oder Ausgaben. Die spätere SMW-Anbindung muss Werkausgabe und hat Werkausgabe ausdrücklich zuordnen.",
+          "required": false,
+          "multiple": true,
+          "uniqueItems": true
+        },
+        {
+          "name": "Sigle",
+          "type": "text",
+          "description": "Kurze Kennzeichnung des Werks oder der konkreten Fassung.",
+          "required": false,
+          "multiple": false,
+          "uniqueItems": false
+        },
+        {
+          "name": "Leserschaft",
+          "type": "text",
+          "description": "Personen, Gruppen oder Benutzerkonten, die das Werk tatsächlich gelesen haben. Vorläufig vollständige Wiki-Seiten- oder Benutzerbezeichnungen; keine Aussage über vorgesehene Leser.",
+          "required": false,
+          "multiple": true,
+          "uniqueItems": true
+        },
+        {
+          "name": "Leserschaftziel",
+          "type": "text",
+          "description": "Personen, Gruppen oder Benutzerkonten, für die das Werk verschriftet wurde. Vorläufig vollständige Wiki-Seiten- oder Benutzerbezeichnungen; bedeutet nicht, dass sie es gelesen haben.",
+          "required": false,
+          "multiple": true,
+          "uniqueItems": true
+        },
+        {
+          "name": "AufEinWort Güte",
+          "type": "text",
+          "description": "Eigener festgehaltener Stand der technischen Aufbereitung beziehungsweise Überarbeitung, beispielsweise überarbeitet. Keine Bewertung wird aus einem fehlenden Eintrag abgeleitet.",
+          "required": false,
+          "multiple": false,
+          "uniqueItems": false
+        },
+        {
+          "name": "AufEinWort Prüfstand",
+          "type": "text",
+          "description": "Eigener Stand, ob das Werk zur Genüge aufbereitet und gegebenenfalls abschließend erforscht wurde. Kein Zugriffsschutz und keine automatische FlaggedRevs-Sichtung. Kein Vorgabewert.",
+          "required": false,
+          "multiple": false,
+          "uniqueItems": false
+        },
+        {
+          "name": "Hinweis",
+          "type": "text",
+          "description": "Ergänzende Hinweise zur beschriebenen Fassung oder Erfassung. Keine automatische Einstufung eines Forschungsbefunds.",
+          "required": false,
+          "multiple": false,
+          "uniqueItems": false
+        },
+        {
+          "name": "Dateiname",
+          "type": "text",
+          "description": "Zugehörige Datei beziehungsweise vollständiger Wikiseitentitel einer Datei. Dateiverweise werden später durch die Vorlage dargestellt.",
+          "required": false,
+          "multiple": true,
+          "uniqueItems": true
+        }
+      ]
+    }
+  },
+  "pages": {
+    "Platon": {
+      "id": "sF1JibFnpJXD3y8",
+      "schema": "Person",
+      "own": {
+        "Bild": [
+          "commons:Platon.jpg"
+        ],
+        "Geburtsdatum": [
+          "-0427"
+        ],
+        "Sterbedatum": [
+          "-0347"
+        ],
+        "Quellenangabe": [
+          "https://de.wikipedia.org/wiki/Platon"
+        ]
+      }
+    },
+    "Johann Wolfgang von Goethe": {
+      "id": "sF1FCQPNcwQdw4B",
+      "schema": "Person",
+      "own": {
+        "Bild": [
+          "local:Goethe (Stieler 1828).jpg"
+        ],
+        "Geburtsname": [
+          "Johann Wolfgang Goethe"
+        ],
+        "Sterbeort": [
+          "Weimar"
+        ]
+      }
+    },
+    "Werk:De mathematica perfectione": {
+      "id": "sF1Bf9yXAGnAwj1",
+      "schema": "Werk",
+      "own": {
+        "Werkform": [
+          "oYcntVhGv5wRnWL"
+        ],
+        "Werkart": [
+          "o3mCfVwqD2CoPZ2"
+        ],
+        "Urheber": [
+          "Federica de Felice"
+        ],
+        "Urwerk": [
+          "De mathematica perfectione"
+        ],
+        "Urheberdatum": [
+          "1458-10-01"
+        ],
+        "Ururheber": [
+          "Nikolaus von Kues"
+        ],
+        "Ururwerk": [
+          "De mathematica perfectione"
+        ],
+        "Urwerkdatum": [
+          "1458-10-01"
+        ],
+        "Erstelldatum": [
+          "2026-02-12T08:49:00.000Z"
+        ],
+        "Werkausgabe": [
+          "Sammlung"
+        ]
+      }
+    }
+  }
+}

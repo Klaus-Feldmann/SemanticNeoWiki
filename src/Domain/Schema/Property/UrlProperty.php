@@ -46,7 +46,16 @@ class UrlProperty extends PropertyDefinition {
 	}
 
 	public function toJsonSchema(): array {
-		return $this->listValueSchema( [ 'type' => 'string', 'pattern' => UrlType::URL_PATTERN ] )
+		return $this->listValueSchema( [ 'oneOf' => [
+			[ 'type' => 'string', 'pattern' => UrlType::URL_PATTERN ],
+			[ 'type' => 'object', 'required' => [ 'url' ], 'additionalProperties' => false,
+				'properties' => [
+					'url' => [ 'type' => 'string', 'pattern' => UrlType::URL_PATTERN ],
+					'label' => [ 'type' => 'string' ], 'caption' => [ 'type' => 'string' ],
+					'captionPage' => [ 'type' => 'string' ],
+				],
+			],
+		] ] )
 			+ ( $this->enforcesUniqueValues() ? [ 'uniqueItems' => true ] : [] );
 	}
 

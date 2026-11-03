@@ -1,0 +1,24 @@
+<includeonly>{{#invoke:NeoWiki|annotieren}}</includeonly><noinclude>
+Übernimmt die unterstützten belegten Schemafelder des NeoWiki-Hauptsubjekts als SMW-Annotationen.
+
+Aufruf: <code><nowiki>{{NeoWiki}}</nowiki></code>
+
+Eigene Angaben haben Vorrang vor abgerufenen Quellenwerten. Mehrere eigene Werte bleiben
+mehrwertig; gleiche Werte je SMW-Eigenschaft werden zusammengefasst. Schemafeldnamen sind
+die Eigenschaftsnamen; Ausnahmen stehen in [[Modul:NeoWiki/config]].
+
+Unterstützt: Text, lokale Seiten, Auswahlbezeichnungen, URL, Zahl, Wahrheitswert sowie die Datumstypen
+historicalDate, date und dateTime. Bilder sind ausgenommen. Belegte Beziehungen,
+mehrsprachige oder unbekannte strukturierte Typen werden vor der Annotation gemeldet.
+Bei mehrdeutigen historischen Quellenzeiten ist eine eigene Datierung erforderlich.
+
+Quellen: [[Modul:NeoWiki/API]]. Benötigt die mit dieser Fassung gelieferte NeoWikiBaseBridge mit Lua-Leseschnittstelle.
+Die SMW-Eigenschaftsseiten bestimmen weiterhin den gespeicherten Datentyp.
+
+Strukturierte URL-Werte setzen zusätzlich Unterobjekte mit zusammengehöriger Adresse,
+Anzeigename, Bezeichnung und lokalem Linkziel. Deren Eigenschaftsnamen stehen in
+Modul:NeoWiki/config unter urlEntries. Eine gesetzte URL-Bezeichnung bestimmt den SMW-Eigenschaftsnamen. Ohne Bezeichnung bleibt es beim Schemafeldnamen beziehungsweise dessen lokaler Zuordnung.
+Vorlage:NeoWiki/URL-Zeile kann die vier Angaben gemeinsam ausgeben.
+
+Alternativ kann der Aufruf zentral im lokalen NeoWiki-Schema hinterlegt werden: Typ Wikitext, „Im Seitenkontext ausführen – zentral im Schema“, Inhalt <code><nowiki>{{NeoWiki}}</nowiki></code>. Dann entfällt der manuelle Aufruf auf den zugehörigen Inhaltsseiten. Gewöhnliche Wikitext-Feldwerte werden nicht nach SMW importiert.
+</noinclude>

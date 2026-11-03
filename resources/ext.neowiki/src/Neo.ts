@@ -1,9 +1,13 @@
+import { WikitextType } from '@/domain/propertyTypes/Wikitext';
+import { PageType } from '@/domain/propertyTypes/Page';
 import { TextType } from '@/domain/propertyTypes/Text';
 import { NumberType } from '@/domain/propertyTypes/Number';
 import { SelectType } from '@/domain/propertyTypes/Select';
 import { RelationType } from '@/domain/propertyTypes/Relation';
+import { ImageType } from '@/domain/propertyTypes/Image';
 import { UrlType } from '@/domain/propertyTypes/Url';
 import { DateTimeType } from '@/domain/propertyTypes/DateTime';
+import { HistoricalDateType } from '@/domain/propertyTypes/HistoricalDateType';
 import { DateType } from '@/domain/propertyTypes/Date';
 import { BooleanType } from '@/domain/propertyTypes/Boolean';
 import { MonolingualTextType } from '@/domain/propertyTypes/MonolingualText';
@@ -33,13 +37,17 @@ export class Neo {
 		const registry = new PropertyTypeRegistry();
 
 		registry.registerType( new TextType() );
+		registry.registerType( new PageType() );
+		registry.registerType( new WikitextType() );
 		registry.registerType( new NumberType() );
 		registry.registerType( new SelectType() );
 		registry.registerType( new BooleanType() );
 		registry.registerType( new RelationType() );
 		registry.registerType( new UrlType() );
+		registry.registerType( new ImageType() );
 		registry.registerType( new DateTimeType() );
 		registry.registerType( new DateType() );
+		registry.registerType( new HistoricalDateType() );
 		registry.registerType( new MonolingualTextType() );
 
 		return registry;

@@ -1,3 +1,4 @@
+import { isSchemaExecution } from './propertyTypes/Wikitext';
 import type { PropertyDefinition, PropertyName } from '@/domain/PropertyDefinition';
 import type { Schema } from '@/domain/Schema';
 import type { Subject } from '@/domain/Subject';
@@ -42,6 +43,7 @@ export function resolveAllNonEmptyProperties( schema: Schema, subject: Subject )
 	const nonEmptyNames = new Set( subject.getNamesOfNonEmptyProperties().map( ( n ) => n.toString() ) );
 
 	for ( const propertyDefinition of schema.getPropertyDefinitions() ) {
+		if ( isSchemaExecution( propertyDefinition ) ) { continue; }
 		if ( !nonEmptyNames.has( propertyDefinition.name.toString() ) ) {
 			continue;
 		}
@@ -75,7 +77,7 @@ function resolveByDisplayRules(
 
 	for ( const rule of displayRules ) {
 		const propertyDefinition = getPropertyDefinition( schema, rule.property );
-		if ( propertyDefinition === undefined ) {
+		if ( propertyDefinition === undefined || isSchemaExecution( propertyDefinition ) ) {
 			continue;
 		}
 

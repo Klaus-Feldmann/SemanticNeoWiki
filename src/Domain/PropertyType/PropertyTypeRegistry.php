@@ -8,12 +8,16 @@ use ProfessionalWiki\NeoWiki\Domain\Schema\SchemaReferenceParser;
 use ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\BooleanType;
 use ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\DateTimeType;
 use ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\DateType;
+use ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\HistoricalDateType;
 use ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\MonolingualTextType;
 use ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\NumberType;
 use ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\RelationType;
 use ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\SelectType;
 use ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\TextType;
+use ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\PageType;
+use ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\WikitextType;
 use ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\UrlType;
+use ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\ImageType;
 
 class PropertyTypeRegistry implements PropertyTypeLookup {
 
@@ -29,13 +33,17 @@ class PropertyTypeRegistry implements PropertyTypeLookup {
 	public static function withCoreTypes( SchemaReferenceParser $schemaReferenceParser ): self {
 		$registry = new self();
 		$registry->registerType( new TextType() );
+		$registry->registerType( new PageType() );
+		$registry->registerType( new WikitextType() );
 		$registry->registerType( new UrlType() );
+		$registry->registerType( new ImageType() );
 		$registry->registerType( new NumberType() );
 		$registry->registerType( new SelectType() );
 		$registry->registerType( new BooleanType() );
 		$registry->registerType( new RelationType( $schemaReferenceParser ) );
 		$registry->registerType( new DateTimeType() );
 		$registry->registerType( new DateType() );
+		$registry->registerType( new HistoricalDateType() );
 		$registry->registerType( new MonolingualTextType() );
 		return $registry;
 	}

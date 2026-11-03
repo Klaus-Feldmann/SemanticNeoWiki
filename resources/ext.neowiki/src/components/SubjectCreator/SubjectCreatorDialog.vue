@@ -1024,11 +1024,6 @@ function handleSaved(): void {
 	setPendingNotification( 'neowiki-subject-creator-success' );
 
 	if ( writtenRoot.pageTitle === null ) {
-		// Assigning a URL that differs only in its fragment would not reload.
-		if ( mw.config.get( 'wgAction' ) === 'subjects' ) {
-			history.replaceState( null, '', '#' + writtenRoot.subjectId.text );
-		}
-
 		window.location.reload();
 		return;
 	}
@@ -1092,14 +1087,8 @@ defineExpose( { hasChanged } );
 
 <style lang="less">
 @import ( reference ) '@wikimedia/codex-design-tokens/theme-wikimedia-ui.less';
-@import ( reference ) '@/assets/mixins.less';
 
 .ext-neowiki-subject-creator {
-	/* The Schema step, which the Subject editor takes over from. */
-	&-dialog.cdx-dialog {
-		.ext-neowiki-subject-dialog-header();
-	}
-
 	/* Sibling of the edit-summary section below it, and built to read as one. */
 	&-page-section.cdx-accordion {
 		border-bottom: 0;

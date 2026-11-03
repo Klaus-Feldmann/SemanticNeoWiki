@@ -13,8 +13,6 @@ import { PropertyTypeAdapter } from '@/presentation/PropertyTypeAdapter';
  */
 export class FrontendRegistrar {
 
-	private uiStarted = false;
-
 	public constructor(
 		private readonly componentRegistry: TypeSpecificComponentRegistry,
 		private readonly propertyTypeRegistry: PropertyTypeRegistry,
@@ -23,13 +21,6 @@ export class FrontendRegistrar {
 	}
 
 	public registerPropertyType( registration: PropertyTypeRegistration ): void {
-		if ( this.uiStarted ) {
-			mw.log.warn(
-				`NeoWiki: Property Type "${ registration.typeName }" was registered after the UI started, so values ` +
-				'already read stay unregistered. Name its module in the NeoWikiGetFrontendModules hook.',
-			);
-		}
-
 		this.propertyTypeRegistry.registerType( new PropertyTypeAdapter( registration ) );
 		this.componentRegistry.registerType( registration.typeName, {
 			valueDisplayComponent: registration.displayComponent,
@@ -42,10 +33,6 @@ export class FrontendRegistrar {
 
 	public registerViewType( registration: ViewTypeRegistration ): void {
 		this.viewTypeRegistry.registerType( registration.typeName, registration.component );
-	}
-
-	public markUiStarted(): void {
-		this.uiStarted = true;
 	}
 
 }

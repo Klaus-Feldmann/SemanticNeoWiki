@@ -1,0 +1,43 @@
+{
+  "generator": "MediaWiki 1.47.0-wmf.24",
+  "phpversion": "8.3.36",
+  "extensions": [
+    {
+      "name": "UnlinkedWikibase",
+      "version": "3.0.0"
+    },
+    {
+      "name": "NeoWiki",
+      "version": "0.1.8-aewi+2026-11-03"
+    },
+    {
+      "name": "NeoWikiBaseBridge",
+      "version": "0.17.0+2026-11-03"
+    },
+    {
+      "name": "Data Transfer",
+      "version": "1.8.1"
+    },
+    {
+      "name": "SemanticMediaWiki",
+      "version": "7.3.1"
+    },
+    {
+      "name": "SemanticScribunto",
+      "version": "3.0.0"
+    },
+    {
+      "name": "Scribunto"
+    },
+    {
+      "name": "ShortDescription",
+      "version": "4.0.1"
+    },
+    {
+      "name": "WikibaseRepository"
+    },
+    {
+      "name": "WikibaseClient"
+    }
+  ]
+}

@@ -54,7 +54,7 @@ class ClearDefaultSubjectLabels extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 
-		$this->requireExtension( 'NeoWiki' );
+		$this->requireExtension( 'SemanticNeoWiki' );
 		$this->addDescription(
 			'Clears the Subject labels that were left at the default the editor offered: the page name for ' .
 			'a Main Subject, and the page name or the Schema name for any other Subject. Run once, when ' .

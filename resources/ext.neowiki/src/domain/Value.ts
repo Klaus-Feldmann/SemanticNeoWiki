@@ -3,6 +3,7 @@ import { SubjectId } from '@/domain/SubjectId';
 export enum ValueType {
 
 	String = 'string',
+	Url = 'url',
 	Number = 'number',
 	Boolean = 'boolean',
 	Relation = 'relation',
@@ -24,6 +25,57 @@ export interface BaseValueRepresentation {
 export interface StringValue extends BaseValueRepresentation {
 	readonly type: ValueType.String;
 	readonly parts: string[];
+}
+
+export interface UrlEntry {
+	url: string;
+	label?: string;
+	caption?: string;
+	captionPage?: string;
+}
+
+export interface UrlValue extends BaseValueRepresentation {
+	readonly type: ValueType.Url;
+	readonly parts: UrlEntry[];
+}
+
+export function newUrlValue( input: unknown ): UrlValue {
+	const parts = typeof input === 'string' ? [ input ] : input;
+	if ( !Array.isArray( parts ) ) {
+		throw new Error( 'URL values must be a list' );
+	}
+	return { type: ValueType.Url, parts: parts.map( ( raw: unknown ): UrlEntry => {
+		if ( typeof raw === 'string' ) {
+			return { url: raw.trim() };
+		}
+		if ( !raw || typeof raw !== 'object' || Array.isArray( raw ) ) {
+			throw new Error( 'Invalid URL entry' );
+		}
+		const entry = raw as Record<string, unknown>;
+		if ( typeof entry.url !== 'string' || Object.keys( entry ).some( ( key ) => ![ 'url', 'label', 'caption', 'captionPage' ].includes( key ) ) ) {
+			throw new Error( 'Invalid URL entry' );
+		}
+		const result: UrlEntry = { url: entry.url.trim() };
+		for ( const key of [ 'label', 'caption', 'captionPage' ] as const ) {
+			if ( entry[ key ] !== undefined ) {
+				if ( typeof entry[ key ] !== 'string' ) {
+					throw new Error( 'URL fields must be text' );
+				}
+				const text = ( entry[ key ] as string ).trim();
+				if ( text ) {
+					result[ key ] = text;
+				}
+			}
+		}
+		if ( !result.url && Object.keys( result ).length > 1 ) {
+			throw new Error( 'A labelled URL needs an address' );
+		}
+		return result;
+	} ).filter( ( entry ) => entry.url !== '' ) };
+}
+
+export function urlEntries( value: Value | undefined ): UrlEntry[] {
+	return value?.type === ValueType.Url ? value.parts : value?.type === ValueType.String ? value.parts.map( ( url ) => ( { url } ) ) : [];
 }
 
 export interface NumberValue extends BaseValueRepresentation {
@@ -78,7 +130,7 @@ export interface UnregisteredTypeValue extends BaseValueRepresentation {
 	readonly raw: unknown;
 }
 
-export type Value = StringValue | NumberValue | BooleanValue | RelationValue | MonolingualTextValue | UnregisteredTypeValue;
+export type Value = UrlValue | StringValue | NumberValue | BooleanValue | RelationValue | MonolingualTextValue | UnregisteredTypeValue;
 
 export function newStringValue( ...parts: string[] | [ string[] ] ): StringValue {
 	const resolved = Array.isArray( parts[ 0 ] ) ? parts[ 0 ] : parts as string[];
@@ -145,6 +197,8 @@ export function relationValueWithTargets( current: RelationValue | undefined, ta
 
 export function valueToJson( value: Value ): unknown {
 	switch ( value.type ) {
+		case ValueType.Url:
+			return value.parts;
 		case ValueType.String:
 			return ( value as StringValue ).parts;
 		case ValueType.Number:
@@ -178,6 +232,8 @@ export function isValueEmpty( value: Value | undefined ): boolean {
 	}
 
 	switch ( value.type ) {
+		case ValueType.Url:
+			return value.parts.length === 0;
 		case ValueType.String:
 			return value.parts.length === 0 ||
 				value.parts.every( ( part ) => part.trim() === '' );

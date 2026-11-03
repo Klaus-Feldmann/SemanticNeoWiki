@@ -1,7 +1,19 @@
+import { ImageType } from '@/domain/propertyTypes/Image';
+import ImageDisplay from '@/components/Value/ImageDisplay.vue';
+import ImageInput from '@/components/Value/ImageInput.vue';
+import ImageAttributesEditor from '@/components/SchemaEditor/Property/ImageAttributesEditor.vue';
 import { RightsBasedSubjectPermissionHints } from '@/persistence/RightsBasedSubjectPermissionHints.ts';
 import { CurrentPageSubjectPermissionHints } from '@/persistence/CurrentPageSubjectPermissionHints.ts';
 import { SubjectPermissionHints } from '@/application/SubjectPermissionHints.ts';
 import { RightsFetcher, UserObjectBasedRightsFetcher } from '@/persistence/UserObjectBasedRightsFetcher.ts';
+import { WikitextType } from '@/domain/propertyTypes/Wikitext';
+import { PageType } from '@/domain/propertyTypes/Page';
+import WikitextInput from '@/components/Value/WikitextInput.vue';
+import WikitextDisplay from '@/components/Value/WikitextDisplay.vue';
+import WikitextAttributesEditor from '@/components/SchemaEditor/Property/WikitextAttributesEditor.vue';
+import PageInput from '@/components/Value/PageInput.vue';
+import PageDisplay from '@/components/Value/PageDisplay.vue';
+import PageAttributesEditor from '@/components/SchemaEditor/Property/PageAttributesEditor.vue';
 import { TextType } from '@/domain/propertyTypes/Text.ts';
 import TextDisplay from '@/components/Value/TextDisplay.vue';
 import { UrlType } from '@/domain/propertyTypes/Url.ts';
@@ -12,6 +24,10 @@ import { SelectType } from '@/domain/propertyTypes/Select.ts';
 import SelectDisplay from '@/components/Value/SelectDisplay.vue';
 import { RelationType } from '@/domain/propertyTypes/Relation.ts';
 import { DateTimeType } from '@/domain/propertyTypes/DateTime.ts';
+import HistoricalDateInput from '@/components/Value/HistoricalDateInput.vue';
+import HistoricalDateDisplay from '@/components/Value/HistoricalDateDisplay.vue';
+import HistoricalDateAttributesEditor from '@/components/SchemaEditor/Property/HistoricalDateAttributesEditor.vue';
+import { HistoricalDateType } from '@/domain/propertyTypes/HistoricalDateType';
 import { DateType } from '@/domain/propertyTypes/Date.ts';
 import { BooleanType } from '@/domain/propertyTypes/Boolean.ts';
 import BooleanDisplay from '@/components/Value/BooleanDisplay.vue';
@@ -65,7 +81,7 @@ import { MediaWikiPageSaver } from '@/persistence/MediaWikiPageSaver.ts';
 import { SubjectDeserializer } from '@/persistence/SubjectDeserializer.ts';
 import { Neo } from '@/Neo.ts';
 // import { cdxIconStringInteger } from '@/assets/CustomIcons.ts';
-import { cdxIconLink, cdxIconSearchCaseSensitive, cdxIconArticles, cdxIconListBullet, cdxIconMathematics, cdxIconClock, cdxIconCalendar, cdxIconCheck, cdxIconAlert, cdxIconLanguage } from '@wikimedia/codex-icons';
+import { cdxIconImage, cdxIconLink, cdxIconSearchCaseSensitive, cdxIconArticles, cdxIconListBullet, cdxIconMathematics, cdxIconClock, cdxIconCalendar, cdxIconCheck, cdxIconAlert, cdxIconLanguage } from '@wikimedia/codex-icons';
 import UnregisteredTypeValueDisplay from '@/components/Value/UnregisteredTypeValueDisplay.vue';
 import UnregisteredTypeValueInput from '@/components/Value/UnregisteredTypeValueInput.vue';
 import UnregisteredTypeAttributesEditor from '@/components/SchemaEditor/Property/UnregisteredTypeAttributesEditor.vue';
@@ -103,12 +119,26 @@ export class NeoWikiExtension {
 	private newTypeSpecificComponentRegistry(): TypeSpecificComponentRegistry {
 		const registry = new TypeSpecificComponentRegistry();
 
+		registry.registerType( WikitextType.typeName, {
+			valueDisplayComponent: WikitextDisplay, valueEditor: WikitextInput, attributesEditor: WikitextAttributesEditor,
+			label: 'neowiki-property-type-wikitext', icon: cdxIconSearchCaseSensitive,
+		} );
+		registry.registerType( PageType.typeName, {
+			valueDisplayComponent: PageDisplay, valueEditor: PageInput,
+			attributesEditor: PageAttributesEditor, label: 'neowiki-property-type-page', icon: cdxIconLink,
+		} );
+
 		registry.registerType( TextType.typeName, {
 			valueDisplayComponent: TextDisplay,
 			valueEditor: TextInput,
 			attributesEditor: TextAttributesEditor,
 			label: 'neowiki-property-type-text',
 			icon: cdxIconSearchCaseSensitive,
+		} );
+
+		registry.registerType( ImageType.typeName, {
+			valueDisplayComponent: ImageDisplay, valueEditor: ImageInput, attributesEditor: ImageAttributesEditor,
+			label: 'neowiki-property-type-image', icon: cdxIconImage,
 		} );
 
 		registry.registerType( UrlType.typeName, {
@@ -149,6 +179,14 @@ export class NeoWikiExtension {
 			attributesEditor: DateTimeAttributesEditor,
 			label: 'neowiki-property-type-datetime',
 			icon: cdxIconClock,
+		} );
+
+		registry.registerType( HistoricalDateType.typeName, {
+			valueDisplayComponent: HistoricalDateDisplay,
+			valueEditor: HistoricalDateInput,
+			attributesEditor: HistoricalDateAttributesEditor,
+			label: 'neowiki-property-type-historicaldate',
+			icon: cdxIconCalendar,
 		} );
 
 		registry.registerType( DateType.typeName, {

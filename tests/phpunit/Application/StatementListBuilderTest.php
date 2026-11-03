@@ -28,6 +28,17 @@ class StatementListBuilderTest extends TestCase {
 		);
 	}
 
+	public function testBuildsStructuredUrlEntriesWithoutFlattening(): void {
+		$entry = [ 'url' => 'https://example.org/?a=1&b=2', 'label' => 'Title', 'caption' => 'Source', 'captionPage' => 'Vermerk:Quelle' ];
+		$list = $this->newBuilder()->build( [ 'Source' => [ 'propertyType' => 'url', 'value' => [ $entry ] ] ] );
+		$this->assertSame( [ $entry ], $list->getStatement( new \ProfessionalWiki\NeoWiki\Domain\Schema\PropertyName( 'Source' ) )->getValue()->toScalars() );
+	}
+
+	public function testRejectsBareUrlObjectInsteadOfAList(): void {
+		$this->expectException( \InvalidArgumentException::class );
+		$this->newBuilder()->build( [ 'Source' => [ 'propertyType' => 'url', 'value' => [ 'url' => 'https://example.org', 'label' => 'Title' ] ] ] );
+	}
+
 	public function testEmptyArrayProducesEmptyList(): void {
 		$list = $this->newBuilder()->build( [] );
 

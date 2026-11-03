@@ -39,27 +39,24 @@ class HiddenUserGraphProjectionTest extends NeoWikiIntegrationTestCase {
 		$second = $this->editPageAs( 'Second page of a hidden user', $author );
 		$this->assertSame(
 			[ $author->getName(), $author->getName() ],
-			[ $this->readPageNodeProperty( $first, 'lastEditor' ), $this->readPageNodeProperty( $second, 'lastEditor' ) ],
+			[ $this->readLastEditor( $first ), $this->readLastEditor( $second ) ],
 			'precondition: the graph names the author of both'
 		);
 
 		$this->hideUser( $author );
 
-		$this->assertSame(
-			[ '', '' ],
-			[ $this->readPageNodeProperty( $first, 'lastEditor' ), $this->readPageNodeProperty( $second, 'lastEditor' ) ]
-		);
+		$this->assertSame( [ '', '' ], [ $this->readLastEditor( $first ), $this->readLastEditor( $second ) ] );
 	}
 
 	public function testShowingAUserAgainPutsTheirNameBack(): void {
 		$author = $this->getTestUser()->getUser();
 		$pageId = $this->editPageAs( 'Page of a user hidden and shown again', $author );
 		$this->hideUser( $author );
-		$this->assertSame( '', $this->readPageNodeProperty( $pageId, 'lastEditor' ), 'precondition: the name is gone' );
+		$this->assertSame( '', $this->readLastEditor( $pageId ), 'precondition: the name is gone' );
 
 		$this->showUser( $author );
 
-		$this->assertSame( $author->getName(), $this->readPageNodeProperty( $pageId, 'lastEditor' ) );
+		$this->assertSame( $author->getName(), $this->readLastEditor( $pageId ) );
 	}
 
 	/**
@@ -153,6 +150,15 @@ class HiddenUserGraphProjectionTest extends NeoWikiIntegrationTestCase {
 			->getJobQueueGroup()
 			->get( RebuildLastEditorPagesJob::TYPE )
 			->getSize();
+	}
+
+	private function readLastEditor( int $pageId ): ?string {
+		$result = $this->readGraph(
+			'MATCH (page:Page {id: $pageId}) RETURN page.lastEditor AS lastEditor',
+			[ 'pageId' => $pageId ]
+		);
+
+		return $result->first()->toRecursiveArray()['lastEditor'] ?? null;
 	}
 
 }

@@ -61,7 +61,7 @@ class GeneratePerformanceDump extends Maintenance {
 	public function __construct() {
 		parent::__construct();
 
-		$this->requireExtension( 'NeoWiki' );
+		$this->requireExtension( 'SemanticNeoWiki' );
 		$this->addDescription(
 			'Generates a MediaWiki XML dump of synthetic Subject pages for performance testing, plus the '
 			. 'Schema they use. Import it with importDump.php. The shape sits at the scale ADR 29 calls '

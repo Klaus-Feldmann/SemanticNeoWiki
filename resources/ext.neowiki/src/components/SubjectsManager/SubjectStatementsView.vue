@@ -1,60 +1,121 @@
 <template>
 	<div class="ext-neowiki-subject-statements">
+		<ExternalIdentityDisplay :subject="subject" @descriptions="descriptionGroups = $event" />
+		<EntityDescriptions v-if="!descriptionImage" :groups="descriptionGroups" />
 		<dl
-			v-if="resolvedProperties.length > 0"
+			v-if="displayProperties.length > 0"
 			class="ext-neowiki-subject-statements__list"
 		>
 			<div
-				v-for="resolved in resolvedProperties"
-				:key="resolved.propertyDefinition.name.toString()"
+				v-for="( resolved, rowIndex ) in displayProperties"
+				:key="`${ resolved.sourcePropertyName }-${ rowIndex }`"
 				class="ext-neowiki-subject-statements__item"
 			>
 				<dt class="ext-neowiki-subject-statements__property">
-					{{ resolved.propertyDefinition.name.toString() }}
+					<PropertyLabel :property="resolved.propertyDefinition" />
 				</dt>
-				<dd class="ext-neowiki-subject-statements__value">
-					<StatementDisplay
-						:value="resolved.value"
-						:property="resolved.propertyDefinition"
-					/>
+				<dd
+					class="ext-neowiki-subject-statements__value"
+					:class="{ 'ext-neowiki-subject-statements__value--with-description': descriptionImage === resolved.propertyDefinition.name.toString() && descriptionGroups.length > 0 }">
+					<EntityDescriptions v-if="descriptionImage === resolved.propertyDefinition.name.toString()" :groups="descriptionGroups" />
+					<div class="ext-neowiki-subject-statements__value-content">
+						<small v-if="resolved.value !== undefined && resolved.propertyDefinition.externalProperty">{{ $i18n( 'neowiki-derived-own' ).text() }}</small>
+						<StatementDisplay
+							v-if="resolved.value !== undefined"
+							:value="resolved.value"
+							:property="manualProperty( resolved )"
+						/>
+						<ExternalStatementDisplay
+							v-if="resolved.external"
+							:field="resolved.external"
+							:property="resolved.propertyDefinition" />
+					</div>
 				</dd>
 			</div>
 		</dl>
 		<div
-			v-else
+			v-else-if="!loading"
 			class="ext-neowiki-subject-statements__empty"
 		>
 			{{ $i18n( 'neowiki-managesubjects-no-statements' ).text() }}
 		</div>
+		<span v-if="loading">{{ $i18n( 'neowiki-derived-loading' ).text() }}</span>
+		<span v-if="failed">{{ $i18n( 'neowiki-derived-unavailable' ).text() }}</span>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { computed, inject, provide, ref } from 'vue';
+import EntityDescriptions from './EntityDescriptions.vue';
+import type { EntityDescription } from '@/presentation/entityDescriptions';
+import { isSchemaExecution } from '@/domain/propertyTypes/Wikitext';
+import { expandUrlDisplayRows } from '@/presentation/urlDisplayRows';
+import ExternalStatementDisplay from './ExternalStatementDisplay.vue';
+import { useExternalStatements, type ExternalField } from '@/composables/useExternalStatements';
+import type { PropertyDefinition } from '@/domain/PropertyDefinition';
+import { ValueType, type Value } from '@/domain/Value';
+import ExternalIdentityDisplay from './ExternalIdentityDisplay.vue';
+import PropertyLabel from '@/components/common/PropertyLabel.vue';
+import { computed, inject, provide, ref, watch } from 'vue';
 import { Subject } from '@/domain/Subject';
 import { Schema } from '@/domain/Schema';
 import { useSchemaStore } from '@/stores/SchemaStore';
-import { resolveAllNonEmptyProperties, type ResolvedProperty } from '@/domain/resolveDisplayProperties';
+import { resolveAllNonEmptyProperties } from '@/domain/resolveDisplayProperties';
 import StatementDisplay from '@/components/Value/StatementDisplay.vue';
 import { EnclosingSubjectIdsKey } from '@/components/Value/ValueDisplayContract.ts';
 
+const emit = defineEmits<{ 'count-change': [ count: number | null ] }>();
 const props = defineProps<{
 	subject: Subject;
 }>();
 
 const schemaStore = useSchemaStore();
+const descriptionGroups = ref<EntityDescription[]>( [] );
 
 const enclosingSubjectIds = inject( EnclosingSubjectIdsKey, ref( [] ) );
 
 provide( EnclosingSubjectIdsKey, computed( () => [ ...enclosingSubjectIds.value, props.subject.getId().text ] ) );
 
-const resolvedProperties = computed<ResolvedProperty[]>( () => {
-	const schema = schemaStore.schemas.get( props.subject.getSchemaName() ) as Schema | undefined;
-	if ( schema === undefined ) {
+const schema = computed( () => schemaStore.schemas.get( props.subject.getSchemaName() ) as Schema | undefined );
+const definitions = computed( () => schema.value ? [ ...schema.value.getPropertyDefinitions() ] : [] );
+const { fields, loading, failed } = useExternalStatements( computed( () => props.subject as Subject ), definitions );
+interface DisplayProperty { sourcePropertyName?: string; propertyDefinition: PropertyDefinition; value?: Value; external?: ExternalField }
+const displayProperties = computed<DisplayProperty[]>( () => {
+	if ( !schema.value ) {
 		return [];
 	}
-	return resolveAllNonEmptyProperties( schema, props.subject as Subject );
+	const own = new Map( resolveAllNonEmptyProperties( schema.value, props.subject as Subject )
+		.map( ( row ) => [ row.propertyDefinition.name.toString(), row.value ] ) );
+	const result: DisplayProperty[] = [];
+	for ( const propertyDefinition of definitions.value ) {
+		if ( isSchemaExecution( propertyDefinition ) ) {
+			continue;
+		}
+		const value = own.get( propertyDefinition.name.toString() );
+		// Own image references take precedence, including when their preview is temporarily unavailable.
+		const external = [ 'image', 'historicalDate' ].includes( propertyDefinition.type ) && value?.type === ValueType.String && value.parts.length > 0 ?
+			undefined : fields.value.get( propertyDefinition.name.toString() );
+		if ( value !== undefined || ( external && external.status !== 'missing' ) ) {
+			result.push( { propertyDefinition, value, external } );
+		}
+	}
+	return expandUrlDisplayRows( result );
 } );
+const descriptionImage = computed( () => displayProperties.value.find( ( row ) => row.propertyDefinition.type === 'image' &&
+ ( row.value !== undefined || row.external?.status === 'resolved' && row.external.values.some( ( value ) => value.kind === 'image' ) ) )?.propertyDefinition.name.toString() );
+watch( () => [ loading.value, failed.value, displayProperties.value ] as const, () => {
+	emit( 'count-change', loading.value || failed.value ? null : new Set( displayProperties.value.filter( ( row ) =>
+		row.value !== undefined || row.external?.status === 'resolved' && row.external.values.length > 0 ).map( ( row ) => row.sourcePropertyName || row.propertyDefinition.name.toString() ) ).size );
+}, { immediate: true } );
+
+function manualProperty( row: DisplayProperty ): PropertyDefinition {
+	// A manually entered property ID stays stored, but is not misrepresented as a local page link.
+	if ( row.value?.type === ValueType.String && row.propertyDefinition.externalProperty &&
+		row.value.parts.every( ( part ) => part === row.propertyDefinition.externalProperty?.id ) ) {
+		return { ...row.propertyDefinition, wikiLink: { ...row.propertyDefinition.wikiLink, values: false } };
+	}
+	return row.propertyDefinition;
+}
+
 </script>
 
 <style lang="less">
@@ -89,6 +150,22 @@ const resolvedProperties = computed<ResolvedProperty[]>( () => {
 		margin: 0;
 		overflow-wrap: anywhere;
 		word-break: break-word;
+	}
+
+	&__value-content {
+		min-width: 0;
+	}
+
+	&__value--with-description {
+		display: grid;
+		grid-template-columns: minmax( 0, 1fr ) minmax( 0, 150px );
+		gap: 12px;
+	}
+
+	@media ( max-width: 500px ) {
+		&__value--with-description {
+			grid-template-columns: minmax( 0, 1fr );
+		}
 	}
 
 	&__empty {

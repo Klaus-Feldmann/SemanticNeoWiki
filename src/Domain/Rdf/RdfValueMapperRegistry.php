@@ -6,6 +6,7 @@ namespace ProfessionalWiki\NeoWiki\Domain\Rdf;
 
 use ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\BooleanType;
 use ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\DateTimeType;
+use ProfessionalWiki\NeoWiki\Domain\HistoricalDate;
 use ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\DateType;
 use ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\MonolingualTextType;
 use ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\NumberType;
@@ -61,11 +62,24 @@ class RdfValueMapperRegistry {
 		$registry = new self();
 
 		$registry->registerMapper( TextType::NAME, self::stringMapper( 'string' ) );
+		$registry->registerMapper( 'wikitext', self::stringMapper( 'string' ) );
+		$registry->registerMapper( 'page', static function ( NeoValue $value ): array {
+			$result = [];
+			foreach ( (array)$value->toScalars() as $text ) {
+				$normal = is_string( $text ) ? \ProfessionalWiki\NeoWiki\Domain\PropertyType\Types\LocalPageTitle::normalize( $text ) : null;
+				if ( $normal !== null ) {
+					$result[] = new Iri( \MediaWiki\Title\Title::newFromText( $normal )->getFullURL() );
+				}
+			}
+			return $result;
+		} );
+		$registry->registerMapper( 'image', self::stringMapper( 'string' ) );
 		$registry->registerMapper( SelectType::NAME, self::stringMapper( 'string' ) );
 		$registry->registerMapper( UrlType::NAME, self::urlMapper( ... ) );
 		$registry->registerMapper( NumberType::NAME, self::mapNumber( ... ) );
 		$registry->registerMapper( BooleanType::NAME, self::mapBoolean( ... ) );
 		$registry->registerMapper( DateType::NAME, self::mapDate( ... ) );
+		$registry->registerMapper( 'historicalDate', self::mapHistoricalDate( ... ) );
 		$registry->registerMapper( DateTimeType::NAME, self::mapDateTime( ... ) );
 		$registry->registerMapper( MonolingualTextType::NAME, self::mapMonolingualText( ... ) );
 
@@ -105,7 +119,7 @@ class RdfValueMapperRegistry {
 	 * @return RdfTerm[]
 	 */
 	private static function urlMapper( NeoValue $value ): array {
-		$scalars = $value->toScalars();
+		$scalars = $value instanceof \ProfessionalWiki\NeoWiki\Domain\Value\UrlValue ? $value->urls() : $value->toScalars();
 
 		if ( !is_array( $scalars ) ) {
 			return [];
@@ -173,6 +187,18 @@ class RdfValueMapperRegistry {
 	/**
 	 * @return Literal[]
 	 */
+	private static function mapHistoricalDate( NeoValue $value ): array {
+		$result = [];
+		$parts = $value->toScalars();
+		foreach ( is_array( $parts ) ? $parts : [] as $part ) {
+			$date = is_string( $part ) ? HistoricalDate::parse( $part ) : null;
+			if ( $date !== null ) {
+				$result[] = new Literal( $part, new Iri( HistoricalDate::RDF_DATATYPE ) );
+			}
+		}
+		return $result;
+	}
+
 	private static function mapDate( NeoValue $value ): array {
 		return self::mapValidatedStrings(
 			$value,

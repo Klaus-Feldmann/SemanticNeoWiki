@@ -3,47 +3,84 @@
 	"type": "object",
 	"$defs": {
 		"severity": {
-			"enum": [ "error", "warning" ]
+			"enum": [
+				"error",
+				"warning"
+			]
 		},
 		"booleanConstraint": {
-			"if": { "type": "object" },
-			"then": {
-				"required": [ "severity" ],
-				"additionalProperties": false,
-				"properties": { "severity": { "$ref": "#/$defs/severity" } }
+			"if": {
+				"type": "object"
 			},
-			"else": { "type": "boolean" }
-		},
-		"booleanConstraintWithFalseValue": {
-			"if": { "type": "object" },
 			"then": {
-				"required": [ "value", "severity" ],
+				"required": [
+					"severity"
+				],
 				"additionalProperties": false,
 				"properties": {
-					"value": { "const": false },
-					"severity": { "$ref": "#/$defs/severity" }
+					"severity": {
+						"$ref": "#/$defs/severity"
+					}
 				}
 			},
-			"else": { "type": "boolean" }
+			"else": {
+				"type": "boolean"
+			}
+		},
+		"booleanConstraintWithFalseValue": {
+			"if": {
+				"type": "object"
+			},
+			"then": {
+				"required": [
+					"value",
+					"severity"
+				],
+				"additionalProperties": false,
+				"properties": {
+					"value": {
+						"const": false
+					},
+					"severity": {
+						"$ref": "#/$defs/severity"
+					}
+				}
+			},
+			"else": {
+				"type": "boolean"
+			}
 		},
 		"scalarConstraint": {
-			"if": { "type": "object" },
+			"if": {
+				"type": "object"
+			},
 			"then": {
-				"required": [ "value", "severity" ],
+				"required": [
+					"value",
+					"severity"
+				],
 				"additionalProperties": false,
 				"properties": {
 					"value": true,
-					"severity": { "$ref": "#/$defs/severity" }
+					"severity": {
+						"$ref": "#/$defs/severity"
+					}
 				}
 			}
 		},
 		"customConstraint": {
 			"if": {
 				"type": "object",
-				"required": [ "severity" ]
+				"required": [
+					"severity"
+				]
 			},
 			"then": {
-				"properties": { "severity": { "$ref": "#/$defs/severity" } }
+				"properties": {
+					"severity": {
+						"$ref": "#/$defs/severity"
+					}
+				}
 			}
 		}
 	},
@@ -59,7 +96,9 @@
 			"patternProperties": {
 				"^.*$": {
 					"type": "object",
-					"additionalProperties": { "$ref": "#/$defs/customConstraint" },
+					"additionalProperties": {
+						"$ref": "#/$defs/customConstraint"
+					},
 					"required": [
 						"type"
 					],
@@ -72,15 +111,92 @@
 							"minLength": 1
 						},
 						"default": true,
-						"required": { "$ref": "#/$defs/booleanConstraint" },
-						"multiple": { "$ref": "#/$defs/booleanConstraintWithFalseValue" },
-						"uniqueItems": { "$ref": "#/$defs/booleanConstraint" },
-						"uniqueLanguages": { "$ref": "#/$defs/booleanConstraint" },
-						"minimum": { "$ref": "#/$defs/scalarConstraint" },
-						"maximum": { "$ref": "#/$defs/scalarConstraint" },
-						"minLength": { "$ref": "#/$defs/scalarConstraint" },
-						"maxLength": { "$ref": "#/$defs/scalarConstraint" },
-						"options": { "$ref": "#/$defs/scalarConstraint" }
+						"required": {
+							"$ref": "#/$defs/booleanConstraint"
+						},
+						"multiple": {
+							"$ref": "#/$defs/booleanConstraintWithFalseValue"
+						},
+						"uniqueItems": {
+							"$ref": "#/$defs/booleanConstraint"
+						},
+						"uniqueLanguages": {
+							"$ref": "#/$defs/booleanConstraint"
+						},
+						"minimum": {
+							"$ref": "#/$defs/scalarConstraint"
+						},
+						"maximum": {
+							"$ref": "#/$defs/scalarConstraint"
+						},
+						"minLength": {
+							"$ref": "#/$defs/scalarConstraint"
+						},
+						"maxLength": {
+							"$ref": "#/$defs/scalarConstraint"
+						},
+						"options": {
+							"$ref": "#/$defs/scalarConstraint"
+						},
+						"wikiLink": {
+							"type": "object",
+							"additionalProperties": false,
+							"properties": {
+								"values": {
+									"type": "boolean"
+								},
+								"namespace": {
+									"type": "string"
+								},
+								"label": {
+									"type": "boolean"
+								},
+								"labelTarget": {
+									"type": "string"
+								},
+								"externalTarget": {
+									"enum": [
+										"source",
+										"local"
+									]
+								}
+							}
+						},
+						"externalProperty": {
+							"type": "object",
+							"required": [
+								"source",
+								"id"
+							],
+							"additionalProperties": false,
+							"properties": {
+								"source": {
+									"enum": [
+										"wikidata",
+										"wikibase-local"
+									]
+								},
+								"id": {
+									"type": "string",
+									"pattern": "^P[1-9][0-9]*$"
+								}
+							}
+						},
+						"imageSource": {
+							"type": "string",
+							"enum": [
+								"wikidata",
+								"wikibase-local",
+								"local",
+								"commons"
+							]
+						},
+						"execute": {
+							"type": "boolean"
+						},
+						"wikitext": {
+							"type": "string"
+						}
 					},
 					"allOf": [
 						{
@@ -130,6 +246,33 @@
 											],
 											"$error": "A target schema must be a Schema name, or an object with a source key and a name. Neither may be empty or have surrounding whitespace."
 										}
+									}
+								}
+							}
+						},
+						{
+							"if": {
+								"required": [
+									"type",
+									"execute"
+								],
+								"properties": {
+									"type": {
+										"const": "wikitext"
+									},
+									"execute": {
+										"const": true
+									}
+								}
+							},
+							"then": {
+								"required": [
+									"wikitext"
+								],
+								"properties": {
+									"wikitext": {
+										"type": "string",
+										"pattern": "\\S"
 									}
 								}
 							}

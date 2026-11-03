@@ -1,10 +1,10 @@
 import { VueWrapper } from '@vue/test-utils';
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import DateTimeDisplay from '@/components/Value/DateTimeDisplay.vue';
 import { newNumberValue, newStringValue, Value } from '@/domain/Value';
 import { newDateTimeProperty, DateTimeProperty } from '@/domain/propertyTypes/DateTime';
 import { ValueDisplayProps } from '@/components/Value/ValueDisplayContract.ts';
-import { createTestWrapper } from '../../VueTestHelpers.ts';
+import { createTestWrapper, setupMwMock } from '../../VueTestHelpers.ts';
 
 function createWrapper( props: Partial<ValueDisplayProps<DateTimeProperty>> ): VueWrapper {
 	const defaultProps: ValueDisplayProps<DateTimeProperty> = {
@@ -37,7 +37,7 @@ describe( 'DateTimeDisplay', () => {
 			const iso = '2025-06-15T12:00:00Z';
 			const wrapper = createWrapperWithValue( newStringValue( iso ) );
 
-			const localHour = String( new Date( iso ).getHours() ).padStart( 2, '0' );
+			const localHour = new Date( iso ).toLocaleTimeString( undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' } ).split( ':' )[ 0 ];
 			expect( wrapper.text() ).toContain( localHour );
 		} );
 
@@ -82,3 +82,6 @@ describe( 'DateTimeDisplay', () => {
 		} );
 	} );
 } );
+
+// Link rendering uses the ResourceLoader dependency mediawiki.util.
+beforeEach( () => setupMwMock( { functions: [ 'util' ] } ) );

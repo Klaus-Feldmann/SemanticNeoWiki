@@ -1,0 +1,23 @@
+{
+  "baseline": {
+    "envendpoint.html": "ae47d0d7a9145186da9f90b20c2f9067539cf52998d702cf8013ad756643461b",
+    "assets/envendpoint-Qu3prYG8.js": "42437eafb47504130fe8f96c79f5f9bccd9faec57bdf42dcb8a7bbe6200c86ed",
+    "assets/common-CPcN3Iil.js": "1a11e37a8aa9086d97f5f9f99eaef789c69d3d5d035ebe05cb0563497ddde8dd",
+    "assets/common-BzxewltY.css": "a3b13868eb0fc86d4f9dabb6946e8e63247b917fee2268144d3735f96a7504d1"
+  },
+  "changes": "Left 50px linked title thumbnail, own-image priority and current image snapshot; Schema-ordered derived values and configured links in expanded tables; Q-ID row below title and source-qualified descriptions below image/title; only resolved source-label/ID pairs; configurable endpoint/base; relative assets; unrelated demos omitted.",
+  "generated": {
+    "helperName": "neowiki-qids-827e18cd68b6.js",
+    "commonName": "common-qids-7bc33f928a44.js",
+    "entryName": "envendpoint-qids-0c8444489b8c.js"
+  },
+  "assets": {
+    "common-BzxewltY.css": "a3b13868eb0fc86d4f9dabb6946e8e63247b917fee2268144d3735f96a7504d1",
+    "common-qids-7bc33f928a44.js": "ab7fea6925492b9089a507779b3c584beb10330cd38fc9d4c792d0408b2ad554",
+    "common-qids-7bc33f928a44.js.map": "005e23e3100204eea5b8f444a4d63d03d5f613f46a472666042337a654df0fc9",
+    "envendpoint-qids-0c8444489b8c.js": "99498c746ddb2217bd351b15b1ad08f46b2431b0df3e2d647609cb639a4a2ee9",
+    "envendpoint-qids-0c8444489b8c.js.map": "76e3cf5cd2c7daef1027e2209fa167774c62ff3d8fbb70d37830c65df00b13de",
+    "neowiki-qids-827e18cd68b6.js": "a8ee95261bb704af19ce0beca4511ab1a4337e071f1eb2e9305c82c74cd8ab21",
+    "neowiki-qids-827e18cd68b6.js.map": "c489ceb1edcde529b0666cce5a68dfdb924afc4ffe818026ff5bb7158f01f4f0"
+  }
+}

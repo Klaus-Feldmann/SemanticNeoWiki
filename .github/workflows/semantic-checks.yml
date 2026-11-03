@@ -1,0 +1,49 @@
+name: SemanticNeoWiki candidate checks
+on:
+  push:
+    branches: [semantic-0.1.9-test]
+  pull_request:
+    branches: [semantic-0.1.9-test]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  standalone:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer:v2
+          coverage: none
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Install isolated PHP test dependencies
+        run: composer install --working-dir=publication-tests/dependencies --no-interaction --prefer-dist
+      - name: PHP standalone checks
+        env:
+          NEOWIKI_TEST_VENDOR: ${{ github.workspace }}/publication-tests/dependencies/vendor/autoload.php
+        run: |
+          publication-tests/dependencies/vendor/bin/phpunit -c publication-tests/phpunit.xml
+          for script in publication-tests/*-contract.php; do php "$script"; done
+      - name: Data UI checks
+        working-directory: resources/ext.neowiki
+        run: |
+          npm ci --ignore-scripts
+          npm test -- --run
+      - name: Graph checks
+        working-directory: graph-explorer-dev
+        run: |
+          npm ci --ignore-scripts
+          npm test
+          npm run build
+          node tests/compare-build.mjs
+          node tests/dom-integration.mjs
+          node tests/fields-dom.mjs
+      - name: Lua checks
+        working-directory: integrations/smw/tests
+        run: |
+          npm install --ignore-scripts
+          npm test

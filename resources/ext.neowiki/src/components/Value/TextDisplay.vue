@@ -1,21 +1,26 @@
 <template>
 	<div>
-		{{ values.join( ', ' ) }}
+		<!-- Vue 3 supports keyed fragments; avoid wrapper-induced whitespace. -->
+		<!-- eslint-disable-next-line vue/no-v-for-template-key -->
+		<template v-for="( text, index ) in values" :key="index">
+			<template v-if="index > 0">
+				{{ separator }}
+			</template>
+			<WikiPageLink
+				:title="text"
+				:namespace="property.wikiLink?.namespace"
+				:enabled="property.wikiLink?.values !== false" />
+		</template>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { ValueType } from '@/domain/Value.ts';
+import { ValueType } from '@/domain/Value';
 import { computed } from 'vue';
-import { ValueDisplayProps } from '@/components/Value/ValueDisplayContract.ts';
-import { TextProperty } from '@/domain/propertyTypes/Text.ts';
-
+import type { ValueDisplayProps } from './ValueDisplayContract';
+import type { TextProperty } from '@/domain/propertyTypes/Text';
+import WikiPageLink from '@/components/common/WikiPageLink.vue';
+const separator = ', ';
 const props = defineProps<ValueDisplayProps<TextProperty>>();
-
-const values = computed( () => {
-	if ( props.value.type !== ValueType.String ) {
-		return [ '' ];
-	}
-	return props.value.parts.filter( ( part ) => part.trim() !== '' );
-} );
+const values = computed( () => props.value.type === ValueType.String ? props.value.parts.filter( ( part ) => part.trim() !== '' ) : [] );
 </script>

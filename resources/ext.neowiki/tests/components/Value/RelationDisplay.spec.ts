@@ -356,7 +356,9 @@ describe( 'RelationDisplay.vue', () => {
 			const block = wrapper.find( '.ext-neowiki-dependent-subject-display' );
 			expect( block.text() ).toContain( 'Date' );
 			expect( block.text() ).toContain( '25 October 1881' );
-			expect( wrapper.find( 'a' ).exists() ).toBe( false );
+			// The dependent Subject stays inline; its field labels/values may now link.
+			expect( wrapper.findAll( 'a' ).some( ( a ) => a.attributes( 'href' )?.includes( BIRTH_ID ) ) ).toBe( false );
+			expect( block.findAll( 'a' ).some( ( a ) => a.text() === 'Date' ) ).toBe( true );
 			expect( wrapper.find( 'table' ).exists() ).toBe( false );
 		} );
 
@@ -667,7 +669,9 @@ describe( 'RelationDisplay.vue', () => {
 
 				const cell = cellOf( onlyTable( wrapper ), 0, 1 );
 				expect( cell.text() ).toContain( 'Lloyd\'s' );
-				expect( cell.find( 'a' ).exists() ).toBe( false );
+				// Link the insurer value, not the inline dependent Subject itself.
+				expect( cell.findAll( 'a' ).some( ( a ) => a.attributes( 'href' )?.includes( INSURANCE_ID ) ) ).toBe( false );
+				expect( cell.findAll( 'a' ).some( ( a ) => a.text() === "Lloyd's" ) ).toBe( true );
 			} );
 
 			it( 'links one of them that points back at itself rather than showing it inside itself again', () => {

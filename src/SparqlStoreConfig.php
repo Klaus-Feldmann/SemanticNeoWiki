@@ -28,7 +28,6 @@ readonly class SparqlStoreConfig {
 		public ?string $accessToken,
 		public string $projection,
 		public string $name,
-		public int $updateTimeoutSeconds,
 	) {
 	}
 

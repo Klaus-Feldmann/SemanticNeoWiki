@@ -1,0 +1,556 @@
+{
+  "version": 1,
+  "scope": "current",
+  "pageId": 966,
+  "mainSubjectId": "sF1FCQPNcwQdw4B",
+  "fields": [
+    {
+      "name": "Bild",
+      "source": "wikidata",
+      "entityId": "Q5879",
+      "propertyId": "P18",
+      "propertyLabel": "Bild",
+      "propertyUrl": "https://www.wikidata.org/wiki/Property:P18",
+      "status": "resolved",
+      "values": [
+        {
+          "kind": "image",
+          "reference": "commons:Goethe (Stieler 1828).jpg",
+          "filename": "Goethe (Stieler 1828).jpg",
+          "repository": "commons",
+          "rank": "normal"
+        }
+      ]
+    },
+    {
+      "name": "Klassenzuordnung",
+      "source": "wikidata",
+      "entityId": "Q5879",
+      "propertyId": "P31",
+      "propertyLabel": "ist ein(e)",
+      "propertyUrl": "https://www.wikidata.org/wiki/Property:P31",
+      "status": "resolved",
+      "values": [
+        {
+          "kind": "entity",
+          "id": "Q5",
+          "label": "Mensch",
+          "url": "https://www.wikidata.org/wiki/Q5",
+          "rank": "normal"
+        }
+      ]
+    },
+    {
+      "name": "Geburtsdatum",
+      "source": "wikidata",
+      "entityId": "Q5879",
+      "propertyId": "P569",
+      "propertyLabel": "Geburtsdatum",
+      "propertyUrl": "https://www.wikidata.org/wiki/Property:P569",
+      "status": "resolved",
+      "values": [
+        {
+          "kind": "time",
+          "sourceTime": {
+            "time": "+1749-08-28T00:00:00Z",
+            "timezone": 0,
+            "before": 0,
+            "after": 0,
+            "precision": 11,
+            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+          },
+          "calendar": "gregorian",
+          "precision": 11,
+          "year": 1749,
+          "month": 8,
+          "day": 28,
+          "displayDate": {
+            "year": 1749,
+            "month": 8,
+            "day": 28
+          },
+          "displayCalendar": "gregorian",
+          "comparison": {
+            "start": 2360109,
+            "end": 2360109
+          },
+          "parts": [
+            {
+              "text": "28. August "
+            },
+            {
+              "text": "1749",
+              "yearTitle": "1749"
+            }
+          ],
+          "label": "28. August 1749",
+          "rank": "preferred",
+          "statementId": "q5879$e48c98e3-4581-9a75-d6dc-9b0811e03ab8"
+        }
+      ],
+      "candidates": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P569",
+            "hash": "f1d304f1a1116fee01acb49e38fdb9947ae4c099",
+            "datavalue": {
+              "value": {
+                "time": "+1749-08-28T00:00:00Z",
+                "timezone": 0,
+                "before": 0,
+                "after": 0,
+                "precision": 11,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+              },
+              "type": "time"
+            },
+            "datatype": "time"
+          },
+          "qualifiers": {
+            "P7452": [
+              {
+                "snaktype": "value",
+                "property": "P7452",
+                "hash": "f9f842b41f249e5504d48025c7ad6d7b5bfc7496",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 71536040,
+                    "id": "Q71536040"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              }
+            ]
+          },
+          "id": "q5879$e48c98e3-4581-9a75-d6dc-9b0811e03ab8",
+          "rank": "preferred"
+        },
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P569",
+            "hash": "053e576c43f6460dd4eecc6352226fe1638fea4b",
+            "datavalue": {
+              "value": {
+                "time": "+1749-00-00T00:00:00Z",
+                "timezone": 0,
+                "before": 0,
+                "after": 0,
+                "precision": 9,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+              },
+              "type": "time"
+            },
+            "datatype": "time"
+          },
+          "id": "Q5879$CBED8AFB-CE60-4D4E-A6E9-7687C5EFBAD8",
+          "rank": "normal"
+        }
+      ],
+      "reason": null
+    },
+    {
+      "name": "Geburtsort",
+      "source": "wikidata",
+      "entityId": "Q5879",
+      "propertyId": "P19",
+      "propertyLabel": "Geburtsort",
+      "propertyUrl": "https://www.wikidata.org/wiki/Property:P19",
+      "status": "resolved",
+      "values": [
+        {
+          "kind": "entity",
+          "id": "Q1794",
+          "label": "Frankfurt am Main",
+          "url": "https://www.wikidata.org/wiki/Q1794",
+          "rank": "normal"
+        }
+      ]
+    },
+    {
+      "name": "Sterbedatum",
+      "source": "wikidata",
+      "entityId": "Q5879",
+      "propertyId": "P570",
+      "propertyLabel": "Sterbedatum",
+      "propertyUrl": "https://www.wikidata.org/wiki/Property:P570",
+      "status": "resolved",
+      "values": [
+        {
+          "kind": "time",
+          "sourceTime": {
+            "time": "+1832-03-22T00:00:00Z",
+            "timezone": 0,
+            "before": 0,
+            "after": 0,
+            "precision": 11,
+            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+          },
+          "calendar": "gregorian",
+          "precision": 11,
+          "year": 1832,
+          "month": 3,
+          "day": 22,
+          "displayDate": {
+            "year": 1832,
+            "month": 3,
+            "day": 22
+          },
+          "displayCalendar": "gregorian",
+          "comparison": {
+            "start": 2390265,
+            "end": 2390265
+          },
+          "parts": [
+            {
+              "text": "22. März "
+            },
+            {
+              "text": "1832",
+              "yearTitle": "1832"
+            }
+          ],
+          "label": "22. März 1832",
+          "rank": "normal",
+          "statementId": "q5879$386a0847-4f1b-48ae-b7b2-c56003f84bd1"
+        }
+      ],
+      "candidates": [
+        {
+          "mainsnak": {
+            "snaktype": "value",
+            "property": "P570",
+            "hash": "e5b7a1c7a494bcc4f1cc9e309327e953d94cd6a8",
+            "datavalue": {
+              "value": {
+                "time": "+1832-03-22T00:00:00Z",
+                "timezone": 0,
+                "before": 0,
+                "after": 0,
+                "precision": 11,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+              },
+              "type": "time"
+            },
+            "datatype": "time"
+          },
+          "id": "q5879$386a0847-4f1b-48ae-b7b2-c56003f84bd1",
+          "rank": "normal"
+        }
+      ],
+      "reason": null
+    },
+    {
+      "name": "Sterbeort",
+      "source": "wikidata",
+      "entityId": "Q5879",
+      "propertyId": "P20",
+      "propertyLabel": "Sterbeort",
+      "propertyUrl": "https://www.wikidata.org/wiki/Property:P20",
+      "status": "resolved",
+      "values": [
+        {
+          "kind": "entity",
+          "id": "Q3955",
+          "label": "Weimar",
+          "url": "https://www.wikidata.org/wiki/Q3955",
+          "rank": "normal"
+        }
+      ]
+    },
+    {
+      "name": "Tätigkeit",
+      "source": "wikidata",
+      "entityId": "Q5879",
+      "propertyId": "P106",
+      "propertyLabel": "Tätigkeit",
+      "propertyUrl": "https://www.wikidata.org/wiki/Property:P106",
+      "status": "resolved",
+      "values": [
+        {
+          "kind": "entity",
+          "id": "Q1776724",
+          "label": "Theaterleiter",
+          "url": "https://www.wikidata.org/wiki/Q1776724",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q2374149",
+          "label": "Botaniker",
+          "url": "https://www.wikidata.org/wiki/Q2374149",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q82955",
+          "label": "Politiker",
+          "url": "https://www.wikidata.org/wiki/Q82955",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q4964182",
+          "label": "Philosoph",
+          "url": "https://www.wikidata.org/wiki/Q4964182",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q1234713",
+          "label": "Theologe",
+          "url": "https://www.wikidata.org/wiki/Q1234713",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q185351",
+          "label": "Jurist",
+          "url": "https://www.wikidata.org/wiki/Q185351",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q4164507",
+          "label": "Kunstkritiker",
+          "url": "https://www.wikidata.org/wiki/Q4164507",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q1350157",
+          "label": "Musikkritiker",
+          "url": "https://www.wikidata.org/wiki/Q1350157",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q182436",
+          "label": "Bibliothekar",
+          "url": "https://www.wikidata.org/wiki/Q182436",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q49757",
+          "label": "Dichter",
+          "url": "https://www.wikidata.org/wiki/Q49757",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q3579035",
+          "label": "Reiseschriftsteller",
+          "url": "https://www.wikidata.org/wiki/Q3579035",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q169470",
+          "label": "Physiker",
+          "url": "https://www.wikidata.org/wiki/Q169470",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q6673651",
+          "label": "Literat",
+          "url": "https://www.wikidata.org/wiki/Q6673651",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q6625963",
+          "label": "Romancier",
+          "url": "https://www.wikidata.org/wiki/Q6625963",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q214917",
+          "label": "Dramatiker",
+          "url": "https://www.wikidata.org/wiki/Q214917",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q18814623",
+          "label": "Autobiograf",
+          "url": "https://www.wikidata.org/wiki/Q18814623",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q193391",
+          "label": "Diplomat",
+          "url": "https://www.wikidata.org/wiki/Q193391",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q372436",
+          "label": "Staatsmann",
+          "url": "https://www.wikidata.org/wiki/Q372436",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q270141",
+          "label": "Universalgelehrter",
+          "url": "https://www.wikidata.org/wiki/Q270141",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q3606216",
+          "label": "Aphoristiker",
+          "url": "https://www.wikidata.org/wiki/Q3606216",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q18939491",
+          "label": "Tagebuchschreiber",
+          "url": "https://www.wikidata.org/wiki/Q18939491",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q13416354",
+          "label": "Mineraloge",
+          "url": "https://www.wikidata.org/wiki/Q13416354",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q350979",
+          "label": "Zoologe",
+          "url": "https://www.wikidata.org/wiki/Q350979",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q17391638",
+          "label": "Kunsttheoretiker",
+          "url": "https://www.wikidata.org/wiki/Q17391638",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q40348",
+          "label": "Rechtsanwalt",
+          "url": "https://www.wikidata.org/wiki/Q40348",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q36834",
+          "label": "Komponist",
+          "url": "https://www.wikidata.org/wiki/Q36834",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q8178443",
+          "label": "Librettist",
+          "url": "https://www.wikidata.org/wiki/Q8178443",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q36180",
+          "label": "Schriftsteller",
+          "url": "https://www.wikidata.org/wiki/Q36180",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q3391743",
+          "label": "bildender Künstler",
+          "url": "https://www.wikidata.org/wiki/Q3391743",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q1792450",
+          "label": "Kunsthistoriker",
+          "url": "https://www.wikidata.org/wiki/Q1792450",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q107212688",
+          "label": "Exlibriskünstler",
+          "url": "https://www.wikidata.org/wiki/Q107212688",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q15296811",
+          "label": "Zeichner",
+          "url": "https://www.wikidata.org/wiki/Q15296811",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q10373653",
+          "label": "Aquarellist",
+          "url": "https://www.wikidata.org/wiki/Q10373653",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q58481158",
+          "label": "Drucksammler",
+          "url": "https://www.wikidata.org/wiki/Q58481158",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q10732476",
+          "label": "Kunstsammler",
+          "url": "https://www.wikidata.org/wiki/Q10732476",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q11569986",
+          "label": "Druckgrafiker",
+          "url": "https://www.wikidata.org/wiki/Q11569986",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q6051619",
+          "label": "Publizist",
+          "url": "https://www.wikidata.org/wiki/Q6051619",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q18805",
+          "label": "Naturwissenschaftler",
+          "url": "https://www.wikidata.org/wiki/Q18805",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q1028181",
+          "label": "Maler",
+          "url": "https://www.wikidata.org/wiki/Q1028181",
+          "rank": "normal"
+        },
+        {
+          "kind": "entity",
+          "id": "Q39020112",
+          "label": "Theaterintendant",
+          "url": "https://www.wikidata.org/wiki/Q39020112",
+          "rank": "normal"
+        }
+      ]
+    }
+  ]
+}

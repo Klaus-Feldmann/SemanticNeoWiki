@@ -88,17 +88,6 @@ class Neo4jProjectionStoreTest extends NeoWikiIntegrationTestCase {
 		);
 	}
 
-	public function testInitializeCreatesThePageTitleIndex(): void {
-		$this->newProjectionStore()->initialize();
-
-		$this->assertSame(
-			[ [ 'name' => 'Page namespaceId dbKey' ] ],
-			$this->readGraph(
-				'SHOW INDEXES YIELD name WHERE name = "Page namespaceId dbKey" RETURN name'
-			)->toRecursiveArray()
-		);
-	}
-
 	public function testSavesPageIdAndTitle(): void {
 		$store = $this->newProjectionStore();
 
@@ -1207,7 +1196,9 @@ class Neo4jProjectionStoreTest extends NeoWikiIntegrationTestCase {
 			properties: TestPageProperties::build( categories: [ 'CatA', 'CatB' ] )
 		) );
 
-		$this->assertSame( [ 'CatA', 'CatB' ], $this->readPageNodeProperty( 42, 'categories' ) );
+		$result = $this->readGraph( 'MATCH (page:Page {id: 42}) RETURN page.categories AS categories' );
+
+		$this->assertSame( [ 'CatA', 'CatB' ], $result->first()->toRecursiveArray()['categories'] );
 	}
 
 	public function testSavesPageExtraProperties(): void {

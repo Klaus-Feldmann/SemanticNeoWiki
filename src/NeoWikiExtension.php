@@ -367,7 +367,7 @@ class NeoWikiExtension {
 	public static function requireComposerLibraries( string $libraryClass ): void {
 		if ( !class_exists( $libraryClass ) ) {
 			throw new RuntimeException(
-				"NeoWiki's Composer libraries are missing. Add extensions/NeoWiki/composer.json to the merge-plugin " .
+				"NeoWiki's Composer libraries are missing. Add extensions/SemanticNeoWiki/composer.json to the merge-plugin " .
 				"include list in MediaWiki's composer.local.json, then run composer update --no-dev there."
 			);
 		}
@@ -406,11 +406,11 @@ class NeoWikiExtension {
 	 * @return array<string, mixed>
 	 */
 	public static function poweredByBadge( string $extensionAssetsPath, string $mediaWikiVersion ): array {
-		$images = $extensionAssetsPath . '/NeoWiki/resources/images';
+		$images = $extensionAssetsPath . '/SemanticNeoWiki/resources/images';
 		$badge = [
 			'src' => $images . '/poweredby_neowiki.svg',
-			'url' => 'https://neowiki.ai/',
-			'alt' => 'Powered by NeoWiki',
+			'url' => 'https://github.com/Klaus-Feldmann/SemanticNeoWiki',
+			'alt' => 'Powered by SemanticNeoWiki (based on NeoWiki)',
 			'lang' => 'en',
 		];
 

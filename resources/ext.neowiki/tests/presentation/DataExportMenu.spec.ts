@@ -78,3 +78,27 @@ describe( 'DataExportMenu', () => {
 		} );
 	} );
 } );
+
+describe( 'complete data view exports with Bridge', () => {
+	beforeEach( () => {
+		setupMwMock( { functions: [ 'config', 'msg', 'util' ], config: { wgNeoWikiCompleteExport: true, wgUserLanguage: 'de', wgNeoWikiMappings: MAPPINGS },
+			messages: { 'neowiki-managesubjects-export-complete': 'Complete', 'neowiki-managesubjects-export-stored-projection': ( name ) => `${ name } (stored)` } } );
+	} );
+	it( 'uses complete JSON and RDF for a page', () => {
+		const urls = pageExportUrls( 42 );
+		expect( urls.jsonUrl ).toBe( '/rest.php/neowikibase/v1/page/42/export?format=json&language=de' );
+		const projections = rdfProjectionsFor( [ 'Person' ] );
+		expect( projections ).toEqual( [ '__complete_data_view__', 'EDM' ] );
+		expect( urls.rdfUrl( projections[ 0 ], 'turtle' ) ).toBe( '/rest.php/neowikibase/v1/page/42/export?format=turtle&language=de' );
+		expect( urls.rdfUrl( projections[ 0 ], 'trig' ) ).toBe( '/rest.php/neowikibase/v1/page/42/export?format=trig&language=de' );
+	} );
+	it( 'keeps named stored-data projections separate and available', () => {
+		const urls = pageExportUrls( 42 );
+		expect( urls.rdfUrl( 'EDM', 'turtle' ) ).toBe( '/rest.php/neowiki/v0/page/42/rdf?projection=EDM&format=turtle' );
+		const menu = rdfMenuItems( rdfProjectionsFor( [ 'Person' ] ), urls.rdfUrl );
+		expect( String( menu[ 2 ].label ) ).toContain( 'EDM (stored)' );
+	} );
+	it( 'builds a subject-scoped complete download URL', () => {
+		expect( subjectExportUrls( 's1aaaaaaaaaaaa1' ).jsonUrl ).toBe( '/rest.php/neowikibase/v1/subject/s1aaaaaaaaaaaa1/export?format=json&language=de' );
+	} );
+} );

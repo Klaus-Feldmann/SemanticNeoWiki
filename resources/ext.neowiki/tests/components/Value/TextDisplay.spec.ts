@@ -1,5 +1,6 @@
+import { setupMwMock } from '../../VueTestHelpers.ts';
 import { mount } from '@vue/test-utils';
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { newNumberValue, newStringValue, Value } from '@/domain/Value';
 import { newTextProperty } from '@/domain/propertyTypes/Text.ts';
 import TextDisplay from '@/components/Value/TextDisplay.vue';
@@ -47,3 +48,6 @@ describe( 'TextDisplay', () => {
 		expect( wrapper.text() ).toBe( '' );
 	} );
 } );
+
+// Link rendering uses the ResourceLoader dependency mediawiki.util.
+beforeEach( () => setupMwMock( { functions: [ 'util' ] } ) );

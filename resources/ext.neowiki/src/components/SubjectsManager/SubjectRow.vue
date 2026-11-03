@@ -67,7 +67,7 @@
 							@click.stop
 						/>
 						<span class="ext-neowiki-subject-row__count">
-							{{ $i18n( 'neowiki-managesubjects-statement-count', statementCount ).text() }}
+							{{ $i18n( 'neowiki-managesubjects-statement-count', statementCount ).text() }}<span v-if="providedStatementCount === null && subject.getPageIdentifiers().getPageId() > 0"> …</span>
 						</span>
 						<span
 							v-if="caption !== null"
@@ -152,7 +152,7 @@
 				</span>
 			</summary>
 			<div class="ext-neowiki-subject-row__expanded">
-				<SubjectStatementsView :subject="subject" />
+				<SubjectStatementsView :subject="subject" @count-change="providedStatementCount = $event" />
 				<footer class="ext-neowiki-subject-row__footer">
 					<dl class="ext-neowiki-subject-row__identifiers">
 						<div class="ext-neowiki-subject-row__id">
@@ -334,7 +334,8 @@ const displayName = computed( () => identifyingSubjectName(
 	schemaStore.schemas.get( props.subject.getSchemaName() ) as Schema | undefined
 ) );
 const schemaName = computed( () => schemaNameToShow( props.subject ) );
-const statementCount = computed( () => props.subject.getNamesOfNonEmptyProperties().length );
+const providedStatementCount = ref<number | null>( null );
+const statementCount = computed( () => providedStatementCount.value ?? props.subject.getNamesOfNonEmptyProperties().length );
 const exportUrls = computed( () => subjectExportUrls( props.subject.getId().text ) );
 const rdfProjections = computed( () => rdfProjectionsFor( [ props.subject.getSchemaName() ] ) );
 

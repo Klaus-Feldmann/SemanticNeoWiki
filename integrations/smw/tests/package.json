@@ -1,0 +1,11 @@
+{
+  "name": "neowiki-smw-schemafelder-tests",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "node run.cjs"
+  },
+  "dependencies": {
+    "fengari": "0.1.5"
+  }
+}

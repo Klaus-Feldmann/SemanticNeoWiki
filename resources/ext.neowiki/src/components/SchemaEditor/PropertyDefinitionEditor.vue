@@ -36,6 +36,7 @@
 		</CdxField>
 
 		<CdxField
+			v-if="!isSchemaExecution( localProperty )"
 			class="ext-neowiki-property-editor__required ext-neowiki-severity-row"
 			:hide-label="true"
 		>
@@ -53,6 +54,12 @@
 			/>
 		</CdxField>
 
+		<PropertySourceEditor
+			v-if="localProperty.type !== 'wikitext'"
+			ref="propertySourceEditor"
+			:property="localProperty as PropertyDefinition"
+			@update:property="updatePropertyAttributes" />
+		<WikiLinkEditor v-if="localProperty.type !== 'wikitext'" :property="localProperty as PropertyDefinition" @update:property="updatePropertyAttributes" />
 		<component
 			:is="componentRegistry.getAttributesEditor( localProperty.type )"
 			ref="attributesEditor"
@@ -61,7 +68,7 @@
 		/>
 		<component
 			:is="componentRegistry.getValueEditingComponent( localProperty.type )"
-			v-if="takesInitialValue"
+			v-if="takesInitialValue && !isSchemaExecution( localProperty )"
 			ref="defaultValueInput"
 			v-model="localProperty.default"
 			class="property-definition-editor__default"
@@ -72,6 +79,9 @@
 </template>
 
 <script setup lang="ts">
+import { isSchemaExecution } from '@/domain/propertyTypes/Wikitext';
+import PropertySourceEditor from './Property/PropertySourceEditor.vue';
+import WikiLinkEditor from './Property/WikiLinkEditor.vue';
 import { PropertyDefinition, PropertyName, withConstraintSeverity, withoutSeveritiesOfClearedConstraints } from '@/domain/PropertyDefinition.ts';
 import type { Severity } from '@/domain/Severity.ts';
 import SeverityInput from '@/components/SchemaEditor/Property/SeverityInput.vue';
@@ -202,6 +212,8 @@ function changePropertyType( type: string ): void {
 	localProperty.value = propertyTypeRegistry.getType( type ).createPropertyDefinition(
 		{
 			name: localProperty.value.name,
+			wikiLink: localProperty.value.wikiLink,
+			externalProperty: localProperty.value.externalProperty,
 			type: type,
 			description: localProperty.value.description,
 			required: localProperty.value.required,
@@ -266,6 +278,7 @@ const takesInitialValue = computed( (): boolean => targetSchemaNames.value.lengt
 	targetsDependentSubjects( targetSchemaNames.value, subjectsAreDependentIn( schemaSummaries.value ) ) !== true
 ) );
 
+const propertySourceEditor = ref<InstanceType<typeof PropertySourceEditor> | null>( null );
 const attributesEditor = ref<AttributesEditorExposes | null>( null );
 const defaultValueInput = ref<ValueInputExposes | null>( null );
 
@@ -280,6 +293,7 @@ export interface PropertyDefinitionEditorExposes {
  */
 function unparseableInputMessage(): string | null {
 	return nameError.value ??
+		propertySourceEditor.value?.unparseableInputMessage() ??
 		attributesEditor.value?.unparseableInputMessage?.() ??
 		defaultValueInput.value?.unparseableInputMessage?.() ??
 		null;

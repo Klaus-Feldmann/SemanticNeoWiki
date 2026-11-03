@@ -19,6 +19,8 @@ readonly class PropertyCore {
 		public bool $required,
 		public mixed $default,
 		public array $constraintSeverities = [],
+		public ?array $wikiLink = null,
+		public ?ExternalProperty $externalProperty = null,
 	) {
 	}
 

@@ -57,7 +57,8 @@ class ViewHtmlBuilder {
 	}
 
 	/**
-	 * Whether the HTML holds a mount made by mainSubjectInFullPlaceholderHtml().
+	 * Whether the HTML holds a mount made by mainSubjectInFullPlaceholderHtml(). Wikitext cannot fake one,
+	 * since the Sanitizer drops data-mw-* attributes.
 	 */
 	public static function containsMainSubjectInFull( string $html ): bool {
 		return preg_match( '/<div id="ext-neowiki-main-subject"(?: [\w-]+="[^"]*")* data-mw-neowiki-subject-id="/', $html ) === 1;

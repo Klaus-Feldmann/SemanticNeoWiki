@@ -1,10 +1,10 @@
 import { VueWrapper } from '@vue/test-utils';
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import DateDisplay from '@/components/Value/DateDisplay.vue';
 import { newNumberValue, newStringValue, Value } from '@/domain/Value';
 import { newDateProperty, DateProperty } from '@/domain/propertyTypes/Date';
 import { ValueDisplayProps } from '@/components/Value/ValueDisplayContract.ts';
-import { createTestWrapper } from '../../VueTestHelpers.ts';
+import { createTestWrapper, setupMwMock } from '../../VueTestHelpers.ts';
 
 function createWrapper( props: Partial<ValueDisplayProps<DateProperty>> ): VueWrapper {
 	const defaultProps: ValueDisplayProps<DateProperty> = {
@@ -84,3 +84,6 @@ describe( 'DateDisplay', () => {
 		} );
 	} );
 } );
+
+// Link rendering uses the ResourceLoader dependency mediawiki.util.
+beforeEach( () => setupMwMock( { functions: [ 'util' ] } ) );

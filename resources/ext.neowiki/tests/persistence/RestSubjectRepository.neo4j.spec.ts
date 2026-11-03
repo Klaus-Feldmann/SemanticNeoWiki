@@ -5,7 +5,7 @@ import { PageIdentifiers } from '@/domain/PageIdentifiers';
 import { StatementList } from '@/domain/StatementList';
 import { Statement } from '@/domain/Statement';
 import { PropertyName } from '@/domain/PropertyDefinition';
-import { newStringValue } from '@/domain/Value';
+import { newUrlValue, newStringValue } from '@/domain/Value';
 import { TextType } from '@/domain/propertyTypes/Text';
 import { RelationType } from '@/domain/propertyTypes/Relation';
 import { InMemoryHttpClient } from '@/infrastructure/HttpClient/InMemoryHttpClient';
@@ -124,7 +124,7 @@ describe( 'RestSubjectRepository', () => {
 				subjectResponse.schema,
 				new StatementList( [
 					new Statement( new PropertyName( 'label' ), 'text', newStringValue( 'John Doe' ) ),
-					new Statement( new PropertyName( 'WorkUrl' ), 'url', newStringValue( 'https://pro.wiki' ) ),
+					new Statement( new PropertyName( 'WorkUrl' ), 'url', newUrlValue( [ 'https://pro.wiki' ] ) ),
 				] ),
 				new PageIdentifiers( subjectResponse.pageId, subjectResponse.pageTitle ),
 				null,

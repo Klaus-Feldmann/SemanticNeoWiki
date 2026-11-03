@@ -103,7 +103,6 @@ class NeoWikiConfigFactoryTest extends TestCase {
 			'queryUrl' => 'https://qlever.example/query',
 			'accessToken' => 'secret-token',
 			'projection' => 'edm',
-			'updateTimeoutSeconds' => 30,
 		] ] );
 
 		$this->assertCount( 1, $config->sparqlStores );
@@ -112,7 +111,6 @@ class NeoWikiConfigFactoryTest extends TestCase {
 		$this->assertSame( 'https://qlever.example/query', $store->queryUrl );
 		$this->assertSame( 'secret-token', $store->accessToken );
 		$this->assertSame( 'edm', $store->projection );
-		$this->assertSame( 30, $store->updateTimeoutSeconds );
 	}
 
 	public function testMinimalSparqlStoreEntryAppliesDefaults(): void {
@@ -123,29 +121,6 @@ class NeoWikiConfigFactoryTest extends TestCase {
 		$this->assertSame( 'https://qlever.example/api', $store->queryUrl );
 		$this->assertNull( $store->accessToken );
 		$this->assertSame( 'native', $store->projection );
-		$this->assertSame( 10, $store->updateTimeoutSeconds );
-	}
-
-	/**
-	 * @dataProvider unusableUpdateTimeoutProvider
-	 */
-	public function testUnusableUpdateTimeoutFallsBackToTheDefaultWithWarning( mixed $updateTimeout ): void {
-		$logger = new TestLogger();
-
-		$config = $this->buildSparqlConfig(
-			[ [ 'updateUrl' => 'https://qlever.example/api', 'updateTimeoutSeconds' => $updateTimeout ] ],
-			$logger
-		);
-
-		$this->assertSame( 10, $config->sparqlStores[0]->updateTimeoutSeconds );
-		$this->assertTrue( $logger->hasWarningThatContains( 'updateTimeoutSeconds' ) );
-	}
-
-	public function unusableUpdateTimeoutProvider(): iterable {
-		yield 'zero' => [ 0 ];
-		yield 'negative' => [ -5 ];
-		yield 'fraction' => [ 2.5 ];
-		yield 'string' => [ '30' ];
 	}
 
 	public function testBlankQueryUrlFallsBackToUpdateUrl(): void {
@@ -216,7 +191,6 @@ class NeoWikiConfigFactoryTest extends TestCase {
 				accessToken: 'SECRET',
 				projection: 'EDM',
 				name: 'edm-public',
-				updateTimeoutSeconds: 10,
 			),
 			$config->sparqlStores[0]
 		);

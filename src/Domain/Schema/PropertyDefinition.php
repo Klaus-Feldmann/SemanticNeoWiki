@@ -20,6 +20,8 @@ abstract class PropertyDefinition {
 
 	abstract public function getPropertyType(): string;
 
+	public function isSchemaExecution(): bool { return false; }
+
 	public function getDescription(): string {
 		return $this->core->description;
 	}
@@ -30,6 +32,14 @@ abstract class PropertyDefinition {
 
 	public function severityOf( string $constraint ): Severity {
 		return $this->core->constraintSeverities[$constraint] ?? Severity::Warning;
+	}
+
+	public function getWikiLink(): ?array {
+		return $this->core->wikiLink;
+	}
+
+	public function getExternalProperty(): ?ExternalProperty {
+		return $this->core->externalProperty;
 	}
 
 	public function getDefault(): mixed {
@@ -60,6 +70,8 @@ abstract class PropertyDefinition {
 			'description' => $this->getDescription(),
 			'required' => $this->isRequired(),
 			'default' => $this->getDefault(),
+			...( $this->getWikiLink() === null ? [] : [ 'wikiLink' => $this->getWikiLink() ] ),
+			...( $this->getExternalProperty() === null ? [] : [ 'externalProperty' => $this->getExternalProperty()->toJson() ] ),
 		];
 	}
 
@@ -125,11 +137,32 @@ abstract class PropertyDefinition {
 			}
 		}
 
+		$wikiLink = $values['wikiLink'] ?? null;
+		if ( $wikiLink !== null ) {
+			if ( !is_array( $wikiLink ) ) {
+				throw new InvalidArgumentException( 'wikiLink must be an object' );
+			}
+			foreach ( $wikiLink as $key => $value ) {
+				$expected = match ( $key ) {
+					'values', 'label' => is_bool( $value ),
+					'namespace', 'labelTarget' => is_string( $value ),
+					'dateBceDe', 'dateBceEn' => is_string( $value ) && strlen( $value ) <= 64 && trim( $value ) !== '',
+					'externalTarget' => in_array( $value, [ 'source', 'local' ], true ),
+					default => false,
+				};
+				if ( !$expected ) {
+					throw new InvalidArgumentException( 'Invalid wikiLink option: ' . $key );
+				}
+			}
+		}
+
 		$propertyCore = new PropertyCore(
 			description: $description,
 			required: $required,
 			default: $values['default'] ?? null,
 			constraintSeverities: $severities,
+			wikiLink: $wikiLink,
+			externalProperty: isset( $values['externalProperty'] ) ? ExternalProperty::fromJson( $values['externalProperty'] ) : null,
 		);
 
 		// The extension owning the type is disabled or failed to load. Preserve the property

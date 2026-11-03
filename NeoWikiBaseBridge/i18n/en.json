@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"AufEinWort"
+		]
+	},
+	"neowikibasebridge-unavailable": "The page is not available.",
+	"neowikibasebridge-property-invalid": "Invalid property lookup.",
+	"neowikibasebridge-property-unavailable": "Property lookup is currently unavailable.",
+	"neowikibasebridge-desc": "Connects NeoWiki to Wikidata and local Wikibase, providing source values, descriptions and provenance for data views, Graph Explorer, exports and structured queries."
+}

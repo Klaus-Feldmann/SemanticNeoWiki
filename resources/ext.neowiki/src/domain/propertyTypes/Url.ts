@@ -1,5 +1,5 @@
 import { MultiStringProperty, PropertyDefinition, PropertyName } from '@/domain/PropertyDefinition';
-import { newStringValue, type StringValue, ValueType } from '@/domain/Value';
+import { newUrlValue, type UrlValue, ValueType } from '@/domain/Value';
 import { BasePropertyType } from '@/domain/PropertyType';
 
 export interface UrlProperty extends MultiStringProperty {
@@ -8,9 +8,9 @@ export interface UrlProperty extends MultiStringProperty {
 
 }
 
-export class UrlType extends BasePropertyType<UrlProperty, StringValue> {
+export class UrlType extends BasePropertyType<UrlProperty, UrlValue> {
 
-	public static readonly valueType = ValueType.String;
+	public static readonly valueType = ValueType.Url;
 
 	public static readonly typeName = 'url';
 
@@ -18,8 +18,8 @@ export class UrlType extends BasePropertyType<UrlProperty, StringValue> {
 		return [];
 	}
 
-	public getExampleValue(): StringValue {
-		return newStringValue( 'https://example.com' );
+	public getExampleValue(): UrlValue {
+		return newUrlValue( [ 'https://example.com' ] );
 	}
 
 	public createPropertyDefinitionFromJson( base: PropertyDefinition, json: any ): UrlProperty {
@@ -157,4 +157,10 @@ export function newUrlProperty( attributes: UrlPropertyAttributes = {} ): UrlPro
 		multiple: attributes.multiple ?? false,
 		uniqueItems: attributes.uniqueItems ?? true,
 	};
+}
+
+/** Same lexical contract as PHP UrlType::URL_PATTERN, including legacy scheme-less URLs. */
+export function isValidUrlInput( value: string ): boolean {
+	// eslint-disable-next-line no-control-regex, security/detect-unsafe-regex -- Mirrors the existing PHP URL lexical contract, including forbidden control characters.
+	return /^(?:https?:\/\/)?(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}|(?:[0-9]{1,3}\.){3}[0-9]{1,3}|localhost)(?::[0-9]+)?(?:[/?#][^\x00-\x20\x7f<>"{}|\\^`]*)?$/i.test( value );
 }

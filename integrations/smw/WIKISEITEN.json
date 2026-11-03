@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Modul:NeoWiki",
+    "file": "Modul-NeoWiki.lua",
+    "revision": 269198,
+    "timestamp": "2026-11-02T18:37:00Z",
+    "sourceUrl": "https://aufeinwort.info/wiki/Modul:NeoWiki",
+    "model": "Scribunto"
+  },
+  {
+    "title": "Modul:NeoWiki/API",
+    "file": "Modul-NeoWiki-API.lua",
+    "revision": 269216,
+    "timestamp": "2026-11-03T06:43:16Z",
+    "sourceUrl": "https://aufeinwort.info/wiki/Modul:NeoWiki/API",
+    "model": "Scribunto"
+  },
+  {
+    "title": "Modul:NeoWiki/config",
+    "file": "Modul-NeoWiki-config.lua",
+    "revision": 269184,
+    "timestamp": "2026-11-02T15:08:14Z",
+    "sourceUrl": "https://aufeinwort.info/wiki/Modul:NeoWiki/config",
+    "model": "Scribunto"
+  },
+  {
+    "title": "Vorlage:NeoWiki",
+    "file": "Vorlage-NeoWiki.wikitext",
+    "revision": 269217,
+    "timestamp": "2026-11-03T06:43:20Z",
+    "sourceUrl": "https://aufeinwort.info/wiki/Vorlage:NeoWiki",
+    "model": "wikitext"
+  },
+  {
+    "title": "Vorlage:NeoWiki/URL-Zeile",
+    "file": "Vorlage-NeoWiki-URL-Zeile.wikitext",
+    "revision": 269181,
+    "timestamp": "2026-11-02T15:06:07Z",
+    "sourceUrl": "https://aufeinwort.info/wiki/Vorlage:NeoWiki/URL-Zeile",
+    "model": "wikitext"
+  }
+]

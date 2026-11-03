@@ -1,40 +1,32 @@
 {
 	"name": "RedHerb",
-
 	"version": "0.0.1",
-
 	"author": [
 		"[https://Professional.Wiki/ Professional Wiki]"
 	],
-
 	"license-name": "GPL-2.0-or-later",
-
 	"description": "Test extension for validating NeoWiki extension points",
-
 	"requires": {
 		"extensions": {
-			"NeoWiki": "*"
+			"SemanticNeoWiki": "*"
 		}
 	},
-
 	"AutoloadNamespaces": {
 		"ProfessionalWiki\\RedHerb\\": "src/"
 	},
-
 	"MessagesDirs": {
-		"RedHerb": [ "i18n" ]
+		"RedHerb": [
+			"i18n"
+		]
 	},
-
 	"ExtensionMessagesFiles": {
 		"RedHerbAliases": "i18n/_Aliases.php"
 	},
-
 	"Hooks": {
 		"NeoWikiRegistration": "ProfessionalWiki\\RedHerb\\RedHerbHooks::onNeoWikiRegistration",
 		"NeoWikiGetFrontendModules": "RedHerbFrontendModulesHook",
 		"SidebarBeforeOutput": "RedHerbSidebarHook"
 	},
-
 	"HookHandlers": {
 		"RedHerbFrontendModulesHook": {
 			"class": "ProfessionalWiki\\RedHerb\\RedHerbFrontendModulesHook"
@@ -43,7 +35,6 @@
 			"class": "ProfessionalWiki\\RedHerb\\RedHerbSidebarHook"
 		}
 	},
-
 	"SpecialPages": {
 		"RedHerbSubjectFinder": {
 			"class": "ProfessionalWiki\\RedHerb\\Specials\\SpecialRedHerbSubjectFinder"
@@ -52,14 +43,20 @@
 			"class": "ProfessionalWiki\\RedHerb\\Specials\\SpecialRedHerbContentPageCount"
 		}
 	},
-
 	"ResourceModules": {
 		"ext.redherb-subject-finder": {
 			"class": "MediaWiki\\ResourceLoader\\CodexModule",
 			"localBasePath": "resources/subjectFinder",
 			"remoteExtPath": "NeoWiki/tests/RedHerb/resources/subjectFinder",
-			"dependencies": [ "vue", "ext.neowiki" ],
-			"codexComponents": [ "CdxField", "CdxTextInput", "CdxTooltip" ],
+			"dependencies": [
+				"vue",
+				"ext.neowiki"
+			],
+			"codexComponents": [
+				"CdxField",
+				"CdxTextInput",
+				"CdxTooltip"
+			],
 			"packageFiles": [
 				"init.js",
 				"SubjectFinderPanel.vue"
@@ -78,8 +75,17 @@
 			"class": "MediaWiki\\ResourceLoader\\CodexModule",
 			"localBasePath": "resources/createSubject",
 			"remoteExtPath": "NeoWiki/tests/RedHerb/resources/createSubject",
-			"dependencies": [ "vue", "ext.neowiki" ],
-			"codexComponents": [ "CdxButton", "CdxDialog", "CdxField", "CdxTextInput", "CdxTooltip" ],
+			"dependencies": [
+				"vue",
+				"ext.neowiki"
+			],
+			"codexComponents": [
+				"CdxButton",
+				"CdxDialog",
+				"CdxField",
+				"CdxTextInput",
+				"CdxTooltip"
+			],
 			"packageFiles": [
 				"init.js",
 				"CreateSubjectDialog.vue",
@@ -99,8 +105,17 @@
 			"class": "MediaWiki\\ResourceLoader\\CodexModule",
 			"localBasePath": "resources/editMainSubject",
 			"remoteExtPath": "NeoWiki/tests/RedHerb/resources/editMainSubject",
-			"dependencies": [ "vue", "ext.neowiki" ],
-			"codexComponents": [ "CdxButton", "CdxDialog", "CdxField", "CdxTextInput", "CdxTooltip" ],
+			"dependencies": [
+				"vue",
+				"ext.neowiki"
+			],
+			"codexComponents": [
+				"CdxButton",
+				"CdxDialog",
+				"CdxField",
+				"CdxTextInput",
+				"CdxTooltip"
+			],
 			"packageFiles": [
 				"init.js",
 				"EditMainSubjectDialog.vue",
@@ -166,6 +181,5 @@
 			]
 		}
 	},
-
 	"manifest_version": 2
 }

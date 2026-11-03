@@ -18,24 +18,8 @@
 			:data-mw-neowiki-subject-id="idOf( subject )"
 			@click="select( subject )"
 		>
-			<span
-				v-if="nameOf( subject ) !== null"
-				class="ext-neowiki-open-subject-list__name"
-			>{{ nameOf( subject ) }}</span>
-			<span
-				v-else
-				class="ext-neowiki-open-subject-list__name ext-neowiki-open-subject-list__name--unlabeled"
-			>{{ $i18n( 'neowiki-subject-no-label' ).text() }}</span>
-			<SchemaNameDisplay
-				v-if="schemaNameToShow( subject ) !== null"
-				class="ext-neowiki-open-subject-list__schema"
-				:schema-name="schemaNameToShow( subject )!"
-				link="none"
-			/>
-			<UnsavedDot
-				v-if="isUnsaved( subject )"
-				class="ext-neowiki-open-subject-list__unsaved"
-			/>
+			<span class="ext-neowiki-open-subject-list__name">{{ displayName( subject ) }}</span>
+			<UnsavedDot v-if="isUnsaved( subject )" />
 		</li>
 	</ul>
 </template>
@@ -43,9 +27,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import UnsavedDot from '@/components/common/UnsavedDot.vue';
-import SchemaNameDisplay from '@/components/common/SchemaNameDisplay.vue';
 import { subjectDisplayName } from '@/presentation/subjectDisplayName.ts';
-import { schemaNameToShow } from '@/presentation/schemaNameToShow.ts';
 import { Subject } from '@/domain/Subject.ts';
 import { SubjectId } from '@/domain/SubjectId.ts';
 
@@ -65,12 +47,8 @@ function idOf( subject: Subject ): string {
 	return subject.getId().text;
 }
 
-// Null for a Subject nobody named, which other surfaces show under its id. Here the row says so in
-// words instead, as the label field beside it does.
-function nameOf( subject: Subject ): string | null {
-	return subject.hasGeneratedDisplayName() && subject.getHostSubject() === null ?
-		null :
-		subjectDisplayName( subject );
+function displayName( subject: Subject ): string {
+	return subjectDisplayName( subject );
 }
 
 function isActive( subject: Subject ): boolean {
@@ -119,23 +97,21 @@ function optionAt( index: number ): HTMLElement | undefined {
 
 .ext-neowiki-open-subject-list {
 	box-sizing: @box-sizing-base;
+	/* A panel of dense rows rather than body text, so it sets its own base a step down. */
+	font-size: @font-size-small;
 	margin: 0;
 	padding: 0;
 	list-style: none;
 
-	/* The row reaches the dialog's edge, so the space before its name is the dialog's own gutter.
-		The unsaved dot hangs in that space, in line with the other dots and moving nothing when it
-		appears. */
 	&__item {
 		box-sizing: @box-sizing-base;
-		position: relative;
-		display: grid;
-		grid-template-columns: minmax( 0, 1fr );
+		display: flex;
 		align-items: center;
-		gap: @spacing-12;
-		padding: @spacing-50 @spacing-100 @spacing-50 @spacing-150;
-		border-start-end-radius: @border-radius-base;
-		border-end-end-radius: @border-radius-base;
+		gap: @spacing-25;
+		min-height: @size-200;
+		/* The block padding is absorbed by min-height until a row's name takes two lines. */
+		padding: @spacing-12 @spacing-35;
+		border-radius: @border-radius-base;
 		cursor: pointer;
 		transition-property: @transition-property-base;
 		transition-duration: @transition-duration-base;
@@ -149,10 +125,8 @@ function optionAt( index: number ): HTMLElement | undefined {
 			color: @color-emphasized;
 		}
 
-		/* Inside the row: the scroller around the list clips at the dialog's edge. */
 		&:focus-visible {
 			outline: @border-width-thick solid @outline-color-progressive--focus;
-			outline-offset: -@border-width-thick;
 		}
 
 		/* Codex's selected-menu-item state: background and colour, and no weight — a weight
@@ -164,29 +138,12 @@ function optionAt( index: number ): HTMLElement | undefined {
 		}
 	}
 
-	/* A long name wraps rather than giving way at its end: the rows are few, so there is room.
-		Past two lines it does give way. */
+	/* Rows keep a common height, so a name gives way at its end. */
 	&__name {
-		display: -webkit-box;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 2;
+		min-width: 0;
 		overflow: hidden;
-		overflow-wrap: anywhere;
-
-		&--unlabeled {
-			color: @color-subtle;
-		}
-	}
-
-	&__schema {
-		justify-self: start;
-	}
-
-	/* On the name's first line, however many it wraps to. */
-	&__unsaved {
-		position: absolute;
-		inset-inline-start: @spacing-50;
-		inset-block-start: calc( @spacing-50 + ( 1lh - @size-50 ) / 2 );
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 }
 </style>

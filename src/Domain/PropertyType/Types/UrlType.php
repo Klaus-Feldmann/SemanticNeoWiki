@@ -12,6 +12,8 @@ use ProfessionalWiki\NeoWiki\Domain\Validation\Severity;
 use ProfessionalWiki\NeoWiki\Domain\Validation\Violation;
 use ProfessionalWiki\NeoWiki\Domain\Value\NeoValue;
 use ProfessionalWiki\NeoWiki\Domain\Value\StringValue;
+use ProfessionalWiki\NeoWiki\Domain\Value\UrlValue;
+use MediaWiki\Title\Title;
 use ProfessionalWiki\NeoWiki\Domain\Value\ValueType;
 
 class UrlType implements PropertyType {
@@ -39,7 +41,7 @@ class UrlType implements PropertyType {
 	}
 
 	public function getValueType(): ValueType {
-		return ValueType::String;
+		return ValueType::Url;
 	}
 
 	public function getDisplayAttributeNames(): array {
@@ -54,7 +56,7 @@ class UrlType implements PropertyType {
 	 * @return Violation[]
 	 */
 	public function validate( NeoValue $value, PropertyDefinition $definition ): array {
-		if ( !$value instanceof StringValue ) {
+		if ( !$value instanceof StringValue && !$value instanceof UrlValue ) {
 			return [];
 		}
 
@@ -62,8 +64,9 @@ class UrlType implements PropertyType {
 			return [];
 		}
 
+		$strings = $value instanceof UrlValue ? $value->urls() : $value->strings;
 		$hasContent = false;
-		foreach ( $value->strings as $part ) {
+		foreach ( $strings as $part ) {
 			if ( trim( $part ) !== '' ) {
 				$hasContent = true;
 				break;
@@ -76,7 +79,7 @@ class UrlType implements PropertyType {
 
 		$violations = [];
 
-		foreach ( $value->strings as $index => $part ) {
+		foreach ( $strings as $index => $part ) {
 			$url = trim( $part );
 			if ( $url !== '' && !self::isValidUrl( $url ) ) {
 				$violations[] = new Violation(
@@ -88,12 +91,23 @@ class UrlType implements PropertyType {
 			}
 		}
 
+		$uniqueParts = $value instanceof UrlValue ? array_map( static fn ( array $entry ): string => json_encode( $entry, JSON_THROW_ON_ERROR ), $value->parts ) : $strings;
 		if ( $definition->enforcesUniqueValues()
-			&& count( array_unique( $value->strings ) ) !== count( $value->strings )
+			&& count( array_unique( $uniqueParts ) ) !== count( $uniqueParts )
 		) {
 			$violations[] = new Violation( propertyName: null, code: 'unique', severity: $definition->severityOf( 'uniqueItems' ) );
 		}
 
+		if ( $value instanceof UrlValue ) {
+			foreach ( $value->parts as $index => $entry ) {
+				if ( isset( $entry['captionPage'] ) ) {
+					$title = Title::newFromText( $entry['captionPage'] );
+					if ( $title === null || $title->isExternal() || !$title->canExist() ) {
+						$violations[] = new Violation( propertyName: null, code: 'invalid-url-caption-page', valuePartIndex: $index, severity: Severity::Error );
+					}
+				}
+			}
+		}
 		return $violations;
 	}
 
@@ -102,7 +116,7 @@ class UrlType implements PropertyType {
 	}
 
 	public function searchText( NeoValue $value, ?PropertyDefinition $definition ): array {
-		return $value instanceof StringValue ? $value->strings : [];
+		return $value instanceof UrlValue ? array_merge( ...array_map( 'array_values', $value->parts ?: [ [] ] ) ) : ( $value instanceof StringValue ? $value->strings : [] );
 	}
 
 }

@@ -25,7 +25,7 @@ class RebuildPublishedSubjectIndex extends LoggedUpdateMaintenance {
 		parent::__construct();
 
 		$this->setBatchSize( DatabasePublishedSubjectIndexRebuilder::DEFAULT_BATCH_SIZE );
-		$this->requireExtension( 'NeoWiki' );
+		$this->requireExtension( 'SemanticNeoWiki' );
 		$this->addDescription(
 			'Rebuilds the published Subject index, which the Subject lists, relation suggestions and Subject ' .
 			'counts read, from the revision every page publishes. Run this after merging page histories, which ' .

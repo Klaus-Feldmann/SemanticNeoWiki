@@ -74,41 +74,19 @@ Requirements:
 These extensions are recommended. NeoWiki runs without them, but you lose the matching functionality:
 
 - **Scribunto** adds the Lua API and its `nw.*` functions.
-- **CodeEditor** adds JSON syntax highlighting when you edit Schema, Layout, and Mapping pages. It needs **WikiEditor**.
+- **CodeEditor** adds JSON syntax highlighting when you edit Schema, Layout, and Mapping pages.
 - **ParserFunctions** is commonly used alongside NeoWiki's parser functions.
 
 ### 1. Install the extension
 
-Run this from the MediaWiki root. If your wiki has no `composer.local.json` yet, as after a tarball install, first run
-`cp composer.local.json-sample composer.local.json`.
+Run this from the MediaWiki root:
 
 ```sh
 COMPOSER=composer.local.json composer require --no-update neowiki/neowiki:^0.1
-composer update --no-dev -o
+composer update neowiki/neowiki --no-dev -o
 ```
 
 This installs the newest 0.1 release at `extensions/NeoWiki/`.
-
-#### If your wiki runs Wikibase
-
-Wikibase requires version 1 of `psr/simple-cache` and NeoWiki needs version 3, so `composer update` fails. Patch
-Wikibase from the MediaWiki root. On MediaWiki 1.43:
-
-```sh
-COMPOSER=extensions/Wikibase/composer.json composer require --no-update "psr/simple-cache:^1.0.1 || ^3.0"
-curl -fsSL https://raw.githubusercontent.com/ProfessionalWiki/NeoWiki/master/patches/wikibase-simple-cache-1.43.patch | patch -p1 -d extensions/Wikibase
-composer update --no-dev -o
-```
-
-On MediaWiki 1.44 and later:
-
-```sh
-COMPOSER=extensions/Wikibase/composer.json composer require --no-update "psr/simple-cache:^1.0.1 || ^3.0"
-curl -fsSL https://raw.githubusercontent.com/ProfessionalWiki/NeoWiki/master/patches/wikibase-simple-cache.patch | patch -p1 -d extensions/Wikibase
-composer update --no-dev -o
-```
-
-Run these again after each Wikibase update.
 
 ### 2. Load the extension
 
@@ -119,7 +97,6 @@ wfLoadExtension( 'NeoWiki' );
 
 // Recommended soft dependencies, unless your wiki already loads them.
 wfLoadExtension( 'Scribunto' );
-wfLoadExtension( 'WikiEditor' );
 wfLoadExtension( 'CodeEditor' );
 wfLoadExtension( 'ParserFunctions' );
 ```
@@ -175,8 +152,6 @@ Master holds the changes not yet in a release. To run it:
   ```json
   { "extra": { "merge-plugin": { "include": [ "extensions/NeoWiki/composer.json" ] } } }
   ```
-
-  On a wiki that runs Wikibase, this fails until you [patch Wikibase](#if-your-wiki-runs-wikibase).
 
   Master holds no frontend bundle, so build it, with Node.js 24 or later:
 
@@ -330,9 +305,6 @@ $wgNeoWikiSparqlStores = [
 		// Optional: sent as an HTTP Bearer token (e.g. a QLever access token) on both update and
 		// query requests — QLever only requires it for updates, but a read-protected store needs it too.
 		'accessToken' => 'SECRET',
-		// Optional: how long one page's update may take before it counts as failed. Defaults to 10;
-		// raise it for a store that is slow to answer.
-		'updateTimeoutSeconds' => 10,
 		// Optional: the RDF vocabulary written to this store. Defaults to 'native'; otherwise a
 		// Mapping page title without the prefix ('EDM' for Mapping:EDM). As with any page title,
 		// only the first letter is case-insensitive.

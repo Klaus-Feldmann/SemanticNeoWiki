@@ -134,9 +134,9 @@ class OnExtensionRegistrationTest extends TestCase {
 	public function testBadgeBeforeMediaWiki144IsTheFullBadgeOnly(): void {
 		$this->assertSame(
 			[
-				'src' => '/w/extensions/NeoWiki/resources/images/poweredby_neowiki.svg',
-				'url' => 'https://neowiki.ai/',
-				'alt' => 'Powered by NeoWiki',
+				'src' => '/w/extensions/SemanticNeoWiki/resources/images/poweredby_neowiki.svg',
+				'url' => 'https://github.com/Klaus-Feldmann/SemanticNeoWiki',
+				'alt' => 'Powered by SemanticNeoWiki (based on NeoWiki)',
 				'lang' => 'en',
 			],
 			NeoWikiExtension::poweredByBadge( '/w/extensions', '1.43.8' )
@@ -146,16 +146,16 @@ class OnExtensionRegistrationTest extends TestCase {
 	public function testBadgeFromMediaWiki144ShowsTheCompactIconOnNarrowScreens(): void {
 		$this->assertSame(
 			[
-				'src' => '/w/extensions/NeoWiki/resources/images/poweredby_neowiki_compact.svg',
-				'url' => 'https://neowiki.ai/',
-				'alt' => 'Powered by NeoWiki',
+				'src' => '/w/extensions/SemanticNeoWiki/resources/images/poweredby_neowiki_compact.svg',
+				'url' => 'https://github.com/Klaus-Feldmann/SemanticNeoWiki',
+				'alt' => 'Powered by SemanticNeoWiki (based on NeoWiki)',
 				'lang' => 'en',
 				'width' => 25,
 				'height' => 25,
 				'sources' => [
 					[
 						'media' => '(min-width: 500px)',
-						'srcset' => '/w/extensions/NeoWiki/resources/images/poweredby_neowiki.svg',
+						'srcset' => '/w/extensions/SemanticNeoWiki/resources/images/poweredby_neowiki.svg',
 						'width' => 88,
 						'height' => 31,
 					],
@@ -242,7 +242,7 @@ class OnExtensionRegistrationTest extends TestCase {
 	}
 
 	private function fileBehind( string $url ): string {
-		return dirname( __DIR__, 2 ) . str_replace( '/w/extensions/NeoWiki', '', $url );
+		return dirname( __DIR__, 2 ) . str_replace( '/w/extensions/SemanticNeoWiki', '', $url );
 	}
 
 	private function givenOnlyTheMediaWikiBadge(): void {

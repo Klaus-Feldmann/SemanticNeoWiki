@@ -71,7 +71,6 @@ class NeoWikiConfigTest extends TestCase {
 				accessToken: null,
 				projection: 'native',
 				name: 'native',
-				updateTimeoutSeconds: 10,
 			),
 			$this->newStore( 'https://qlever.example/api', 'EDM' )
 		);
@@ -88,7 +87,6 @@ class NeoWikiConfigTest extends TestCase {
 				accessToken: null,
 				projection: 'EDM',
 				name: 'EDM',
-				updateTimeoutSeconds: 10,
 			)
 		);
 
@@ -126,7 +124,6 @@ class NeoWikiConfigTest extends TestCase {
 			accessToken: null,
 			projection: $projection,
 			name: $projection,
-			updateTimeoutSeconds: 10,
 		);
 	}
 

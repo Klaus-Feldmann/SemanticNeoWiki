@@ -16,11 +16,12 @@ class UrlPropertyTest extends TestCase {
 
 	use JsonSchemaAssertions;
 
-	public function testValueIsAnArrayOfStringsMatchingTheUrlPattern(): void {
-		$this->assertSame(
-			[ 'type' => 'array', 'items' => [ 'type' => 'string', 'pattern' => UrlType::URL_PATTERN ] ],
-			TestProperty::buildUrl( multiple: true )->toJsonSchema()
-		);
+	public function testValueSupportsLegacyStringsAndStructuredEntries(): void {
+		$schema = TestProperty::buildUrl( multiple: true )->toJsonSchema();
+		$this->assertTrue( $this->jsonSchemaAccepts( $schema, [ 'https://example.org' ] ) );
+		$this->assertTrue( $this->jsonSchemaAccepts( $schema, [ [ 'url' => 'https://example.org', 'label' => 'Title', 'caption' => 'Source', 'captionPage' => 'Vermerk:Quelle' ] ] ) );
+		$this->assertFalse( $this->jsonSchemaAccepts( $schema, [ [ 'url' => 'https://example.org', 'label' => 7 ] ] ) );
+		$this->assertFalse( $this->jsonSchemaAccepts( $schema, [ [ 'url' => 'https://example.org', 'unknown' => 'Do not lose' ] ] ) );
 	}
 
 	public function testValueDoesNotClaimTheUriFormat(): void {
@@ -32,14 +33,9 @@ class UrlPropertyTest extends TestCase {
 	}
 
 	public function testUniqueItemsConstraintForbidsDuplicateParts(): void {
-		$this->assertSame(
-			[
-				'type' => 'array',
-				'items' => [ 'type' => 'string', 'pattern' => UrlType::URL_PATTERN ],
-				'uniqueItems' => true,
-			],
-			TestProperty::buildUrl( multiple: true, uniqueItems: true )->toJsonSchema()
-		);
+		$schema = TestProperty::buildUrl( multiple: true, uniqueItems: true )->toJsonSchema();
+		$this->assertFalse( $this->jsonSchemaAccepts( $schema, [ [ 'url' => 'https://example.org', 'label' => 'One' ], [ 'url' => 'https://example.org', 'label' => 'One' ] ] ) );
+		$this->assertTrue( $this->jsonSchemaAccepts( $schema, [ [ 'url' => 'https://example.org', 'label' => 'One' ], [ 'url' => 'https://example.org', 'label' => 'Two' ] ] ) );
 	}
 
 	/**

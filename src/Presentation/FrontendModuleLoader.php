@@ -44,12 +44,11 @@ class FrontendModuleLoader {
 			'wgNeoWikiSubjectCountsAvailable' => $out->getAuthority()->isAllowed( AuthorityBasedRawQueryAuthorizer::RIGHT ),
 		] );
 
-		/** @var string[] $modules populated by hook handlers */
+		/** @var list<string> $modules populated by hook handlers */
 		$modules = [];
 		$this->hookContainer->run( 'NeoWikiGetFrontendModules', [ &$modules, $out, $skin ] );
 
 		$out->addModules( $modules );
-		$out->addJsConfigVars( 'wgNeoWikiFrontendModules', array_values( $modules ) );
 	}
 
 	/**

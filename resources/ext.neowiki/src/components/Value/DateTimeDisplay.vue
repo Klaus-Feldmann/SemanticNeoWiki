@@ -1,17 +1,17 @@
 <template>
-	<time
+	<LinkedCalendarDate
 		v-if="parsedIso !== null"
-		:datetime="parsedIso"
-	>
-		{{ formattedValue }}
-	</time>
+		:iso="parsedIso"
+		:property="property"
+		:with-time="true" />
 	<span v-else>{{ rawValue }}</span>
 </template>
 
 <script setup lang="ts">
+import LinkedCalendarDate from './LinkedCalendarDate.vue';
 import { computed } from 'vue';
 import { ValueType } from '@/domain/Value.ts';
-import { DateTimeProperty, formatDateTimeForDisplay, parseStrictDateTime } from '@/domain/propertyTypes/DateTime.ts';
+import { DateTimeProperty, parseStrictDateTime } from '@/domain/propertyTypes/DateTime.ts';
 import { ValueDisplayProps } from '@/components/Value/ValueDisplayContract.ts';
 
 const props = defineProps<ValueDisplayProps<DateTimeProperty>>();
@@ -27,8 +27,4 @@ const parsedIso = computed( (): string | null => {
 	const raw = rawValue.value;
 	return raw !== '' && parseStrictDateTime( raw ) !== null ? raw : null;
 } );
-
-const formattedValue = computed( (): string => (
-	parsedIso.value === null ? '' : formatDateTimeForDisplay( parsedIso.value )
-) );
 </script>

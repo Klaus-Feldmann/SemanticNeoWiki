@@ -41,12 +41,12 @@
 		</div>
 		<div class="ext-neowiki-infobox__content">
 			<div
-				v-for="resolved in resolvedProperties"
-				:key="resolved.propertyDefinition.name.toString()"
+				v-for="( resolved, rowIndex ) in displayRows"
+				:key="`${ resolved.sourcePropertyName }-${ rowIndex }`"
 				class="ext-neowiki-infobox__item"
 			>
 				<div class="ext-neowiki-infobox__property">
-					{{ resolved.propertyDefinition.name.toString() }}
+					<PropertyLabel :property="resolved.propertyDefinition" />
 				</div>
 				<div class="ext-neowiki-infobox__value">
 					<component
@@ -62,6 +62,8 @@
 </template>
 
 <script setup lang="ts">
+import { expandUrlDisplayRows } from '@/presentation/urlDisplayRows';
+import PropertyLabel from '@/components/common/PropertyLabel.vue';
 import { Component, computed, provide } from 'vue';
 import { Subject } from '@/domain/Subject.ts';
 import { Schema } from '@/domain/Schema.ts';
@@ -129,6 +131,8 @@ const layout = computed( () => {
 	}
 	return layoutStore.getLayout( props.layoutName );
 } );
+
+const displayRows = computed( () => expandUrlDisplayRows( resolvedProperties.value ) );
 
 const resolvedProperties = computed( (): ResolvedProperty[] => {
 	if ( !schema.value || !subject.value ) {
@@ -222,21 +226,13 @@ const resolvedProperties = computed( (): ResolvedProperty[] => {
 }
 
 // TODO: This is a temporary fix until we implement Views.
-// Parsoid wraps each section in a <section>, so later headings need not be siblings of the View.
 @media ( min-width: @min-width-breakpoint-tablet ) {
 	.ext-neowiki-view ~ h2,
 	.ext-neowiki-view ~ h3,
 	.ext-neowiki-view ~ h4,
 	.ext-neowiki-view ~ h5,
 	.ext-neowiki-view ~ h6,
-	.ext-neowiki-view ~ .mw-heading,
-	.ext-neowiki-view ~ section > .mw-heading {
-		clear: both;
-	}
-
-	// A rule of its own: a browser without :has() drops every selector in a list that holds one.
-	// Like the rules above, it skips a View inside a wrapper.
-	section:has( > .ext-neowiki-view, section > .ext-neowiki-view ) ~ section > .mw-heading {
+	.ext-neowiki-view ~ .mw-heading {
 		clear: both;
 	}
 }

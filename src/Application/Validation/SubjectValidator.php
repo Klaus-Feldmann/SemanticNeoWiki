@@ -119,6 +119,7 @@ readonly class SubjectValidator {
 		PropertyDefinition $definition,
 		SubjectMap $relationTargets
 	): array {
+		if ( $definition->isSchemaExecution() ) { return []; }
 		$propertyName = $statement->getPropertyName();
 
 		// Writer's-schema drift (ADR 11 / ADR 12): the Schema property's type

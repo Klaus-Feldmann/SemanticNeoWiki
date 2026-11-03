@@ -37,7 +37,6 @@ A single-wiki install has just one `wiki_id`.
 | `id` | integer | MediaWiki page ID (unique per wiki) |
 | `name` | string | Full page title, including the namespace prefix (e.g. `Help:Installation`) |
 | `namespaceId` | integer | MediaWiki namespace ID of the page (e.g. `0` for the main namespace, `12` for Help) |
-| `dbKey` | string | Page title without the namespace prefix, with underscores for spaces (e.g. `Installation_guide` for `Help:Installation guide`) |
 | `creationTime` | datetime | When the page was created |
 | `lastUpdated` | datetime | When the page was last modified |
 | `lastEditor` | string | Username of the last editor, empty where the wiki hides it |
@@ -153,12 +152,11 @@ When a Subject is removed while other Subjects still reference it, its node is k
 
 Relation edges to Subjects from another Source ([ADR 23](../adr/023-subject-sources.md)) are not projected yet.
 
-## Constraints and indexes
+## Constraints
 
 Two node uniqueness constraints apply: `(wiki_id, id)` on `:Page` nodes
-([ADR 22](../adr/022-multi-wiki-node-identity.md)) and `id` on `:Subject` nodes. An index on `(namespaceId, dbKey)`
-serves finding a `:Page` node by its title. All three are created by `update.php` and by `RebuildGraphDatabases.php`,
-not by the incremental per-edit projection.
+([ADR 22](../adr/022-multi-wiki-node-identity.md)) and `id` on `:Subject` nodes. Both are created by `update.php` and
+by `RebuildGraphDatabases.php`, not by the incremental per-edit projection.
 
 Relation (edge) `id` values carry no uniqueness constraint
 ([#351](https://github.com/ProfessionalWiki/NeoWiki/issues/351)).

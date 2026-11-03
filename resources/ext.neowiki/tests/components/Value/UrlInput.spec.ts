@@ -1,258 +1,86 @@
-import { VueWrapper } from '@vue/test-utils';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { ref } from 'vue';
+import type { VueWrapper } from '@vue/test-utils';
+import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
+import { CdxTextInput, CdxField, CdxButton } from '@wikimedia/codex';
 import UrlInput from '@/components/Value/UrlInput.vue';
-import NeoMultiTextInput from '@/components/common/NeoMultiTextInput.vue';
-import { CdxField, CdxTextInput, ValidationMessages } from '@wikimedia/codex';
-import { Icon } from '@wikimedia/codex-icons';
-import { newStringValue } from '@/domain/Value';
-import { UrlProperty, UrlType, newUrlProperty } from '@/domain/propertyTypes/Url.ts';
-import { createTestWrapper } from '../../VueTestHelpers.ts';
-import { ValueInputExposes, ValueInputProps } from '@/components/Value/ValueInputContract.ts';
-import { useStringValueInput } from '@/composables/useStringValueInput.ts';
-
-const mockOnInput = vi.fn();
-const mockGetCurrentValue = vi.fn();
-const mockDisplayValues = ref<string[]>( [] );
-const mockFieldMessages = ref<ValidationMessages>( {} );
-const mockInputMessages = ref<ValidationMessages[]>( [] );
-const mockStartIcon = ref<Icon | undefined>( undefined );
-
-// TODO: Should we move this into a mock file?
-vi.mock( '@/composables/useStringValueInput.ts', () => ( {
-	useStringValueInput: vi.fn( () => ( {
-		displayValues: mockDisplayValues,
-		fieldMessages: mockFieldMessages,
-		inputMessages: mockInputMessages,
-		onInput: mockOnInput,
-		getCurrentValue: mockGetCurrentValue,
-		startIcon: mockStartIcon,
-	} ) ),
-} ) );
-
-describe( 'UrlInput', () => {
-	function newWrapper( props: Partial<ValueInputProps<UrlProperty>> = {} ): VueWrapper<InstanceType<typeof UrlInput>> {
-		return createTestWrapper( UrlInput, {
-			modelValue: undefined,
-			label: 'URL Label',
-			property: newUrlProperty( { name: 'testUrlProp', type: UrlType.typeName, multiple: false } ),
-			...props,
-		} );
-	}
-
-	beforeEach( () => {
-		vi.clearAllMocks();
-		mockDisplayValues.value = [];
-		mockFieldMessages.value = {};
-		mockInputMessages.value = [];
-		mockStartIcon.value = undefined;
-		mockGetCurrentValue.mockReturnValue( undefined );
-
-		vi.stubGlobal( 'mw', {
-			message: vi.fn( ( str: string ) => ( {
-				text: () => str,
-				parse: () => str,
-			} ) ),
-		} );
+import UrlDisplay from '@/components/Value/UrlDisplay.vue';
+import { newStringValue, newUrlValue, valueToJson } from '@/domain/Value';
+import { newUrlProperty } from '@/domain/propertyTypes/Url';
+import { createTestWrapper } from '../../VueTestHelpers';
+import type { ValueInputExposes } from '@/components/Value/ValueInputContract';
+import type { UrlValue } from '@/domain/Value';
+beforeEach( () => vi.stubGlobal( 'mw', { msg: ( key: string ) => key, message: ( key: string ) => ( { text: () => key } ), util: { getUrl: ( title: string ) => '/wiki/' + encodeURIComponent( title ) } } ) );
+afterEach( () => vi.unstubAllGlobals() );
+function wrapper( value = newUrlValue( [] ), multiple = false ): VueWrapper<InstanceType<typeof UrlInput>> {
+	return createTestWrapper( UrlInput, { modelValue: value, property: newUrlProperty( { name: 'Source', multiple } ), label: 'Source' } );
+}
+describe( 'Structured URL input', () => {
+	it( 'shows one empty entry with four input fields', () => {
+		const w = wrapper();
+		expect( w.findAllComponents( CdxTextInput ) ).toHaveLength( 4 );
 	} );
-
-	describe( 'Initialization and Prop Passing', () => {
-		it( 'calls useStringValueInput with correct arguments', () => {
-			const testProperty = newUrlProperty( { name: 'customUrlProp', multiple: true, required: true } );
-			const testModelValue = newStringValue( 'https://initial.url' );
-			newWrapper( {
-				property: testProperty,
-				modelValue: testModelValue,
-			} );
-
-			expect( useStringValueInput ).toHaveBeenCalledTimes( 1 );
-			const useStringValueInputArgs = ( useStringValueInput as import( 'vitest' ).Mock ).mock.calls[ 0 ];
-			expect( useStringValueInputArgs[ 0 ].value ).toEqual( testModelValue );
-			expect( useStringValueInputArgs[ 1 ].value ).toEqual( testProperty );
-			expect( useStringValueInputArgs[ 3 ] ).toBeInstanceOf( UrlType );
-		} );
+	it( 'preserves all parts after reopening', () => {
+		const entry = { url: 'https://example.org/?a=1&b=2#x', label: 'Article', caption: 'Website', captionPage: 'Vermerk:Quelle' };
+		const w = wrapper( newUrlValue( [ entry ] ) );
+		expect( valueToJson( ( w.vm as unknown as ValueInputExposes ).getCurrentValue()! ) ).toEqual( [ entry ] );
+		expect( w.findAllComponents( CdxTextInput ).map( ( i ) => i.props( 'modelValue' ) ) ).toEqual( Object.values( entry ) );
 	} );
-
-	describe( 'Rendering based on props and composable state', () => {
-		it( 'renders a CdxField with the label and optional status', () => {
-			const wrapper = newWrapper( {
-				label: 'My Awesome URL Label',
-				property: newUrlProperty( { required: false } ),
-			} );
-			const field = wrapper.findComponent( CdxField );
-
-			expect( field.exists() ).toBe( true );
-			expect( field.props( 'isFieldset' ) ).toBe( true );
-			expect( wrapper.text() ).toContain( 'My Awesome URL Label' );
-			expect( field.props( 'optional' ) ).toBe( true );
-		} );
-
-		it( 'renders CdxTextInput for single URL value', () => {
-			mockDisplayValues.value = [ 'https://single.url' ];
-			mockStartIcon.value = 'url-icon';
-			const wrapper = newWrapper( {
-				property: newUrlProperty( { multiple: false } ),
-			} );
-
-			expect( wrapper.findComponent( CdxTextInput ).exists() ).toBe( true );
-			expect( wrapper.findComponent( NeoMultiTextInput ).exists() ).toBe( false );
-			const textInput = wrapper.findComponent( CdxTextInput );
-			expect( textInput.props( 'modelValue' ) ).toBe( 'https://single.url' );
-			expect( textInput.props( 'startIcon' ) ).toBe( 'url-icon' );
-		} );
-
-		it( 'renders NeoMultiTextInput for multiple URL values', () => {
-			mockDisplayValues.value = [ 'https://url1.com', 'https://url2.com' ];
-			mockInputMessages.value = [ {}, { error: 'An error' } ];
-			mockStartIcon.value = 'multi-url-icon';
-			const wrapper = newWrapper( {
-				property: newUrlProperty( { multiple: true } ),
-			} );
-
-			expect( wrapper.findComponent( NeoMultiTextInput ).exists() ).toBe( true );
-			const multiInput = wrapper.findComponent( NeoMultiTextInput );
-			expect( multiInput.props( 'modelValue' ) ).toEqual( [ 'https://url1.com', 'https://url2.com' ] );
-			expect( multiInput.props( 'messages' ) ).toEqual( [ {}, { error: 'An error' } ] );
-			expect( multiInput.props( 'startIcon' ) ).toBe( 'multi-url-icon' );
-			expect( multiInput.props( 'label' ) ).toBe( 'URL Label' );
-		} );
-
-		it( 'passes fieldMessages to CdxField and sets status to error if fieldMessages.error exists (single input)', () => {
-			mockFieldMessages.value = { error: 'Main URL field error' };
-			const wrapper = newWrapper( {
-				property: newUrlProperty( { multiple: false } ),
-			} );
-			const field = wrapper.findComponent( CdxField );
-
-			expect( field.props( 'messages' ) ).toEqual( { error: 'Main URL field error' } );
-			expect( field.props( 'status' ) ).toBe( 'error' );
-		} );
-
-		it( 'sets status to warning when fieldMessages carries a warning (single input)', () => {
-			mockFieldMessages.value = { warning: 'Advisory only' };
-			const wrapper = newWrapper( {
-				property: newUrlProperty( { multiple: false } ),
-			} );
-			const field = wrapper.findComponent( CdxField );
-
-			expect( field.props( 'messages' ) ).toEqual( { warning: 'Advisory only' } );
-			expect( field.props( 'status' ) ).toBe( 'warning' );
-		} );
-
-		it( 'sets CdxField status to default if no fieldMessages.error (single input)', () => {
-			const wrapper = newWrapper( {
-				property: newUrlProperty( { multiple: false } ),
-			} );
-			const field = wrapper.findComponent( CdxField );
-
-			expect( field.props( 'status' ) ).toBe( 'default' );
-		} );
-
-		it( 'shows the field message of a multi-valued property', () => {
-			mockFieldMessages.value = { error: 'All values must be unique.' };
-			const wrapper = newWrapper( {
-				property: newUrlProperty( { multiple: true } ),
-			} );
-
-			expect( wrapper.text() ).toContain( 'All values must be unique.' );
-		} );
+	it( 'changes the label without replacing the URL', async () => {
+		const w = wrapper( newUrlValue( [ 'https://example.org' ] ) );
+		w.findAllComponents( CdxTextInput )[ 1 ].vm.$emit( 'update:model-value', 'Title' );
+		await w.vm.$nextTick();
+		expect( ( w.vm as unknown as ValueInputExposes ).getCurrentValue() ).toEqual( newUrlValue( [ { url: 'https://example.org', label: 'Title' } ] ) );
 	} );
-
-	describe( 'Event Handling', () => {
-		it( 'calls onInput from composable when CdxTextInput emits update:model-value (single)', async () => {
-			const wrapper = newWrapper( {
-				property: newUrlProperty( { multiple: false } ),
-			} );
-			await wrapper.findComponent( CdxTextInput ).vm.$emit( 'update:modelValue', 'https://new.single.url' );
-
-			expect( mockOnInput ).toHaveBeenCalledWith( 'https://new.single.url' );
-		} );
-
-		it( 'calls onInput from composable when NeoMultiTextInput emits update:model-value (multiple)', async () => {
-			const wrapper = newWrapper( {
-				property: newUrlProperty( { multiple: true } ),
-			} );
-			await wrapper.findComponent( NeoMultiTextInput ).vm.$emit( 'update:modelValue', [ 'https://new1.url', 'https://new2.url' ] );
-
-			expect( mockOnInput ).toHaveBeenCalledWith( [ 'https://new1.url', 'https://new2.url' ] );
-		} );
+	it( 'accepts legacy string values', () => {
+		const w = createTestWrapper( UrlInput, { modelValue: newStringValue( 'https://example.org' ), property: newUrlProperty(), label: 'Source' } );
+		expect( w.findComponent( CdxTextInput ).props( 'modelValue' ) ).toBe( 'https://example.org' );
 	} );
-
-	describe( 'Exposed Methods', () => {
-		it( 'exposes getCurrentValue from composable', () => {
-			const wrapper = newWrapper();
-			mockGetCurrentValue.mockReturnValueOnce( newStringValue( 'https://exposed.url' ) );
-
-			const exposedValue = ( wrapper.vm as unknown as ValueInputExposes ).getCurrentValue();
-			expect( mockGetCurrentValue ).toHaveBeenCalledTimes( 1 );
-			expect( exposedValue ).toEqual( newStringValue( 'https://exposed.url' ) );
-		} );
+	it( 'keeps incomplete input visible and blocks saving without losing the old value', async () => {
+		const w = wrapper( newUrlValue( [ 'https://example.org' ] ) );
+		w.findComponent( CdxTextInput ).vm.$emit( 'update:model-value', 'https://' );
+		await w.vm.$nextTick();
+		const api = w.vm as unknown as ValueInputExposes;
+		expect( api.unparseableInputMessage!() ).toBeTruthy();
+		expect( api.getCurrentValue() ).toEqual( newUrlValue( [ 'https://example.org' ] ) );
+		expect( w.findComponent( CdxTextInput ).props( 'modelValue' ) ).toBe( 'https://' );
 	} );
-
-	describe( 'Server violations (multi-value)', () => {
-		it( 'passes serverViolations to useStringValueInput as the fifth argument', () => {
-			const violation = { propertyName: 'Website', code: 'invalid-url', args: [], severity: 'error' as const, valuePartIndex: 1 };
-			newWrapper( {
-				property: newUrlProperty( { name: 'Website', multiple: true } ),
-				serverViolations: [ violation ],
-			} );
-
-			expect( useStringValueInput ).toHaveBeenCalledTimes( 1 );
-			const args = ( useStringValueInput as import( 'vitest' ).Mock ).mock.calls[ 0 ];
-			expect( args[ 4 ].value ).toEqual( [ violation ] );
-		} );
-
-		it( 'renders server violation on the matching valuePartIndex via inputMessages', () => {
-			// Composable merges server violation into inputMessages[1], mock reflects that.
-			mockInputMessages.value = [ {}, { error: 'neowiki-field-invalid-url' } ];
-			mockDisplayValues.value = [ 'https://ok.example', 'bad' ];
-			const wrapper = newWrapper( {
-				property: newUrlProperty( { name: 'Website', multiple: true } ),
-				serverViolations: [
-					{ propertyName: 'Website', code: 'invalid-url', args: [], severity: 'error', valuePartIndex: 1 },
-				],
-			} );
-
-			const multiInput = wrapper.findComponent( NeoMultiTextInput );
-			const messages = multiInput.props( 'messages' ) as { error?: string }[];
-			expect( messages[ 0 ] ).toEqual( {} );
-			expect( messages[ 1 ] ).toHaveProperty( 'error', 'neowiki-field-invalid-url' );
-		} );
-
-		it( 'emits clear-server-violation when the composable emits it for valuePartIndex 1', async () => {
-			const wrapper = newWrapper( {
-				property: newUrlProperty( { name: 'Website', multiple: true } ),
-				serverViolations: [
-					{ propertyName: 'Website', code: 'invalid-url', args: [], severity: 'error', valuePartIndex: 1 },
-				],
-			} );
-
-			const capturedEmit = ( useStringValueInput as import( 'vitest' ).Mock ).mock.calls[ 0 ][ 2 ];
-			capturedEmit( 'clear-server-violation', { propertyName: 'Website', valuePartIndex: 1 } );
-
-			await wrapper.vm.$nextTick();
-
-			expect( wrapper.emitted( 'clear-server-violation' ) ).toBeTruthy();
-			expect( wrapper.emitted( 'clear-server-violation' )![ 0 ] ).toEqual( [
-				{ propertyName: 'Website', valuePartIndex: 1 },
-			] );
-		} );
-
-		it( 'does not emit clear-server-violation for index 0 when no server violation exists there', async () => {
-			const wrapper = newWrapper( {
-				property: newUrlProperty( { name: 'Website', multiple: true } ),
-				serverViolations: [
-					// violation only at index 1, not index 0
-					{ propertyName: 'Website', code: 'invalid-url', args: [], severity: 'error', valuePartIndex: 1 },
-				],
-			} );
-
-			// The composable only calls emit('clear-server-violation') when a violation exists at
-			// the edited index. Since no violation at index 0, no clear is emitted for index 0.
-			// We simulate the composable NOT calling it for index 0 by not invoking capturedEmit.
-			await wrapper.vm.$nextTick();
-
-			expect( wrapper.emitted( 'clear-server-violation' ) ).toBeFalsy();
-		} );
+	it( 'does not drop additional information if the address is cleared', async () => {
+		const w = wrapper( newUrlValue( [ { url: 'https://example.org', label: 'Title' } ] ) );
+		w.findComponent( CdxTextInput ).vm.$emit( 'update:model-value', '' );
+		await w.vm.$nextTick();
+		expect( ( w.vm as unknown as ValueInputExposes ).unparseableInputMessage!() ).toBeTruthy();
+		expect( w.emitted( 'update:modelValue' ) ).toBeUndefined();
+	} );
+	it( 'supports adding and removing complete independent entries', async () => {
+		const w = wrapper( newUrlValue( [ { url: 'https://one.org', label: 'One' }, { url: 'https://two.org', label: 'Two' } ] ), true );
+		expect( w.findAllComponents( CdxTextInput ) ).toHaveLength( 8 );
+		await w.findAllComponents( CdxButton )[ 0 ].trigger( 'click' );
+		expect( ( ( w.vm as unknown as ValueInputExposes ).getCurrentValue() as UrlValue ).parts ).toEqual( [ { url: 'https://two.org', label: 'Two' } ] );
+		const buttons = w.findAllComponents( CdxButton );
+		await buttons[ buttons.length - 1 ].trigger( 'click' );
+		expect( w.findAllComponents( CdxTextInput ) ).toHaveLength( 8 );
+	} );
+	it( 'shows server errors and clears them on editing', async () => {
+		const w = createTestWrapper( UrlInput, { modelValue: newUrlValue( [ 'https://example.org' ] ), property: newUrlProperty( { name: 'Source' } ), serverViolations: [ { propertyName: 'Source', code: 'invalid-url', severity: 'error', valuePartIndex: 0, args: [] } ] } );
+		expect( w.findComponent( CdxField ).props( 'status' ) ).toBe( 'error' );
+		w.findAllComponents( CdxTextInput )[ 1 ].vm.$emit( 'update:model-value', 'Title' );
+		await w.vm.$nextTick();
+		expect( w.emitted( 'clear-server-violation' ) ).toBeTruthy();
+	} );
+	it( 'keeps server warning status visible', () => {
+		const w = createTestWrapper( UrlInput, { modelValue: newUrlValue( [ 'https://example.org' ] ), property: newUrlProperty( { name: 'Source' } ), serverViolations: [ { propertyName: 'Source', code: 'unique', severity: 'warning', valuePartIndex: null, args: [] } ] } );
+		expect( w.findComponent( CdxField ).props( 'status' ) ).toBe( 'warning' );
+	} );
+	it( 'renders two independent links and escapes HTML in labels', () => {
+		const w = createTestWrapper( UrlDisplay, { value: newUrlValue( [ { url: 'https://de.wikipedia.org/wiki/Regiomontanus', label: '<b>Regiomontanus</b>', caption: 'Wikipedia (de)', captionPage: 'Vermerk:Wikipedia' } ] ), property: newUrlProperty() } );
+		const links = w.findAll( 'a' );
+		expect( links ).toHaveLength( 2 );
+		expect( links[ 0 ].attributes( 'href' ) ).toContain( 'Wikipedia' );
+		expect( links[ 1 ].text() ).toBe( '<b>Regiomontanus</b>' );
+		expect( w.find( 'b' ).exists() ).toBe( false );
+	} );
+	it( 'rejects malformed records without silently losing metadata', () => {
+		expect( () => newUrlValue( [ { url: 'https://example.org', label: 7 } ] ) ).toThrow();
+		expect( () => newUrlValue( [ { url: '', label: 'Lost' } ] ) ).toThrow();
+		expect( () => newUrlValue( [ { url: 'https://example.org', other: 'Lost' } ] ) ).toThrow();
 	} );
 } );

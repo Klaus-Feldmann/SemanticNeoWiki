@@ -25,6 +25,7 @@ export function useStringValueInput<P extends MultiStringProperty>(
 	emit: ValueInputEmitFunction,
 	propertyType: PropertyType,
 	serverViolations?: Ref<readonly SubjectViolation[] | undefined>,
+	valueFactory: ( ...parts: string[] ) => StringValue = newStringValue,
 ): UseStringValueInputReturn {
 	const internalValue: Ref<StringValue | undefined> = ref( undefined );
 	const userInputValues: Ref<string[] | null> = ref( null );
@@ -149,7 +150,7 @@ export function useStringValueInput<P extends MultiStringProperty>(
 		// enforcement (e.g. changing one valid URL to "ftp://..." would be
 		// accepted because the proposed StringValue still matches the prior).
 		// newStringValue trims whitespace and filters empties.
-		const tempValue = newStringValue( ...currentInputValues );
+		const tempValue = valueFactory( ...currentInputValues );
 		const newStringValueInstance: StringValue | undefined =
 			tempValue.parts.length > 0 ? tempValue : undefined;
 

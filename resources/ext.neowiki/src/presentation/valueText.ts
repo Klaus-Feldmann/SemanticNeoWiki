@@ -12,6 +12,8 @@ import { DateTimeType, formatDateTimeForDisplay } from '@/domain/propertyTypes/D
  */
 export function valueText( property: PropertyDefinition, value: Value ): string | null {
 	switch ( value.type ) {
+		case ValueType.Url:
+			return joined( value.parts.map( ( part ) => part.label || part.url ) );
 		case ValueType.String:
 			return joined( value.parts.filter( isText ).map( ( part ) => stringText( property, part ) ) );
 		case ValueType.Number:

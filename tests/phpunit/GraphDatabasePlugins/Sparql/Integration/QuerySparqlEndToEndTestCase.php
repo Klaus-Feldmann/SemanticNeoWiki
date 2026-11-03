@@ -413,7 +413,6 @@ abstract class QuerySparqlEndToEndTestCase extends NeoWikiIntegrationTestCase {
 			MediaWikiServices::getInstance()->getHttpRequestFactory(),
 			$this->updateUrl,
 			$this->accessToken,
-			timeoutSeconds: 30,
 		) )->postUpdate( 'DROP ALL' );
 	}
 
