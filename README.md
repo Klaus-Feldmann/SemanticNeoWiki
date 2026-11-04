@@ -2,7 +2,9 @@
 
 A research-oriented, independent fork of [NeoWiki](https://github.com/ProfessionalWiki/NeoWiki): schema-based data entry, Wikidata and local Wikibase sources, optional Semantic MediaWiki annotations, knowledge graphs and AI access through MCP.
 
-**Maintainer:** Klaus Feldmann / AufEinWort · **Contact:** [info@aufeinwort.info](mailto:info@aufeinwort.info) · **Research wiki:** [aufeinwort.info](https://aufeinwort.info)
+The main purpose of this fork is to automatically generate Semantic MediaWiki (SMW) annotations from data retrieved on demand from Wikibase and/or Wikidata using selected property IDs (P-IDs), with customizable field labels that serve as SMW property names.
+
+**Maintainer:** Klaus Feldmann / AufEinWort · **Contact:** [info@aufeinwort.info](mailto:info@aufeinwort.info) · **Research wiki:** [https://aufeinwort.info/wiki/Spezial:Version aufeinwort.info]
 
 **This fork is not maintained or supported by Jeroen De Dauw or Professional Wiki.** Please report fork-specific issues in [this repository](https://github.com/Klaus-Feldmann/SemanticNeoWiki/issues), not to the original NeoWiki project. Original authorship and licenses are retained.
 
