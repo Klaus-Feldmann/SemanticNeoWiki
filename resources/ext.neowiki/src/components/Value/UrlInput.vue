@@ -63,9 +63,10 @@ import { wikiPageUrl } from '@/presentation/wikiLinks';
 import LocalPageLinkInput from '@/components/common/LocalPageLinkInput.vue';
 import { ValueInputProps, ValueInputEmits, ValueInputExposes } from '@/components/Value/ValueInputContract';
 import { preferErrorViolation, useServerViolations, violationStatus } from '@/composables/useServerViolations';
-const props = withDefaults( defineProps<ValueInputProps<UrlProperty>>(), { modelValue: undefined, label: '' } );
+const props = withDefaults( defineProps<ValueInputProps<UrlProperty>>(), { modelValue: undefined, label: '', initialValueMode: false } );
 const emit = defineEmits<ValueInputEmits>();
 const rows = ref<UrlEntry[]>( [] );
+const touched = ref<Set<number>>( new Set() );
 let lastGood: Value | undefined = props.modelValue;
 let lastEmitted: Value | undefined;
 let hasEmitted = false;
@@ -74,13 +75,15 @@ watch( () => props.modelValue, ( value ) => {
 	if ( hasEmitted && value === lastEmitted ) {
 		return;
 	}
-	lastGood = value;
+	touched.value = new Set();
 	const entries = urlEntries( value );
+	const complete = entries.filter( ( entry ) => entry.url.trim() !== '' );
+	lastGood = props.initialValueMode ? value : complete.length ? newUrlValue( complete ) : undefined;
 	rows.value = entries.length ? entries.map( ( entry ) => ( { ...entry } ) ) : [ { url: '' } ];
 }, { immediate: true } );
 const problem = computed( () => {
-	for ( const entry of rows.value ) {
-		if ( !entry.url.trim() && [ entry.label, entry.caption, entry.captionPage ].some( ( text ) => text?.trim() ) ) {
+	for ( const [ index, entry ] of rows.value.entries() ) {
+		if ( !props.initialValueMode && !entry.url.trim() && [ entry.label, entry.caption, entry.captionPage ].some( ( text ) => text?.trim() ) && ( props.property.required || touched.value.has( index ) ) ) {
 			return mw.msg( 'neowiki-url-needs-address' );
 		}
 		if ( entry.url.trim() && !isValidUrlInput( entry.url.trim() ) ) {
@@ -104,13 +107,14 @@ function changed(): void {
 	if ( problem.value ) {
 		return;
 	}
-	const value = newUrlValue( rows.value );
+	const value = newUrlValue( props.initialValueMode ? rows.value : rows.value.filter( ( entry ) => entry.url.trim() !== '' ), props.initialValueMode );
 	lastGood = value.parts.length ? value : undefined;
 	lastEmitted = lastGood;
 	hasEmitted = true;
 	emit( 'update:modelValue', lastGood );
 }
 function update( index: number, key: keyof UrlEntry, text: string | number ): void {
+	touched.value.add( index );
 	rows.value[ index ][ key ] = String( text );
 	changed();
 }
@@ -119,6 +123,7 @@ function add(): void {
 }
 function remove( index: number ): void {
 	rows.value.splice( index, 1 );
+	touched.value = new Set( [ ...touched.value ].filter( ( row ) => row !== index ).map( ( row ) => row > index ? row - 1 : row ) );
 	changed();
 }
 defineExpose<ValueInputExposes>( { getCurrentValue: () => lastGood, unparseableInputMessage: () => problem.value } );

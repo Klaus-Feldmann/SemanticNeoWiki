@@ -1,24 +1,17 @@
 <includeonly>{{#invoke:NeoWiki|annotieren}}</includeonly><noinclude>
-Übernimmt die unterstützten belegten Schemafelder des NeoWiki-Hauptsubjekts als SMW-Annotationen.
+Die automatische SMW-Übernahme erfolgt seit SemanticNeoWiki 0.1.11 durch die Extension.
+Diese Vorlage ist für bestehende Einbindungen erhalten; ihr Aufruf erzeugt keine zusätzlichen Annotationen.
+Sie ist weder im Artikel noch als ausführbarer Eintrag im Schema erforderlich.
 
-Aufruf: <code><nowiki>{{NeoWiki}}</nowiki></code>
+Einzelabfragen bleiben über [[Modul:NeoWiki]] verfügbar:
+* <code><nowiki>{{#invoke:NeoWiki|wert|Feldname}}</nowiki></code>
+* <code><nowiki>{{#invoke:NeoWiki|werte|Feldname}}</nowiki></code>
+* <code><nowiki>{{#invoke:NeoWiki|label|Feldname}}</nowiki></code>
 
-Eigene Angaben haben Vorrang vor abgerufenen Quellenwerten. Mehrere eigene Werte bleiben
-mehrwertig; gleiche Werte je SMW-Eigenschaft werden zusammengefasst. Schemafeldnamen sind
-die Eigenschaftsnamen; Ausnahmen stehen in [[Modul:NeoWiki/config]].
+Seite, Subjekt, Sprache, Herkunft, Index und Trenner bleiben entsprechend dem jeweiligen Aufruf verwendbar.
+Quellenzeilen können weiterhin über Vorlage:NeoWiki/URL-Zeile ausgegeben werden.
 
-Unterstützt: Text, lokale Seiten, Auswahlbezeichnungen, URL, Zahl, Wahrheitswert sowie die Datumstypen
-historicalDate, date und dateTime. Bilder sind ausgenommen. Belegte Beziehungen,
-mehrsprachige oder unbekannte strukturierte Typen werden vor der Annotation gemeldet.
-Bei mehrdeutigen historischen Quellenzeiten ist eine eigene Datierung erforderlich.
-
-Quellen: [[Modul:NeoWiki/API]]. Benötigt die mit dieser Fassung gelieferte NeoWikiBaseBridge mit Lua-Leseschnittstelle.
+[[Modul:NeoWiki/config]] bleibt die bearbeitbare Konfiguration für Eigenschaftszuordnungen und URL-Unterobjekte.
 Die SMW-Eigenschaftsseiten bestimmen weiterhin den gespeicherten Datentyp.
-
-Strukturierte URL-Werte setzen zusätzlich Unterobjekte mit zusammengehöriger Adresse,
-Anzeigename, Bezeichnung und lokalem Linkziel. Deren Eigenschaftsnamen stehen in
-Modul:NeoWiki/config unter urlEntries. Eine gesetzte URL-Bezeichnung bestimmt den SMW-Eigenschaftsnamen. Ohne Bezeichnung bleibt es beim Schemafeldnamen beziehungsweise dessen lokaler Zuordnung.
-Vorlage:NeoWiki/URL-Zeile kann die vier Angaben gemeinsam ausgeben.
-
-Alternativ kann der Aufruf zentral im lokalen NeoWiki-Schema hinterlegt werden: Typ Wikitext, „Im Seitenkontext ausführen – zentral im Schema“, Inhalt <code><nowiki>{{NeoWiki}}</nowiki></code>. Dann entfällt der manuelle Aufruf auf den zugehörigen Inhaltsseiten. Gewöhnliche Wikitext-Feldwerte werden nicht nach SMW importiert.
+Bestehende Q-ID-Registrierung und andere ausführbare Schemafelder werden nicht durch diese Vorlage ersetzt.
 </noinclude>

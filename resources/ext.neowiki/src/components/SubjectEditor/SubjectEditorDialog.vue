@@ -579,7 +579,7 @@ async function createRelationTarget( schemaName: string, label: string | null ):
 				label ?? schemaName,
 				label === null,
 				schemaName,
-				new StatementList( [] ),
+				schema.initialStatements(),
 				page,
 				null
 			),

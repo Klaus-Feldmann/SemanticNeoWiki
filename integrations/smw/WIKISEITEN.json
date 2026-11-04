@@ -2,18 +2,22 @@
   {
     "title": "Modul:NeoWiki",
     "file": "Modul-NeoWiki.lua",
-    "revision": 269198,
-    "timestamp": "2026-11-02T18:37:00Z",
     "sourceUrl": "https://aufeinwort.info/wiki/Modul:NeoWiki",
-    "model": "Scribunto"
+    "model": "Scribunto",
+    "previousRevision": 269198,
+    "previousTimestamp": "2026-11-02T18:37:00Z",
+    "source": "Prepared 0.1.13 source; maintainer reports module installation in production",
+    "prepared": "2026-11-04"
   },
   {
     "title": "Modul:NeoWiki/API",
     "file": "Modul-NeoWiki-API.lua",
-    "revision": 269216,
-    "timestamp": "2026-11-03T06:43:16Z",
     "sourceUrl": "https://aufeinwort.info/wiki/Modul:NeoWiki/API",
-    "model": "Scribunto"
+    "model": "Scribunto",
+    "previousRevision": 269216,
+    "previousTimestamp": "2026-11-03T06:43:16Z",
+    "source": "Prepared 0.1.13 source; maintainer reports module installation in production",
+    "prepared": "2026-11-04"
   },
   {
     "title": "Modul:NeoWiki/config",
@@ -26,10 +30,12 @@
   {
     "title": "Vorlage:NeoWiki",
     "file": "Vorlage-NeoWiki.wikitext",
-    "revision": 269217,
-    "timestamp": "2026-11-03T06:43:20Z",
     "sourceUrl": "https://aufeinwort.info/wiki/Vorlage:NeoWiki",
-    "model": "wikitext"
+    "model": "wikitext",
+    "previousRevision": 269217,
+    "previousTimestamp": "2026-11-03T06:43:20Z",
+    "source": "Prepared 0.1.13 source; maintainer reports module installation in production",
+    "prepared": "2026-11-04"
   },
   {
     "title": "Vorlage:NeoWiki/URL-Zeile",

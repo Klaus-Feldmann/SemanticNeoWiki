@@ -64,7 +64,8 @@ final class SchemaWikitextHooks {
 			if ( !$revision->hasSlot( MediaWikiSubjectRepository::SLOT_NAME ) ) {
 				if ( !$old?->hasSlot( MediaWikiSubjectRepository::SLOT_NAME ) ) { return; }
 			} elseif ( $revision->getSlot( MediaWikiSubjectRepository::SLOT_NAME, RevisionRecord::RAW )->isInherited() ) { return; }
-			if ( !self::usesExecution( $revision ) && !( $old && self::usesExecution( $old ) ) ) { return; }
+			if ( !MediaWikiServices::getInstance()->hasService( 'SMW.ParserDataFactory' ) &&
+                !self::usesExecution( $revision ) && !( $old && self::usesExecution( $old ) ) ) { return; }
 			$title = $wikiPage->getTitle();
 			DeferredUpdates::addCallableUpdate( static function () use ( $title ): void {
 				try {

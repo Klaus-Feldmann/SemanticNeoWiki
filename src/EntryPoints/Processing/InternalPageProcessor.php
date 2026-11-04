@@ -43,6 +43,7 @@ final class InternalPageProcessor {
         $context = new ProcessingContext( $title );
         return $context->run( function () use ( $services, $revision, $title, $user, $options, $context ): ProcessingResult {
             $dependencies = [];
+            $schema = null;
             $content = SubjectSlotReader::read( $revision );
             if ( $revision->hasSlot( 'neo' ) && $content === null ) {
                 throw new ProcessingIncomplete( 'SemanticNeoWiki: subject slot is not readable.' );
@@ -74,7 +75,7 @@ final class InternalPageProcessor {
                 if ( $publishedSchema->getId() !== $schemaRevision->getId() ) {
                     throw new ProcessingIncomplete( 'SemanticNeoWiki: current schema is not yet publishable.', 'pending' );
                 }
-                if ( NeoWikiExtension::getInstance()->getSchemaResolverFor( $user )->getSchema( $reference ) === null ) {
+                if ( ( $schema = NeoWikiExtension::getInstance()->getSchemaResolverFor( $user )->getSchema( $reference ) ) === null ) {
                     throw new ProcessingIncomplete( 'SemanticNeoWiki: invalid or unavailable schema.' );
                 }
                 $dependencies[] = [ 'namespace' => $schemaTitle->getNamespace(), 'title' => $schemaTitle->getDBkey(), 'revision' => $schemaRevision->getId() ];
@@ -98,8 +99,14 @@ final class InternalPageProcessor {
                 [ 'audience' => RevisionRecord::FOR_THIS_USER, 'use-master' => true ] );
             $output = $rendered->getRevisionParserOutput( [ 'generate-html' => true ] );
             $html = $output->getContentHolderText();
-            if ( $context->failure !== null || preg_match( '/class=["\x27][^"\x27]*\b(?:error|scribunto-error)\b/i', $html ) ) {
+            $sortWarning = $context->parser?->msg( 'duplicate-defaultsort', ParserFailureCheck::OLD_KEY, ParserFailureCheck::NEW_KEY )->text();
+            if ( $context->failure !== null || ParserFailureCheck::hasFailure( $html, $sortWarning ) ) {
                 throw new ProcessingIncomplete( 'SemanticNeoWiki: parser or source resolution failed; previous derived data retained.' );
+            }
+            if ( $subject !== null && $schema !== null && $services->hasService( 'SMW.ParserDataFactory' ) ) {
+                ( new \ProfessionalWiki\NeoWiki\EntryPoints\Semantic\AutomaticAnnotations() )->apply(
+                    $title, $output, $context->parser, $schema, $subject, $user
+                );
             }
             foreach ( $output->getLinkList( ParserOutputLinkTypes::TEMPLATE ) as $link ) {
                 $dependencies[] = [ 'namespace' => $link['link']->getNamespace(), 'title' => $link['link']->getDBkey(), 'revision' => $link['revid'] ];

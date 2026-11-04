@@ -1,3 +1,9 @@
+# SemanticNeoWiki releases
+
+## 0.1.13 — 2026-11-04
+
+Current research-workflow snapshot with automatic SMW processing, schema presets and consistent parser-warning handling. Existing field configuration and individual Lua queries are retained. Runtime confirmed on the documented AufEinWort installation; Composer packaging checked locally; GitHub retrieval follows publication.
+
 # Release notes
 
 ## SemanticNeoWiki 0.1.10 test — 2026-11-04

@@ -209,7 +209,7 @@ export class DependentSubjectLoader {
 			schema.getName(),
 			true,
 			schema.getName(),
-			new StatementList( [] ),
+			schema.initialStatements(),
 			page,
 			null,
 		);

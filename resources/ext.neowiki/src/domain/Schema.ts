@@ -1,3 +1,4 @@
+import { cloneInitialValue } from './Value';
 import { isSchemaExecution } from './propertyTypes/Wikitext';
 import type { PropertyDefinition } from '@/domain/PropertyDefinition';
 import { PropertyName } from '@/domain/PropertyDefinition';
@@ -87,6 +88,14 @@ export class Schema {
 			),
 		);
 	}
+
+    /** Only for creation: editing existing subjects continues to use statementsFrom(). */
+    public initialStatements(): StatementList {
+        return new StatementList( [ ...this.properties ].filter( ( definition ) => !isSchemaExecution( definition ) ).map(
+            ( definition ) => new Statement( definition.name, definition.type,
+                definition.default === undefined ? undefined : cloneInitialValue( definition.default ) ),
+        ) );
+    }
 
 	public blankStatements(): StatementList {
 		return this.statementsFrom( new StatementList( [] ) );

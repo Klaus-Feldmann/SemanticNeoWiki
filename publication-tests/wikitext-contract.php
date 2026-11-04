@@ -9,6 +9,8 @@ namespace Harness {
 }
 namespace {
  class Job {
+  public const JOB_NO_EXPLICIT_TRX_ROUND = 1;
+  protected $executionFlags = 0;
   protected $title,$params,$removeDuplicates=false;
   public function __construct($name,$title,$params){$this->title=$title;$this->params=$params;}
   public function parameters(){return $this->params;}
@@ -63,6 +65,7 @@ namespace MediaWiki\JobQueue\Jobs {class RefreshLinksJob{
 namespace MediaWiki {
  class MediaWikiServices {
   public static function getInstance(){return new self;}
+  public function hasService($name){return false;}
   public function getRevisionLookup(){return new class{public function getRevisionById($id){return \Harness\State::$old;}};}
   public function getJobQueueGroup(){return new class{public function push($job){\Harness\State::$queued[]=$job;}};}
   public function getWikiPageFactory(){return new class{public function newFromTitle($title){return new class($title){
@@ -98,6 +101,16 @@ namespace ProfessionalWiki\NeoWiki {
   public function getSchemaResolverFor($authority){return $this->getSchemaResolver();}
   public function getSchemaResolver(){return new class{public function getSchema($ref){if(\Harness\State::$error)throw new \RuntimeException('lookup failed');return \Harness\State::$schema;}};}
   public function newHookPageRebuilder(){return new class{public function rebuild($title){\Harness\State::$rebuilds++;}};}
+ }
+}
+namespace ProfessionalWiki\NeoWiki\EntryPoints\Processing {
+ // Scheduling contract only: the real worker is tested in the full MediaWiki fixtures.
+ final class InternalPageProcessor {
+  public function refresh($title): bool {
+   \Harness\State::$refresh++;
+   if(\Harness\State::$fail){return false;}
+   \Harness\State::$purges++;\Harness\State::$rebuilds++;return true;
+  }
  }
 }
 namespace {

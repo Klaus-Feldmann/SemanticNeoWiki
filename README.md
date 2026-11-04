@@ -4,15 +4,15 @@ A research-oriented, independent fork of [NeoWiki](https://github.com/Profession
 
 The main purpose of this fork is to automatically generate Semantic MediaWiki (SMW) annotations from data retrieved on demand from Wikibase and/or Wikidata using selected property IDs (P-IDs), with customizable field labels that serve as SMW property names.
 
-**Maintainer:** Klaus Feldmann / AufEinWort · **Contact:** [info@aufeinwort.info](mailto:info@aufeinwort.info) · **Research wiki:** [https://aufeinwort.info/wiki/Spezial:Version aufeinwort.info]
+**Maintainer:** Klaus Feldmann / AufEinWort · **Contact:** [info@aufeinwort.info](mailto:info@aufeinwort.info) · **Research wiki:** [aufeinwort.info](https://aufeinwort.info/wiki/Spezial:Version)
 
 **This fork is not maintained or supported by Jeroen De Dauw or Professional Wiki.** Please report fork-specific issues in [this repository](https://github.com/Klaus-Feldmann/SemanticNeoWiki/issues), not to the original NeoWiki project. Original authorship and licenses are retained.
 
 ## Version and supported environment
 
-The current test snapshot is **SemanticNeoWiki 0.1.10-private-processing-test+2026-11-04**, with **NeoWikiBaseBridge 0.18.1-private-processing-test+2026-11-04**. It is published on `master` and the named branch `semantic-0.1.10-test`. The earlier `semantic-0.1.9-test` branch is retained unchanged. It remains based on NeoWiki 0.1.0; newer upstream work is not implicitly merged.
+The current version is **SemanticNeoWiki 0.1.13+2026-11-04**, prepared for `master` and the named branch `semantic-0.1.13`. Earlier version branches remain unchanged. The fork remains based on NeoWiki 0.1.0; newer upstream changes are not implicitly merged. This is not a 1.0 release.
 
-The Composer migration to SemanticNeoWiki 0.1.9 was completed on the AufEinWort production research server. The 0.1.10 runtime changes were installed there as a guarded file update and tested with anonymous reading disabled and a running job worker. Saved values, changed values and intentionally removed values were checked in the SMW store. Independent manual annotations were preserved. See [verification](publication/VERIFICATION.md) for the distinction between runtime and Composer-distribution checks.
+This runtime is in active use on the AufEinWort production research server. The current version was installed there as guarded updates over the existing Composer installation. The maintainer has confirmed automatic annotations, schema presets and the corrected handling of duplicate sort-key warnings in daily use. See [verification](publication/VERIFICATION.md) for the distinction between runtime and Composer-distribution checks.
 
 Support is limited to the tested setup: **MediaWiki 1.47.0-wmf.24, PHP 8.3.36, the legacy parser, UnlinkedWikibase 3.0.0, Semantic MediaWiki 7.4.0, Semantic Scribunto 3.0.0, local Wikibase, Scribunto and a Fuseki/SPARQL-backed Graph Explorer.** Earlier MediaWiki versions and other parser/backend combinations are not supported or tested by this fork. Later versions require their own verification. Details are in [the environment snapshot](publication/TESTED-ENVIRONMENT.json).
 
@@ -22,8 +22,8 @@ Support is limited to the tested setup: **MediaWiki 1.47.0-wmf.24, PHP 8.3.36, t
 - Read-only source values with explicit own-value precedence and configurable local/source links.
 - Historical BCE dates with precision/calendar information and year links.
 - Images from local files, Commons or bound source properties, including Data/Graph thumbnails.
-- Local page selection, structured source URLs and display names, passive Wikitext and centrally executed schema Wikitext.
-- Optional schema-driven SMW annotations through Lua; relevant subject/schema saves trigger background page processing rather than requiring an additional manual article save.
+- Local page selection, structured source URLs and display names, schema presets, passive Wikitext and centrally executed schema Wikitext.
+- Automatic schema-driven SMW annotations; no annotation template call is required in articles or schemas. Individual Lua queries remain available.
 - Private-wiki processing with an automatically managed, non-login, read-only identity; validated full-revision results feed the normal MediaWiki/SMW updates without granting anonymous read access.
 - Complete Data-view JSON, Turtle and TriG downloads and a separately supplied MCP read-tool patch.
 - Readable select values, ordered fields, configured links and preferred descriptions in Graph Explorer.
@@ -34,7 +34,7 @@ External source changes alone do not guarantee immediate propagation to stored S
 
 ## Installation: Composer only
 
-This candidate is for an existing MediaWiki server. **No Docker image, Docker demo or alternate application installer is supplied or supported.** Built Data UI/Graph assets are included; npm is not an installation requirement. Inherited demo data and Docker reference files remain in Git history/source browsing but are excluded from GitHub/Composer distribution archives.
+This version is for an existing MediaWiki server. **No Docker image, Docker demo or alternate application installer is supplied or supported.** Built Data UI/Graph assets are included; npm is not an installation requirement. Inherited demo data and Docker reference files remain in Git history/source browsing but are excluded from GitHub/Composer distribution archives.
 
 In the MediaWiki root, merge the following into your existing `composer.local.json` without replacing other settings:
 
@@ -44,7 +44,7 @@ In the MediaWiki root, merge the following into your existing `composer.local.js
     { "type": "vcs", "url": "https://github.com/Klaus-Feldmann/SemanticNeoWiki" }
   ],
   "require": {
-    "aufeinwort/semantic-neowiki": "dev-semantic-0.1.10-test"
+    "aufeinwort/semantic-neowiki": "dev-semantic-0.1.13"
   },
   "config": {
     "allow-plugins": { "composer/installers": true }
@@ -87,7 +87,7 @@ See the commented [LocalSettings example](publication/LocalSettings.SemanticNeoW
 
 ## Included integration material
 
-- [SMW modules and templates](integrations/smw/README.md), with current wiki revision provenance. Their existing names remain NeoWiki; central executable schema Wikitext can continue invoking `{{NeoWiki}}`.
+- [SMW modules and templates](integrations/smw/README.md), with current wiki revision provenance. Their existing names remain NeoWiki. Import the two current query modules; preserve existing local configuration. An annotation template call is no longer needed.
 - [Wikidata registration helper](integrations/registration/README.md): AewiWikidataRegistrierung.php and its Magic Words file. Existing Q-registration templates can stay; the example helper's automatic title search uses German Wikipedia and is namespace-controlled.
 - [Historical optional SMW 7.3.1 statistics correction](integrations/smw/compatibility/README.md): exact-source patch for SPARQLStore, with a checked backup/apply script. It is not applied by Composer and must not be applied to SMW 7.4.0 on the basis of its older version alone.
 - [MCP source/runtime patch](integrations/mcp/README.md): complete Data-view tool and recognition of the SemanticNeoWiki extension name. Apply before changing extension identity if MCP must retain the existing NeoWiki tools. It targets MCP 0.20.1, with checked compatible 0.20.0 runtime files; it contains no authentication data.

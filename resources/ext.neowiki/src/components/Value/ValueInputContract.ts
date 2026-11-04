@@ -7,6 +7,8 @@ import type { SubjectId } from '@/domain/SubjectId';
 export interface ValueInputProps<T extends PropertyDefinition> {
 	modelValue: Value | undefined;
 	label?: string;
+	/** Schema presets may be incomplete; subject values remain strict. */
+	initialValueMode?: boolean;
 	property: T;
 	/**
 	 * Server-sourced violations for this field, pre-filtered by the parent

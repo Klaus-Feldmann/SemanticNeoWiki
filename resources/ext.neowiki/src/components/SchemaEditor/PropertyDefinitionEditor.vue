@@ -71,6 +71,7 @@
 			v-if="takesInitialValue && !isSchemaExecution( localProperty )"
 			ref="defaultValueInput"
 			v-model="localProperty.default"
+			:initial-value-mode="true"
 			class="property-definition-editor__default"
 			:label="$i18n( 'neowiki-property-editor-initial-value' ).text()"
 			:property="{ ...localProperty, description: '', required: false }"
