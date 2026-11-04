@@ -1,0 +1,1 @@
+Historical pre-0.1.11 Lua annotation references for the existing comparison harness. These files are not installable current wiki modules. Current modules delegate reads to PHP and no longer trigger annotation.

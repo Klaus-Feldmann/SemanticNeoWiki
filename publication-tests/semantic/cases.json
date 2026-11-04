@@ -1,0 +1,3842 @@
+[
+  {
+    "name": "text-0",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "text"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "Mensch",
+            "Mensch",
+            "A|B",
+            "a=b"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "page-1",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "page"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "Universität Wien"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "url-2",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "url"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "https://example.org/?a=1&b=2"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "number-3",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "number"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            0
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "number-4",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "number"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            1.25
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "boolean-5",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "boolean"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            false
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "boolean-6",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "boolean"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            true
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "image-7",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "image"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "commons:Goethe.jpg"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "wikitext-8",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "wikitext"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "{{NeoWiki}}"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "relation-9",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "relation"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            {
+              "target": "sX"
+            }
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "monolingualText-10",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "monolingualText"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            {
+              "text": "Hallo",
+              "language": "de"
+            }
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "historical--0427",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "historicalDate"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "-0427"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "historical--0347",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "historicalDate"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "-0347"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "historical-1401-05-18",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "historicalDate"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "1401-05-18"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "historical-1582",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "historicalDate"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "1582"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "historical-1582-10",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "historicalDate"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "1582-10"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "historical-1582-10-04",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "historicalDate"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "1582-10-04"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "historical-1582-10-15",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "historicalDate"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "1582-10-15"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "historical-1582-10-10",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "historicalDate"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "1582-10-10"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "historical-0000",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "historicalDate"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "0000"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "historical-1900-02-29",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "historicalDate"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "1900-02-29"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "historical-1500-02-29",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "historicalDate"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "1500-02-29"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "date-2000-02-29",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "date"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "2000-02-29"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "date-1900-02-29",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "date"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "1900-02-29"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "date-2026-11-04",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "date"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "2026-11-04"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "datetime-2026-11-04T00:15:00+05:45",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "dateTime"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "2026-11-04T00:15:00+05:45"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "datetime-2026-12-31T23:59:59.123456789-02:00",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "dateTime"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "2026-12-31T23:59:59.123456789-02:00"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "datetime-2000-03-01T00:01:02+01:00",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "dateTime"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "2000-03-01T00:01:02+01:00"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "datetime-2026-11-04T10:00:00Z",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "dateTime"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "2026-11-04T10:00:00Z"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "datetime-2026-11-04T10:00:00",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "dateTime"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "2026-11-04T10:00:00"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "datetime-0001-01-01T00:00:00+01:00",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "dateTime"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "0001-01-01T00:00:00+01:00"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "select-id",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "select",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Abhandlung"
+            }
+          ]
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "o1"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "select-label",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "select",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Abhandlung"
+            }
+          ]
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "Abhandlung"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "select-unknown",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "select",
+          "options": [
+            {
+              "id": "o1",
+              "label": "Abhandlung"
+            }
+          ]
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "o2"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "url-structured",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "url"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            {
+              "url": "https://de.wikipedia.org/wiki/Regiomontanus?a=1&b=2",
+              "label": "Regiomontanus",
+              "caption": "Wikipedia (de)",
+              "captionPage": "Vermerk:Wikipedia (de)"
+            }
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "url-multiple",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "url"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            {
+              "url": "https://e.org/a",
+              "label": "A",
+              "caption": "Quelle"
+            },
+            {
+              "url": "https://e.org/b",
+              "label": "B",
+              "caption": "Quelle"
+            }
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "wikidata-external",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "text",
+          "externalProperty": {
+            "source": "wikidata",
+            "id": "P31"
+          }
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": []
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": [
+        {
+          "name": "Feld",
+          "status": "resolved",
+          "source": "wikidata",
+          "propertyId": "P31",
+          "values": [
+            {
+              "kind": "entity",
+              "id": "Q5",
+              "label": "Mensch"
+            },
+            {
+              "kind": "entity",
+              "id": "Q5",
+              "label": "Mensch"
+            },
+            {
+              "kind": "entity",
+              "id": "Q6",
+              "label": "Anderer Wert"
+            }
+          ]
+        }
+      ]
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "wikidata-own",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "text",
+          "externalProperty": {
+            "source": "wikidata",
+            "id": "P31"
+          }
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "Eigene Angabe"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": [
+        {
+          "name": "Feld",
+          "status": "resolved",
+          "source": "wikidata",
+          "propertyId": "P31",
+          "values": [
+            {
+              "kind": "entity",
+              "id": "Q5",
+              "label": "Mensch"
+            },
+            {
+              "kind": "entity",
+              "id": "Q5",
+              "label": "Mensch"
+            },
+            {
+              "kind": "entity",
+              "id": "Q6",
+              "label": "Anderer Wert"
+            }
+          ]
+        }
+      ]
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "wikibase-local-external",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "text",
+          "externalProperty": {
+            "source": "wikibase-local",
+            "id": "P31"
+          }
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": []
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": [
+        {
+          "name": "Feld",
+          "status": "resolved",
+          "source": "wikibase-local",
+          "propertyId": "P31",
+          "values": [
+            {
+              "kind": "entity",
+              "id": "Q5",
+              "label": "Mensch"
+            },
+            {
+              "kind": "entity",
+              "id": "Q5",
+              "label": "Mensch"
+            },
+            {
+              "kind": "entity",
+              "id": "Q6",
+              "label": "Anderer Wert"
+            }
+          ]
+        }
+      ]
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "wikibase-local-own",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "text",
+          "externalProperty": {
+            "source": "wikibase-local",
+            "id": "P31"
+          }
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "Eigene Angabe"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": [
+        {
+          "name": "Feld",
+          "status": "resolved",
+          "source": "wikibase-local",
+          "propertyId": "P31",
+          "values": [
+            {
+              "kind": "entity",
+              "id": "Q5",
+              "label": "Mensch"
+            },
+            {
+              "kind": "entity",
+              "id": "Q5",
+              "label": "Mensch"
+            },
+            {
+              "kind": "entity",
+              "id": "Q6",
+              "label": "Anderer Wert"
+            }
+          ]
+        }
+      ]
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "remote-missing",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "historicalDate",
+          "externalProperty": {
+            "source": "wikidata",
+            "id": "P569"
+          }
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": []
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": [
+        {
+          "name": "Feld",
+          "status": "missing",
+          "source": "wikidata",
+          "propertyId": "P569",
+          "values": []
+        }
+      ]
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "remote-manual",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "historicalDate",
+          "externalProperty": {
+            "source": "wikidata",
+            "id": "P569"
+          }
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": []
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": [
+        {
+          "name": "Feld",
+          "status": "manual",
+          "source": "wikidata",
+          "propertyId": "P569",
+          "values": []
+        }
+      ]
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "remote-unavailable",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "historicalDate",
+          "externalProperty": {
+            "source": "wikidata",
+            "id": "P569"
+          }
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": []
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": [
+        {
+          "name": "Feld",
+          "status": "unavailable",
+          "source": "wikidata",
+          "propertyId": "P569",
+          "values": []
+        }
+      ]
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "remote-time-Q1985786",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "historicalDate",
+          "externalProperty": {
+            "source": "wikidata",
+            "id": "P569"
+          }
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": []
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": [
+        {
+          "name": "Feld",
+          "status": "resolved",
+          "source": "wikidata",
+          "propertyId": "P569",
+          "values": [
+            {
+              "kind": "time",
+              "label": "427 v. Chr.",
+              "sourceTime": {
+                "time": "-0427-00-00T00:00:00Z",
+                "precision": 9,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985786"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "remote-time-Q1985727",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "historicalDate",
+          "externalProperty": {
+            "source": "wikidata",
+            "id": "P569"
+          }
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": []
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": [
+        {
+          "name": "Feld",
+          "status": "resolved",
+          "source": "wikidata",
+          "propertyId": "P569",
+          "values": [
+            {
+              "kind": "time",
+              "label": "427 v. Chr.",
+              "sourceTime": {
+                "time": "-0427-00-00T00:00:00Z",
+                "precision": 9,
+                "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "remote-time-Q11184",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "historicalDate",
+          "externalProperty": {
+            "source": "wikidata",
+            "id": "P569"
+          }
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": []
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": [
+        {
+          "name": "Feld",
+          "status": "resolved",
+          "source": "wikidata",
+          "propertyId": "P569",
+          "values": [
+            {
+              "kind": "time",
+              "label": "427 v. Chr.",
+              "sourceTime": {
+                "time": "-0427-00-00T00:00:00Z",
+                "precision": 9,
+                "calendarmodel": "http://www.wikidata.org/entity/Q11184"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "no-old-map-Leserschaft",
+    "schema": {
+      "name": "Werk",
+      "properties": [
+        {
+          "name": "Leserschaft",
+          "type": "text"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Leserschaft": {
+          "values": [
+            "Person"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "no-old-map-Leserschaftziel",
+    "schema": {
+      "name": "Werk",
+      "properties": [
+        {
+          "name": "Leserschaftziel",
+          "type": "text"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Leserschaftziel": {
+          "values": [
+            "Person"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "no-old-map-Werkausgabe",
+    "schema": {
+      "name": "Werk",
+      "properties": [
+        {
+          "name": "Werkausgabe",
+          "type": "text"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Werkausgabe": {
+          "values": [
+            "Person"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "empty",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "text"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "",
+            "  "
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "invalid-property",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "bad|name",
+          "type": "text"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "bad|name": {
+          "values": [
+            "X"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "renamed-url-url",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "url"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            {
+              "url": "https://e.org/?a=1&b=2",
+              "label": "Titel",
+              "caption": "Quelle",
+              "captionPage": "Vermerk:Quelle"
+            }
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Eigene url",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "renamed-url-label",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "url"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            {
+              "url": "https://e.org/?a=1&b=2",
+              "label": "Titel",
+              "caption": "Quelle",
+              "captionPage": "Vermerk:Quelle"
+            }
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Eigene label",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "renamed-url-caption",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "url"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            {
+              "url": "https://e.org/?a=1&b=2",
+              "label": "Titel",
+              "caption": "Quelle",
+              "captionPage": "Vermerk:Quelle"
+            }
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Eigene caption",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "renamed-url-captionPage",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "url"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            {
+              "url": "https://e.org/?a=1&b=2",
+              "label": "Titel",
+              "caption": "Quelle",
+              "captionPage": "Vermerk:Quelle"
+            }
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Eigene captionPage",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "renamed-url-field",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "url"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            {
+              "url": "https://e.org/?a=1&b=2",
+              "label": "Titel",
+              "caption": "Quelle",
+              "captionPage": "Vermerk:Quelle"
+            }
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "Eigene field",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "renamed-url-subject",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "url"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            {
+              "url": "https://e.org/?a=1&b=2",
+              "label": "Titel",
+              "caption": "Quelle",
+              "captionPage": "Vermerk:Quelle"
+            }
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "Eigene subject"
+      }
+    }
+  },
+  {
+    "name": "custom-field-map",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "text"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "Wert"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        },
+        "Person": {
+          "Feld": "Eigene Eigenschaft"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "merged-properties",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "text"
+        },
+        {
+          "name": "Zweites",
+          "type": "text"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "A",
+            "A",
+            "B"
+          ]
+        },
+        "Zweites": {
+          "values": [
+            "B",
+            "C"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        },
+        "Person": {
+          "Feld": "Gemeinsam",
+          "Zweites": "Gemeinsam"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "missing-config-properties",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "url"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            {
+              "url": "https://e.org",
+              "caption": "Quelle"
+            }
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "missing-config-urlEntries",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "url"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            {
+              "url": "https://e.org",
+              "caption": "Quelle"
+            }
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      }
+    }
+  },
+  {
+    "name": "bad-mapping-",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "text"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "X"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        },
+        "Person": {
+          "Feld": ""
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "bad-mapping-bad|name",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "text"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "X"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        },
+        "Person": {
+          "Feld": "bad|name"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "bad-mapping-bad::name",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "text"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "X"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        },
+        "Person": {
+          "Feld": "bad::name"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "bad-mapping-+option",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "text"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "X"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        },
+        "Person": {
+          "Feld": "+option"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "bad-mapping-template",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "text"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "X"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        },
+        "Person": {
+          "Feld": "template"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "bad-mapping-@json",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "text"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "X"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        },
+        "Person": {
+          "Feld": "@json"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "bad-mapping-False",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "text"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "X"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        },
+        "Person": {
+          "Feld": false
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "bad-url-mapping-",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "url"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            {
+              "url": "https://e.org",
+              "caption": "Quelle"
+            }
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "bad-url-mapping-bad|name",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "url"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            {
+              "url": "https://e.org",
+              "caption": "Quelle"
+            }
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "bad|name",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "bad-url-mapping-bad::name",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "url"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            {
+              "url": "https://e.org",
+              "caption": "Quelle"
+            }
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "bad::name",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "bad-url-mapping-+option",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "url"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            {
+              "url": "https://e.org",
+              "caption": "Quelle"
+            }
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "+option",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "bad-url-mapping-template",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "url"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            {
+              "url": "https://e.org",
+              "caption": "Quelle"
+            }
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "template",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "bad-url-mapping-@json",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "url"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            {
+              "url": "https://e.org",
+              "caption": "Quelle"
+            }
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": "@json",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "bad-url-mapping-False",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "url"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            {
+              "url": "https://e.org",
+              "caption": "Quelle"
+            }
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        }
+      },
+      "urlEntries": {
+        "url": false,
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "mapping-label- Person ",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "page"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "Wien"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        },
+        "Person": {
+          "Feld": " Person "
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "mapping-label-Mensch",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "page"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "Wien"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        },
+        "Person": {
+          "Feld": "Mensch"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  },
+  {
+    "name": "mapping-label-Vermerk:Liste Mensch",
+    "schema": {
+      "name": "Person",
+      "properties": [
+        {
+          "name": "Feld",
+          "type": "page"
+        }
+      ]
+    },
+    "subject": {
+      "id": "sTest",
+      "statements": {
+        "Feld": {
+          "values": [
+            "Wien"
+          ]
+        }
+      }
+    },
+    "external": {
+      "version": 1,
+      "scope": "current",
+      "mainSubjectId": "sTest",
+      "fields": []
+    },
+    "config": {
+      "properties": {
+        "Werk": {
+          "Leserschaft": "hat Leserschaft",
+          "Leserschaftziel": "hat Leserschaftziel",
+          "Werkausgabe": "hat Werkausgabe"
+        },
+        "Person": {
+          "Feld": "Vermerk:Liste Mensch"
+        }
+      },
+      "urlEntries": {
+        "url": "Quellen-URL",
+        "label": "Quellentitel",
+        "caption": "Quellenbezeichnung",
+        "captionPage": "Quellenbezeichnungsseite",
+        "field": "NeoWiki-Feld",
+        "subject": "NeoWiki-Subjekt"
+      }
+    }
+  }
+]

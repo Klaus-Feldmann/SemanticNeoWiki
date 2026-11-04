@@ -21,6 +21,7 @@ use ProfessionalWiki\NeoWiki\NeoWikiExtension;
 class ScribuntoLuaLibrary extends LibraryBase {
 
 	private ?SubjectDataLookup $subjectDataLookup = null;
+    private array $effectiveReaders = [];
 	private ?SchemaLuaSerializer $schemaLuaSerializer = null;
 	private ?CypherQueryRunner $cypherQueryRunner = null;
 	private ?SparqlQueryRunner $sparqlQueryRunner = null;
@@ -66,6 +67,8 @@ class ScribuntoLuaLibrary extends LibraryBase {
 			'getSubject' => [ $this, 'getSubject' ],
 			'getSubjects' => [ $this, 'getSubjects' ],
 			'getSchema' => [ $this, 'getSchema' ],
+            'collectFields' => [ $this, 'collectFields' ],
+            'hasAutomaticAnnotations' => [ $this, 'hasAutomaticAnnotations' ],
 		];
 
 		$neo4jFunctions = NeoWikiExtension::getInstance()->getNeo4jPlugin()?->getLuaLibraryFunctionNames() ?? [];
@@ -191,5 +194,57 @@ class ScribuntoLuaLibrary extends LibraryBase {
 
 		return [ $this->getSchemaLuaSerializer()->toLuaTable( $schema ) ];
 	}
+
+    public function hasAutomaticAnnotations(): array { return [ true ]; }
+
+    public function collectFields(?array $options = null): array {
+        $o=$options ?? [];
+        foreach($o as $key=>$value) {
+            if(!in_array($key,['page','subject','field','language','origin','includeImages'],true) || ($key==='includeImages' ? !is_bool($value) : !is_string($value))) {
+                throw new LuaError('NeoWiki: invalid field lookup option');
+            }
+        }
+        if(isset($o['page'],$o['subject'])) { throw new LuaError('NeoWiki: specify page or subject, not both'); }
+        $title=isset($o['page']) ? \MediaWiki\Title\Title::newFromText($o['page']) : $this->getTitle();
+        if(!$title || $title->isExternal() || !$title->canExist()) { throw new LuaError('NeoWiki: invalid lookup page'); }
+        $extension=NeoWikiExtension::getInstance();
+        $resolver=$extension->newSubjectResolver($this->getParser());
+        $subject=isset($o['subject']) ? $resolver->resolveById($o['subject']) : $resolver->resolveMainByTitle($title);
+        if(!$subject) { return [ [ 'fields'=>[], 'missing'=>true ] ]; }
+        $authority=ParserAuthority::of($this->getParser());
+        $schema=$extension->getSchemaResolverFor($authority)->getSchema($subject->getSchemaReference());
+        if(!$schema) { throw new LuaError('NeoWiki: schema unavailable'); }
+        $dependencies=new \ProfessionalWiki\NeoWiki\Infrastructure\ParserPageDependencyRecorder($this->getParser());
+        $dependencies->recordDependencyOnSchema($subject->getSchemaReference());
+        $services=\MediaWiki\MediaWikiServices::getInstance();
+        $language=$o['language'] ?? $services->getContentLanguage()->getCode();
+        if(!preg_match('/\A[a-z]{2,12}(?:-[a-z0-9]{1,12})*\z/',$language)) { throw new LuaError('NeoWiki: invalid language'); }
+        $key=json_encode([$subject->id->text,$title->getPrefixedText(),$language]);
+        try {
+            if(!isset($this->effectiveReaders[$key])) {
+                $this->incrementExpensiveFunctionCount();
+                $context=new \MediaWiki\Context\DerivativeContext(\MediaWiki\Context\RequestContext::getMain());
+                $context->setUser($services->getUserFactory()->newFromUserIdentity($this->getParser()->getUserIdentity()));
+                $this->effectiveReaders[$key]=\ProfessionalWiki\NeoWiki\Application\Semantic\FieldSnapshot::reader($schema,$subject,
+                    static function() use($context,$title,$subject,$language,$dependencies): array {
+                        if(!class_exists(\NeoWikiBaseBridge\ExternalValuesLookup::class)) { throw new \RuntimeException('NeoWiki source bridge unavailable'); }
+                        return (new \NeoWikiBaseBridge\ExternalValuesLookup($context))->read($title,[
+                            'pageid'=>$title->getArticleID(),'subject'=>$subject->id->text,'language'=>$language,'presentation'=>false
+                        ],$dependencies);
+                    }, fn(string $name) => $this->getSubjectDataLookup()->getAll($title,$name,['subject'=>$subject->id->text])[0]);
+            }
+            $result=$this->effectiveReaders[$key]->collect($o['field'] ?? null,$o['origin'] ?? 'all',$language,$o['includeImages'] ?? false);
+            $result['subject']=isset($o['subject']) ? $this->getSubjectDataLookup()->getSubjectData($o['subject'])[0]
+                : $this->getSubjectDataLookup()->getMainSubjectData($title)[0];
+            return [ self::fieldsToLua($result) ];
+        } catch (\Throwable $e) { throw new LuaError('NeoWiki: '.$e->getMessage()); }
+    }
+
+    private static function fieldsToLua(mixed $value): mixed {
+        if(!is_array($value)) { return $value; }
+        $list=array_is_list($value);$out=[];
+        foreach($value as $key=>$item) { $out[$list ? $key+1 : $key]=self::fieldsToLua($item); }
+        return $out;
+    }
 
 }

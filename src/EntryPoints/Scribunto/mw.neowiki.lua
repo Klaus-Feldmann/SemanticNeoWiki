@@ -56,4 +56,12 @@ function neowiki.getSchema( name )
 	return php.getSchema( name )
 end
 
+function neowiki.collectFields(options)
+    return php.collectFields(options)
+end
+
+function neowiki.hasAutomaticAnnotations()
+    return php.hasAutomaticAnnotations()
+end
+
 return neowiki

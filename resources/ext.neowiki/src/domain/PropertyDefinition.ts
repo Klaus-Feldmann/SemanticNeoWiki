@@ -2,7 +2,7 @@ import { Neo } from '@/Neo';
 import { PropertyTypeRegistry } from '@/domain/PropertyType';
 import type { Severity } from '@/domain/Severity';
 import { extractSeverities } from '@/domain/SeverityNormalizer';
-import { Value } from '@/domain/Value';
+import { Value, newUrlValue } from '@/domain/Value';
 import { ValueDeserializer } from '@/persistence/ValueDeserializer';
 
 export class PropertyName {
@@ -154,7 +154,7 @@ export class PropertyDefinitionDeserializer {
 			...( values.externalProperty !== undefined ? { externalProperty: values.externalProperty as ExternalProperty } : {} ),
 			...( values.wikiLink !== undefined ? { wikiLink: values.wikiLink as PropertyDefinition['wikiLink'] } : {} ),
 			default: values.default !== undefined && values.default !== null ?
-				this.valueDeserializer.deserialize( values.default, json.type ) :
+				( json.type === 'url' ? newUrlValue( values.default, true ) : this.valueDeserializer.deserialize( values.default, json.type ) ) :
 				undefined,
 			...( Object.keys( severities ).length > 0 ? { constraintSeverities: severities } : {} ),
 		};

@@ -8,9 +8,9 @@ Image fields select local or Commons files, or derive references from Wikidata/l
 
 Page fields use local title lookup. Structured URL values retain URL, display name, source caption and optional local caption target. Wikitext can be passive field content or a centrally executed schema program; only the latter runs as page-context configuration. Executable schema programs are not exported as research statements.
 
-The optional Lua integration maps supported schema fields to SMW properties. It preserves own-value precedence, deduplicates values, retains date calendars and uses subobjects for associated URL attributes. Images, relations and multilingual fields are not simplified into SMW facts. Existing SMW property types are not overwritten.
+The optional automatic SMW integration maps supported schema fields to SMW properties. It preserves own-value precedence, deduplicates values, retains date calendars and uses subobjects for associated URL attributes. Images, relations and multilingual fields are not simplified into SMW facts. Existing SMW property types are not overwritten.
 
-Saving relevant subjects reparses the hosting page; schema changes enqueue affected-page work. This is page/parser-based synchronization through Lua, not a direct replacement for SemanticWikibase or a guaranteed immediate refresh of externally changed data. A job runner and parser compatibility remain necessary.
+Saving relevant subjects reparses the hosting page; schema changes enqueue affected-page work. This is page/parser-based synchronization through the extension, not a direct replacement for SemanticWikibase or a guaranteed immediate refresh of externally changed data. A job runner and parser compatibility remain necessary.
 
 The complete read interface exposes current main/additional subjects with definitions, ordered fields, status, values, descriptions, source identities and relationships. JSON preserves that model. Turtle and TriG include effective assertions, separately described own/source assertions and complete metadata. Raw subject editing APIs, graph-store projections and named stored-value mappings remain separate. A failed complete resolution returns a download error instead of a silently partial file.
 
@@ -19,3 +19,5 @@ The separately distributed MCP patch advertises a complete-view read tool only w
 The graph build is a guarded extension of captured Graph Explorer bundles, with exact embedded sources and a matching upstream source reference included. It is not presented as an independently refactored Graph Explorer source distribution. Neo4j/Docker demo compatibility and other parser/backend combinations have not been revalidated for this fork.
 
 The extension registry and Composer installation name are SemanticNeoWiki. Existing neowiki APIs, config keys, data and custom hooks remain stable identifiers. Only the documented MW 1.47 legacy-parser deployment is supported. There is no supported Docker installation.
+
+Schema presets initialize new subjects without overwriting existing values. URL presets may omit the address; incomplete optional presets are not persisted as source assertions. Individual Lua queries remain read-only, and legacy annotation calls are harmless.

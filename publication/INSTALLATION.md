@@ -10,7 +10,7 @@ The current server may have loaded NeoWiki from copied files and a Composer merg
 
 ## Install the candidate
 
-Merge the VCS repository, package requirement and composer/installers allowance shown in README.md into your existing root/local configuration. Use `dev-semantic-0.1.10-test` explicitly. Then run the README Composer command from the MediaWiki root. The extension installer writes `extensions/SemanticNeoWiki` and its dependencies are loaded through the MediaWiki root vendor/autoload.php.
+Merge the VCS repository, package requirement and composer/installers allowance shown in README.md into your existing root/local configuration. Use `dev-semantic-0.1.13` explicitly. Then run the README Composer command from the MediaWiki root. The extension installer writes `extensions/SemanticNeoWiki` and its dependencies are loaded through the MediaWiki root vendor/autoload.php.
 
 Check that `extensions/SemanticNeoWiki/extension.json` exists before changing loading instructions. Replace the NeoWiki and bundled Bridge load lines with those in README.md. The old directory may be retained for return but must not be loaded in parallel. Do not delete old dependencies, RDF data or namespace contents as part of the rename.
 
@@ -28,7 +28,7 @@ The renamed 0.1.9 Composer installation was confirmed on AufEinWort. The 0.1.10 
 
 ## Updating from 0.1.9 and private operation
 
-Change the Composer requirement to `dev-semantic-0.1.10-test` and use the Composer update command from README.md. Do not change persisted content models, namespaces or existing NeoWiki configuration names. These changes introduce no SQL schema migration and require no whole-wiki rebuild. Preserve existing local configuration when updating. Rebuild localization after the file update.
+Change the Composer requirement to `dev-semantic-0.1.13` and use the Composer update command from README.md. Do not change persisted content models, namespaces or existing NeoWiki configuration names. These changes introduce no SQL schema migration and require no whole-wiki rebuild. Preserve existing local configuration when updating. Rebuild localization after the file update.
 
 Private wikis may keep `$wgGroupPermissions['*']['read'] = false`. No read whitelist for article/schema/module namespaces is required by the new processing path. A non-login system account, `SemanticNeoWiki internal processor`, is created automatically on first use. Its effective rights are restricted to `read`, including removal of inherited write/admin rights. An existing ordinary account with that name is never taken over. Do not set up a password or browser session for it.
 
@@ -43,3 +43,9 @@ Import/adapt only the wiki pages documented under integrations/smw. Existing cur
 ## Distribution files
 
 GitHub/Composer archives exclude the inherited DemoData and Docker directories through .gitattributes. These are not part of the supported production install and can trigger legacy system-unzip filename handling on macOS. The install inventory is publication/DISTRIBUTION-SHA256SUMS; publication/SHA256SUMS describes the full source tree. The inventories do not hash themselves or each other.
+
+## Current version 0.1.13
+
+The full package includes the tested runtime updates. Existing installations must update `Modul:NeoWiki/API` and `Modul:NeoWiki` from `integrations/smw/Wikiseiten`; keep their existing names and preserve `Modul:NeoWiki/config`. Old `{{NeoWiki}}` / `#invoke:NeoWiki|annotieren` calls become harmless. Remove annotation-only schema programs after updating both modules, without removing Q registration or unrelated schema Wikitext. Initial values apply to newly created subjects only; incomplete URL presets remain form data until completed. Do not apply old file patches on top of this full package.
+
+No SQL schema migration is introduced by these updates. Keep the job worker operational. The current full Composer distribution still requires its own installation test; live evidence is from guarded updates on the existing production installation.

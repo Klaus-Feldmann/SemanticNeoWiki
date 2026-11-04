@@ -39,7 +39,7 @@ export interface UrlValue extends BaseValueRepresentation {
 	readonly parts: UrlEntry[];
 }
 
-export function newUrlValue( input: unknown ): UrlValue {
+export function newUrlValue( input: unknown, allowIncomplete = false ): UrlValue {
 	const parts = typeof input === 'string' ? [ input ] : input;
 	if ( !Array.isArray( parts ) ) {
 		throw new Error( 'URL values must be a list' );
@@ -67,11 +67,11 @@ export function newUrlValue( input: unknown ): UrlValue {
 				}
 			}
 		}
-		if ( !result.url && Object.keys( result ).length > 1 ) {
+		if ( !allowIncomplete && !result.url && Object.keys( result ).length > 1 ) {
 			throw new Error( 'A labelled URL needs an address' );
 		}
 		return result;
-	} ).filter( ( entry ) => entry.url !== '' ) };
+	} ).filter( ( entry ) => entry.url !== '' || allowIncomplete && Object.keys( entry ).length > 1 ) };
 }
 
 export function urlEntries( value: Value | undefined ): UrlEntry[] {
@@ -249,4 +249,22 @@ export function isValueEmpty( value: Value | undefined ): boolean {
 		default:
 			return true;
 	}
+}
+
+/** A new form must never mutate schema defaults or another new form. */
+export function cloneInitialValue( value: Value ): Value {
+    if ( value instanceof RelationValue ) {
+        return new RelationValue( value.relations.map( ( relation ) => new Relation( undefined, relation.target ) ) );
+    }
+    switch ( value.type ) {
+        case ValueType.Url:
+        case ValueType.MonolingualText:
+            return { ...value, parts: value.parts.map( ( part ) => ( { ...part } ) ) } as Value;
+        case ValueType.String:
+            return { ...value, parts: [ ...value.parts ] };
+        case ValueType.UnregisteredType:
+            return { ...value, raw: value.raw === undefined ? undefined : JSON.parse( JSON.stringify( value.raw ) ) };
+        default:
+            return { ...value } as Value;
+    }
 }

@@ -11,10 +11,24 @@ for (const suite of ['regression-datum.lua', 'schemafelder.lua', 'url.lua']) {
     const asLua = v => v === null ? 'nil' : Array.isArray(v) ? '{'+v.map(asLua).join(',')+'}' : typeof v === 'object' ? '{'+Object.entries(v).map(([k,x])=>'['+JSON.stringify(k)+']='+asLua(x)).join(',')+'}' : JSON.stringify(v);
     let source = 'liveFixtures = ' + asLua(fixture) + '\n';
     for (const [name,file] of [['Modul:NeoWiki/API','Modul-NeoWiki-API.lua'], ['Modul:NeoWiki/config','Modul-NeoWiki-config.lua'], ['Modul:NeoWiki','Modul-NeoWiki.lua']]) {
-        source += `package.preload[${JSON.stringify(name)}] = function()\n${fs.readFileSync(path.join(root,'Wikiseiten',file),'utf8')}\nend\n`;
+        source += `package.preload[${JSON.stringify(name)}] = function()\n${fs.readFileSync(path.join(__dirname,'legacy',file),'utf8')}\nend\n`;
     }
     source += fs.readFileSync(path.join(__dirname, suite), 'utf8');
     if (lauxlib.luaL_dostring(L,to_luastring(source)) !== lua.LUA_OK) {
         throw new Error(suite + ': ' + to_jsstring(lua.lua_tostring(L,-1)));
+    }
+}
+
+// Current public modules: read through the PHP adapter, never annotate in Lua.
+{
+    const L = lauxlib.luaL_newstate();
+    lualib.luaL_openlibs(L);
+    let source = '';
+    for (const [name, file] of [['Modul:NeoWiki/API','Modul-NeoWiki-API.lua'], ['Modul:NeoWiki','Modul-NeoWiki.lua']]) {
+        source += `package.preload[${JSON.stringify(name)}] = function()\n${fs.readFileSync(path.join(root,'Wikiseiten',file),'utf8')}\nend\n`;
+    }
+    source += fs.readFileSync(path.join(__dirname,'reader.lua'),'utf8');
+    if (lauxlib.luaL_dostring(L,to_luastring(source)) !== lua.LUA_OK) {
+        throw new Error('reader.lua: ' + to_jsstring(lua.lua_tostring(L,-1)));
     }
 }

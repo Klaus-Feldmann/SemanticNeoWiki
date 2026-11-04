@@ -789,7 +789,7 @@ function openSubjectStep( schema: Schema, id: SubjectId ): void {
 		schema.getName(),
 		true,
 		schema.getName(),
-		new StatementList( [] ),
+		schema.initialStatements(),
 		UNANSWERED_PAGE,
 		null
 	);
