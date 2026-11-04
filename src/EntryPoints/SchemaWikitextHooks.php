@@ -41,6 +41,7 @@ final class SchemaWikitextHooks {
 			if ( $schema === null ) { return; }
 			$text = SchemaWikitext::append( $text, SchemaWikitext::programs( $schema ) );
 		} catch ( Throwable $e ) {
+			if ( $context = \ProfessionalWiki\NeoWiki\EntryPoints\Processing\ProcessingContext::current() ) { $context->failure = $e->getMessage(); }
 			LoggerFactory::getInstance( 'NeoWiki' )->error( 'Schema wikitext preparation failed', [ 'exception' => $e ] );
 			$text .= "\n<strong class=\"error\">" . wfMessage( 'neowiki-wikitext-error' )->escaped() . '</strong>';
 		}
@@ -52,7 +53,7 @@ final class SchemaWikitextHooks {
 			$main = $revision->getContent( SlotRecord::MAIN );
 			$oldMain = $old?->getContent( SlotRecord::MAIN );
 			if ( $main instanceof SchemaContent || $oldMain instanceof SchemaContent ) {
-				if ( self::schemaPrograms( $main ) !== self::schemaPrograms( $oldMain ) ) {
+				if ( $main?->getText() !== $oldMain?->getText() ) {
 					$title = $wikiPage->getTitle();
 					DeferredUpdates::addCallableUpdate( static function () use ( $title ): void {
 						MediaWikiServices::getInstance()->getJobQueueGroup()->push( new SchemaWikitextRefreshJob( $title, [ 'after' => 0 ] ) );
@@ -99,9 +100,7 @@ final class SchemaWikitextHooks {
 	}
 
 	public static function refreshPage( Title $title ): bool {
-		if ( !self::refreshJob( $title )->run() ) { return false; }
-		NeoWikiExtension::getInstance()->newHookPageRebuilder()->rebuild( $title );
-		return true;
+        return ( new \ProfessionalWiki\NeoWiki\EntryPoints\Processing\InternalPageProcessor() )->refresh( $title );
 	}
 
 	public static function refreshJob( Title $title ): object {

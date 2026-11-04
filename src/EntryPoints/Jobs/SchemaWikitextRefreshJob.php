@@ -13,10 +13,21 @@ class SchemaWikitextRefreshJob extends Job {
 	public function __construct( Title $title, array $params ) {
 		parent::__construct( 'neowikiSchemaWikitextRefresh', $title, $params );
 		$this->removeDuplicates = true;
+		// RefreshLinksJob manages its own transaction rounds; do not wrap this job in another.
+		$this->executionFlags |= self::JOB_NO_EXPLICIT_TRX_ROUND;
 	}
 	public function run(): bool {
 		$services = MediaWikiServices::getInstance();
-		if ( ( $this->params['page'] ?? false ) === true ) { return SchemaWikitextHooks::refreshPage( $this->title ); }
+		if ( ( $this->params['page'] ?? false ) === true ) {
+            try {
+                $old = isset( $this->params['movedFrom'] ) ? Title::newFromText( $this->params['movedFrom'] ) : null;
+                return ( new \ProfessionalWiki\NeoWiki\EntryPoints\Processing\InternalPageProcessor() )->refresh( $this->title, $old );
+            } catch ( \Throwable $e ) {
+                $this->setLastError( $e->getMessage() );
+                \MediaWiki\Logger\LoggerFactory::getInstance( 'NeoWiki' )->error( 'Internal refresh failed; previous data retained', [ 'exception' => $e ] );
+                return false;
+            }
+        }
 		$after = (int)( $this->params['after'] ?? 0 );
 		$db = $services->getConnectionProvider()->getPrimaryDatabase();
 		$ids = $db->newSelectQueryBuilder()->select( 'nws_page_id' )->distinct()->from( 'neowiki_subject' )

@@ -50,3 +50,7 @@ $smwgSparqlEndpoint = [
 // { "subjectFirst": false, "dataLanguages": ["de", "la", "grc", "en"] }
 // The existing deployment has wgJobRunRate=0 and uses an external job runner.
 // This example does not configure that runner or change access permissions.
+
+// Optional private-wiki policy. Internal processing supports this without data/schema/module whitelists:
+// $wgGroupPermissions['*']['read'] = false;
+// Keep the existing external job runner active for derived-data updates.

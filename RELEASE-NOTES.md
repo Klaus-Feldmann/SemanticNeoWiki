@@ -1,5 +1,16 @@
 # Release notes
 
+## SemanticNeoWiki 0.1.10 test — 2026-11-04
+
+* Private-wiki processing while anonymous reading remains disabled, using an automatically managed non-login identity restricted to read access.
+* Full-revision preparation and validated hand-off to ordinary MediaWiki/SMW secondary-data updates and background jobs.
+* Preservation of previous derived assertions on incomplete results; intentional value removal still clears old annotations. Independent manual annotations are retained.
+* Optional SMW 7.4 integration, processing-state metadata, current-parse Wikidata identity preference, and the job transaction-round fix.
+* No SQL schema, frontend asset or existing Wiki-module change. Keep the regular job worker running.
+* On AufEinWort, own-value changes and clearing were verified by reading back stored SMW data with anonymous read disabled.
+
+Composer branch: `dev-semantic-0.1.10-test`. The earlier `semantic-0.1.9-test` snapshot remains available. [Installation](publication/INSTALLATION.md) and [verification](publication/VERIFICATION.md).
+
 To move an install to a newer version, see [Upgrading](https://neowiki.ai/docs/operations/upgrading).
 
 ## NeoWiki 0.1.0

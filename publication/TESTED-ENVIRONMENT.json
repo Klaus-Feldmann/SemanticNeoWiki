@@ -7,12 +7,12 @@
       "version": "3.0.0"
     },
     {
-      "name": "NeoWiki",
-      "version": "0.1.8-aewi+2026-11-03"
+      "name": "SemanticNeoWiki",
+      "version": "0.1.10-private-processing-test+2026-11-04"
     },
     {
       "name": "NeoWikiBaseBridge",
-      "version": "0.17.0+2026-11-03"
+      "version": "0.18.1-private-processing-test+2026-11-04"
     },
     {
       "name": "Data Transfer",
@@ -20,7 +20,7 @@
     },
     {
       "name": "SemanticMediaWiki",
-      "version": "7.3.1"
+      "version": "7.4.0"
     },
     {
       "name": "SemanticScribunto",
@@ -39,5 +39,14 @@
     {
       "name": "WikibaseClient"
     }
-  ]
+  ],
+  "verifiedDate": "2026-11-04",
+  "parser": "legacy",
+  "privateProcessing": {
+    "anonymousRead": false,
+    "jobWorker": "enabled",
+    "ownValueChangesAndRemoval": "verified via MCP SMW reads",
+    "manualAnnotations": "preserved"
+  },
+  "runtimeInstallMethod": "guarded file patch over Composer-installed 0.1.9-test"
 }

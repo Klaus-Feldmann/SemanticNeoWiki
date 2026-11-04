@@ -8,11 +8,11 @@ A research-oriented, independent fork of [NeoWiki](https://github.com/Profession
 
 ## Version and supported environment
 
-The candidate is **SemanticNeoWiki 0.1.9-test+2026-11-03**, with **NeoWikiBaseBridge 0.18.0-test+2026-11-03**. The complete candidate is published on `master` and the named test branch `semantic-0.1.9-test`. Use the named branch for the Composer test. It is based on NeoWiki 0.1.0; newer upstream development is not implicitly merged. The fork's initial upstream commit remains in Git history.
+The current test snapshot is **SemanticNeoWiki 0.1.10-private-processing-test+2026-11-04**, with **NeoWikiBaseBridge 0.18.1-private-processing-test+2026-11-04**. It is published on `master` and the named branch `semantic-0.1.10-test`. The earlier `semantic-0.1.9-test` branch is retained unchanged. It remains based on NeoWiki 0.1.0; newer upstream work is not implicitly merged.
 
-The preceding NeoWiki-named runtime (0.1.8-aewi / Bridge 0.17.0) runs on the production research server AufEinWort. The renamed candidate preserves its data model and features. **Composer packaging has been checked locally; installation from GitHub on that production server is the next live test.** Do not interpret the prior production use as a completed live test of the rename.
+The Composer migration to SemanticNeoWiki 0.1.9 was completed on the AufEinWort production research server. The 0.1.10 runtime changes were installed there as a guarded file update and tested with anonymous reading disabled and a running job worker. Saved values, changed values and intentionally removed values were checked in the SMW store. Independent manual annotations were preserved. See [verification](publication/VERIFICATION.md) for the distinction between runtime and Composer-distribution checks.
 
-Support is limited to the tested setup: **MediaWiki 1.47.0-wmf.24, PHP 8.3.36, the legacy parser, UnlinkedWikibase 3.0.0, Semantic MediaWiki 7.3.1, Semantic Scribunto 3.0.0, local Wikibase, Scribunto and a Fuseki/SPARQL-backed Graph Explorer.** Earlier MediaWiki versions and other parser/backend combinations are not supported or tested by this fork. Later versions require their own verification. Additional reported versions are in [the environment snapshot](publication/TESTED-ENVIRONMENT.json).
+Support is limited to the tested setup: **MediaWiki 1.47.0-wmf.24, PHP 8.3.36, the legacy parser, UnlinkedWikibase 3.0.0, Semantic MediaWiki 7.4.0, Semantic Scribunto 3.0.0, local Wikibase, Scribunto and a Fuseki/SPARQL-backed Graph Explorer.** Earlier MediaWiki versions and other parser/backend combinations are not supported or tested by this fork. Later versions require their own verification. Details are in [the environment snapshot](publication/TESTED-ENVIRONMENT.json).
 
 ## Added capabilities
 
@@ -21,9 +21,12 @@ Support is limited to the tested setup: **MediaWiki 1.47.0-wmf.24, PHP 8.3.36, t
 - Historical BCE dates with precision/calendar information and year links.
 - Images from local files, Commons or bound source properties, including Data/Graph thumbnails.
 - Local page selection, structured source URLs and display names, passive Wikitext and centrally executed schema Wikitext.
-- Optional schema-driven SMW annotations through Lua; relevant subject/schema saves trigger page processing rather than requiring an additional manual article save.
+- Optional schema-driven SMW annotations through Lua; relevant subject/schema saves trigger background page processing rather than requiring an additional manual article save.
+- Private-wiki processing with an automatically managed, non-login, read-only identity; validated full-revision results feed the normal MediaWiki/SMW updates without granting anonymous read access.
 - Complete Data-view JSON, Turtle and TriG downloads and a separately supplied MCP read-tool patch.
 - Readable select values, ordered fields, configured links and preferred descriptions in Graph Explorer.
+
+**Keep a functioning job worker running.** Data is saved first and derived page/SMW data is maintained through background processing. No additional processing-account settings are required. Existing article data is retained when a complete replacement cannot be prepared; intentionally empty fields remove their former annotations.
 
 External source changes alone do not guarantee immediate propagation to stored SMW annotations; affected pages must be processed. Existing SMW property types and research decisions remain under the administrator's control.
 
@@ -39,7 +42,7 @@ In the MediaWiki root, merge the following into your existing `composer.local.js
     { "type": "vcs", "url": "https://github.com/Klaus-Feldmann/SemanticNeoWiki" }
   ],
   "require": {
-    "aufeinwort/semantic-neowiki": "dev-semantic-0.1.9-test"
+    "aufeinwort/semantic-neowiki": "dev-semantic-0.1.10-test"
   },
   "config": {
     "allow-plugins": { "composer/installers": true }
@@ -84,7 +87,7 @@ See the commented [LocalSettings example](publication/LocalSettings.SemanticNeoW
 
 - [SMW modules and templates](integrations/smw/README.md), with current wiki revision provenance. Their existing names remain NeoWiki; central executable schema Wikitext can continue invoking `{{NeoWiki}}`.
 - [Wikidata registration helper](integrations/registration/README.md): AewiWikidataRegistrierung.php and its Magic Words file. Existing Q-registration templates can stay; the example helper's automatic title search uses German Wikipedia and is namespace-controlled.
-- [Optional SMW 7.3.1 statistics correction](integrations/smw/compatibility/README.md): exact-source patch for SPARQLStore, with a checked backup/apply script. It is not applied by Composer and is not needed for every SMW setup.
+- [Historical optional SMW 7.3.1 statistics correction](integrations/smw/compatibility/README.md): exact-source patch for SPARQLStore, with a checked backup/apply script. It is not applied by Composer and must not be applied to SMW 7.4.0 on the basis of its older version alone.
 - [MCP source/runtime patch](integrations/mcp/README.md): complete Data-view tool and recognition of the SemanticNeoWiki extension name. Apply before changing extension identity if MCP must retain the existing NeoWiki tools. It targets MCP 0.20.1, with checked compatible 0.20.0 runtime files; it contains no authentication data.
 
 ## Credits, license and verification

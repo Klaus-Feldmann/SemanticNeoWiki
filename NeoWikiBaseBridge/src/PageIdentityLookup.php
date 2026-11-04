@@ -18,7 +18,8 @@ final class PageIdentityLookup {
 			return [ 'status' => 'unavailable' ];
 		}
 		$values = MediaWikiServices::getInstance()->getPageProps()->getProperties( $page, 'unlinkedwikibase_id' );
-		$id = $values[$page->getArticleID()] ?? null;
+		$current = \ProfessionalWiki\NeoWiki\EntryPoints\Processing\ProcessingContext::current()?->currentProperty( $page, 'unlinkedwikibase_id' );
+		$id = $current ?? $values[$page->getArticleID()] ?? null;
 		if ( $id === null || $id === '' ) {
 			return [ 'status' => 'missing' ];
 		}

@@ -10,7 +10,7 @@ The current server may have loaded NeoWiki from copied files and a Composer merg
 
 ## Install the candidate
 
-Merge the VCS repository, package requirement and composer/installers allowance shown in README.md into your existing root/local configuration. Use `dev-semantic-0.1.9-test` explicitly. Then run the README Composer command from the MediaWiki root. The extension installer writes `extensions/SemanticNeoWiki` and its dependencies are loaded through the MediaWiki root vendor/autoload.php.
+Merge the VCS repository, package requirement and composer/installers allowance shown in README.md into your existing root/local configuration. Use `dev-semantic-0.1.10-test` explicitly. Then run the README Composer command from the MediaWiki root. The extension installer writes `extensions/SemanticNeoWiki` and its dependencies are loaded through the MediaWiki root vendor/autoload.php.
 
 Check that `extensions/SemanticNeoWiki/extension.json` exists before changing loading instructions. Replace the NeoWiki and bundled Bridge load lines with those in README.md. The old directory may be retained for return but must not be loaded in parallel. Do not delete old dependencies, RDF data or namespace contents as part of the rename.
 
@@ -24,7 +24,17 @@ For a switch from our installed 0.1.8-aewi runtime, the rename has no SQL/conten
 
 Verify Special:Version reports SemanticNeoWiki and the new Bridge; open/edit/save one subject, inspect Data/Graph links and thumbnails, and download complete JSON/Turtle/TriG. Confirm the existing MCP tools and complete-view tool after connection refresh. For SMW, verify a changed and a removed value after saving the subject and running queued work. Keep a functioning job runner. Remote Wikidata changes alone do not reprocess all pages.
 
-The preceding runtime was live-tested in AufEinWort. The renamed extension/Composer migration remains a separate live test until confirmed; local Composer checks do not boot a complete production wiki.
+The renamed 0.1.9 Composer installation was confirmed on AufEinWort. The 0.1.10 private-processing runtime was subsequently applied there as a checked file update and verified using the stored SMW data. Those are distinct checks; a distribution download alone is not a server boot test.
+
+## Updating from 0.1.9 and private operation
+
+Change the Composer requirement to `dev-semantic-0.1.10-test` and use the Composer update command from README.md. Do not change persisted content models, namespaces or existing NeoWiki configuration names. These changes introduce no SQL schema migration and require no whole-wiki rebuild. Preserve existing local configuration when updating. Rebuild localization after the file update.
+
+Private wikis may keep `$wgGroupPermissions['*']['read'] = false`. No read whitelist for article/schema/module namespaces is required by the new processing path. A non-login system account, `SemanticNeoWiki internal processor`, is created automatically on first use. Its effective rights are restricted to `read`, including removal of inherited write/admin rights. An existing ordinary account with that name is never taken over. Do not set up a password or browser session for it.
+
+Run the normal MediaWiki job worker. Saving subject/schema data schedules the derived processing; inspect stored SMW values after processing. A protected full-revision result is passed to normal secondary-data updates, not to the shared HTML parser cache. Normal views, REST/API and MCP keep the caller's permissions. Existing explicit ACLs and registered publication policies are respected.
+
+Use one separate test subject before a larger migration. Verify a value, a changed value, an intentionally empty value, and preservation of an independent manual annotation. No changes to Wikibase or UnlinkedWikibase are part of this update. Creating new private-wiki sitelinks is a separate mechanism; the maintained existing sitelink was observed to remain intact.
 
 ## Optional companion files
 
