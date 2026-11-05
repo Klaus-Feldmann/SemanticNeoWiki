@@ -94,7 +94,11 @@ See the commented [LocalSettings example](publication/LocalSettings.SemanticNeoW
 
 ## Credits, license and verification
 
-NeoWiki is the work of Professional Wiki, Jeroen De Dauw and its other contributors. Their credits and GPL-2.0-or-later license remain; see [COPYING](COPYING). Klaus Feldmann / AufEinWort supplied the research requirements, workflow/interface design and application testing. OpenAI ChatGPT/Codex assisted with implementation, tests and documentation. Publication does not imply endorsement by the original developers.
+**NeoWikiBaseBridge** — Softwaredesign: [Klaus Feldmann / AufEinWort](https://aufeinwort.info/), Programmierung: ChatGPT/Sophos.
+
+**SemanticNeoWiki** — Softwaredesign und Weiterentwicklung des Forks: [Klaus Feldmann / AufEinWort](https://aufeinwort.info/), Programmierung: ChatGPT/Sophos. Basiert auf NeoWiki von [Professional Wiki](https://professional.wiki/), [Jeroen De Dauw](https://www.entropywins.wtf/mediawiki), Morne Alberts, [Alistair3149](https://www.mediawiki.org/wiki/User:Alistair3149) und [weiteren Mitwirkenden](https://github.com/ProfessionalWiki/NeoWiki/graphs/contributors?all=1).
+
+Original copyright notices and the GPL-2.0-or-later license remain unchanged; see [COPYING](COPYING). Publication does not imply endorsement by the original developers or OpenAI.
 
 Zazuko Graph Explorer retains its LGPL notice, original sources and dependency notices; the separate MCP patch retains the MCP project's license. See [third-party provenance](publication/THIRD-PARTY.md).
 
