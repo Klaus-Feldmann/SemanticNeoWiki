@@ -1,4 +1,4 @@
-# SemanticNeoWiki
+# Semantic NeoWiki
 
 A research-oriented, independent fork of [NeoWiki](https://github.com/ProfessionalWiki/NeoWiki): schema-based data entry, Wikidata and local Wikibase sources, optional Semantic MediaWiki annotations, knowledge graphs and AI access through MCP.
 
@@ -7,6 +7,14 @@ The main purpose of this fork is to automatically generate Semantic MediaWiki (S
 **Maintainer:** Klaus Feldmann / AufEinWort · **Contact:** [info@aufeinwort.info](mailto:info@aufeinwort.info) · **Research wiki:** [aufeinwort.info](https://aufeinwort.info/wiki/Spezial:Version)
 
 **This fork is not maintained or supported by Jeroen De Dauw or Professional Wiki.** Please report fork-specific issues in [this repository](https://github.com/Klaus-Feldmann/SemanticNeoWiki/issues), not to the original NeoWiki project. Original authorship and licenses are retained.
+
+## Dynamic, schema-driven metadata from WikiData
+
+Semantic NeoWiki lets contributors define WikiData property mappings once in a shared schema, such as Person, instead of maintaining the same retrieval logic across individual articles, templates and Lua modules. When a page has a Wikidata item association, its schema provides the configured property values automatically. Adding a P-ID to the schema triggers background updates of the pages using that schema; contributors do not have to edit each article separately. Locally entered values can take precedence over retrieved values, preserving editorial decisions and research findings.
+
+This structured workflow does not require [Semantic MediaWiki](https://www.mediawiki.org/wiki/Extension:Semantic_MediaWiki) to be installed. When SMW is installed, Semantic NeoWiki also automatically generates semantic annotations from the schema’s field names and values, including values retrieved through configured P-IDs from Wikidata or a local Wikibase. These annotations make the data available for semantic queries and tables.
+
+For Wikipedia, this offers a potential way to consolidate metadata tasks currently distributed across templates such as the German Wikipedia’s Normdaten and Personendaten, reducing repeated manual entry and maintenance. Less experienced contributors could work with a consistent data-entry form while experienced contributors maintain the shared schema. The current implementation demonstrates this workflow in a research wiki; replacing Wikipedia-specific templates would require mapping and validating their individual functions.
 
 ## Version and supported environment
 
