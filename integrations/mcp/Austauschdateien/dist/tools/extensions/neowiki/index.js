@@ -12,7 +12,7 @@ import { neowikiValidateSubject } from './neowiki-validate-subject.js';
 import { neowikiMintSubjectIds } from './neowiki-mint-subject-ids.js';
 export const neowikiPack = {
     id: 'neowiki',
-    extensionNames: ['NeoWiki', 'SemanticNeoWiki'],
+    extensionNames: ['NeoWiki', 'SemanticNeoWiki', 'SemanticWikiSchema'],
     tools: [
         neowikiListSchemas,
         neowikiGetSchema,

@@ -54,7 +54,7 @@ final class ProcessingHooks {
         if ( InternalPageProcessor::manages( $title ) &&
             !ProcessingResult::isCurrent( $title, $update->getParserOutput()->getExtensionData( ProcessingResult::STAMP ) ) ) {
             self::queue( $title );
-            throw new ProcessingIncomplete( 'SemanticNeoWiki: stale/incomplete links update refused before table writes.' );
+            throw new ProcessingIncomplete( 'SemanticWikiSchema: stale/incomplete links update refused before table writes.' );
         }
     }
 
@@ -64,12 +64,12 @@ final class ProcessingHooks {
         $stamp = $data->getExtensionData( ProcessingResult::STAMP );
         if ( !ProcessingResult::isCurrent( $title, $stamp ) ) {
             self::queue( $title );
-            throw new ProcessingIncomplete( 'SemanticNeoWiki: incomplete/stale SMW update refused; complete refresh queued.' );
+            throw new ProcessingIncomplete( 'SemanticWikiSchema: incomplete/stale SMW update refused; complete refresh queued.' );
         }
         if ( ( $stamp['semanticHash'] ?? null ) !== ProcessingResult::semanticHash( $data ) ) {
             // Do not create a fresh self-repeating job for a deterministic integration error.
             ProcessingState::record( $title, 'failed', $stamp['revision'] );
-            throw new ProcessingIncomplete( 'SemanticNeoWiki: prepared semantic assertions changed before persistence.' );
+            throw new ProcessingIncomplete( 'SemanticWikiSchema: prepared semantic assertions changed before persistence.' );
         }
     }
 

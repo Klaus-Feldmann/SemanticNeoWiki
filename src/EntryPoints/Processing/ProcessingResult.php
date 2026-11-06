@@ -66,7 +66,7 @@ final class ProcessingResult {
 
     public function assertCurrent(): void {
         if ( !self::isCurrent( $this->title, $this->stamp ) ) {
-            throw new ProcessingIncomplete( 'SemanticNeoWiki: revision or dependency changed during processing; retry required.', 'superseded' );
+            throw new ProcessingIncomplete( 'SemanticWikiSchema: revision or dependency changed during processing; retry required.', 'superseded' );
         }
     }
 }

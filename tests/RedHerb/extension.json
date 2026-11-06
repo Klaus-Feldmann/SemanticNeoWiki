@@ -8,7 +8,7 @@
 	"description": "Test extension for validating NeoWiki extension points",
 	"requires": {
 		"extensions": {
-			"SemanticNeoWiki": "*"
+			"SemanticWikiSchema": "*"
 		}
 	},
 	"AutoloadNamespaces": {

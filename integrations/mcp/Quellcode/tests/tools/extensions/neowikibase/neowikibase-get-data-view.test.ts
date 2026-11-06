@@ -130,7 +130,7 @@ describe('neowikibase-get-data-view', () => {
 		expect(schema.safeParse({ language: 'en-gb' }).success).toBe(true);
 	});
 	it('gates only the new tool on Bridge availability', () => {
-		expect(neowikiBasePack.extensionNames).toEqual(['NeoWikiBaseBridge']);
+		expect(neowikiBasePack.extensionNames).toEqual(['NeoWikiBaseBridge', 'SchemaBaseBridge']);
 		expect(neowikiBasePack.tools).toEqual([tool]);
 		expect(tool.annotations?.readOnlyHint).toBe(true);
 	});

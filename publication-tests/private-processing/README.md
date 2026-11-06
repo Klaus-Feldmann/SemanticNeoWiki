@@ -2,7 +2,7 @@
 
 Diese PHP-Dateien sind **keine Live-Testprogramme**. Sie legen Testseiten, Module und Vorlagen an, ändern Werte und löschen eine Testseite. Sie brechen außerhalb der Datenbank `semantic_test` mit Serveradresse `http://127.0.0.1:18747` ab. Sie werden nicht automatisch ausgeführt.
 
-Die verwendete isolierte Umgebung: MediaWiki-Zweig `wmf/1.47.0-wmf.24`, PHP 8.3.36, SQLite, SMW 7.4.0, Scribunto aus demselben MediaWiki-Zweig, Legacy-Parser. Das Wiki wurde mit der Installationswartung lokal erstellt, Sprache Deutsch, Administrator `TestAdmin`; anonyme Leserechte dauerhaft `false`. Die eigene Arbeitsfassung liegt unter `extensions/SemanticNeoWiki`; die Bridge wird daraus geladen. SMW ist eingerichtet, die Tabellen wurden ausschließlich in dieser Testdatenbank angelegt.
+Die verwendete isolierte Umgebung: MediaWiki-Zweig `wmf/1.47.0-wmf.24`, PHP 8.3.36, SQLite, SMW 7.4.0, Scribunto aus demselben MediaWiki-Zweig, Legacy-Parser. Das Wiki wurde mit der Installationswartung lokal erstellt, Sprache Deutsch, Administrator `TestAdmin`; anonyme Leserechte dauerhaft `false`. Die eigene Arbeitsfassung liegt unter `extensions/SemanticWikiSchema`; die Bridge wird daraus geladen. SMW ist eingerichtet, die Tabellen wurden ausschließlich in dieser Testdatenbank angelegt.
 
 Für die Wiederausführung muss diese isolierte Umgebung vorliegen. Beispiel aus deren MediaWiki-Verzeichnis (Pfad zum entpackten Paket anpassen):
 

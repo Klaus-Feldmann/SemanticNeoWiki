@@ -11,8 +11,8 @@ use ProfessionalWiki\NeoWiki\Domain\Schema\Schema;
 use ProfessionalWiki\NeoWiki\Domain\Schema\SchemaName;
 use ProfessionalWiki\NeoWiki\Tests\Data\TestSources;
 
-require_once __DIR__ . '/../../../../NeoWikiBaseBridge/src/GraphFieldPresentation.php';
-require_once __DIR__ . '/../../../../NeoWikiBaseBridge/src/TimePresentation.php';
+require_once __DIR__ . '/../../../../SchemaBaseBridge/src/GraphFieldPresentation.php';
+require_once __DIR__ . '/../../../../SchemaBaseBridge/src/TimePresentation.php';
 
 class GraphFieldPresentationTest extends TestCase {
 	public function testPageTitlesArePreservedAlongsideTheirRdfIris(): void {

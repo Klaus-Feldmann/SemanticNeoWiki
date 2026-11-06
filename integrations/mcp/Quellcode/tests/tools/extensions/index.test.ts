@@ -40,14 +40,14 @@ describe('extensionPacks', () => {
 
 	it('accepts original NeoWiki and the independent SemanticNeoWiki fork', () => {
 		const neowiki = extensionPacks.find((p) => p.id === 'neowiki');
-		expect(neowiki?.extensionNames).toEqual(['NeoWiki', 'SemanticNeoWiki']);
+		expect(neowiki?.extensionNames).toEqual(['NeoWiki', 'SemanticNeoWiki', 'SemanticWikiSchema']);
 	});
 
 	it('allows the unchanged NeoWiki tool surface for SemanticNeoWiki', () => {
 		const pack = extensionPacks.find((p) => p.id === 'neowiki');
 		if (!pack) throw new Error('Missing NeoWiki pack');
 		const identity: WikiInspection = {
-			extensions: new Set(['SemanticNeoWiki']),
+			extensions: new Set(['SemanticWikiSchema']),
 			reachable: true,
 		};
 		expect(packToolRefusal(pack, 'neowiki-get-subject', identity, 'research')).toBeUndefined();

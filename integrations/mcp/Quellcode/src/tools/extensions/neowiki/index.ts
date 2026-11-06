@@ -14,7 +14,7 @@ import { neowikiMintSubjectIds } from './neowiki-mint-subject-ids.ts';
 
 export const neowikiPack: ExtensionPack = {
 	id: 'neowiki',
-	extensionNames: ['NeoWiki', 'SemanticNeoWiki'],
+	extensionNames: ['NeoWiki', 'SemanticNeoWiki', 'SemanticWikiSchema'],
 	tools: [
 		neowikiListSchemas,
 		neowikiGetSchema,

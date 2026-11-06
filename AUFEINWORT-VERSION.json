@@ -1,5 +1,5 @@
 {
-  "name": "SemanticNeoWiki",
+  "name": "SemanticWikiSchema",
   "testedNeoWikiVersion": "0.1.17+2026-11-06",
   "bridgeVersion": "0.19.1+2026-11-05",
   "prepared": "2026-11-06",
@@ -9,20 +9,20 @@
     "version": "0.1.0"
   },
   "forkMasterAtPreparation": "7e42aa94",
-  "branch": "semantic-0.1.17",
-  "extensionName": "SemanticNeoWiki",
-  "extensionVersion": "0.1.17+2026-11-06",
-  "composerPackage": "aufeinwort/semantic-neowiki",
+  "branch": "semantic-0.1.18",
+  "extensionName": "SemanticWikiSchema",
+  "extensionVersion": "0.1.18+2026-11-06",
+  "composerPackage": "aufeinwort/semantic-wikischema",
   "minimumMediaWiki": "1.47.0-wmf.24",
   "composerLiveInstallVerified": false,
   "contact": "info@aufeinwort.info",
   "composerLocalInstallVerified": false,
   "publicationBranches": [
     "master",
-    "semantic-0.1.17"
+    "semantic-0.1.18"
   ],
-  "runtimeLiveInstallVerified": true,
-  "runtimeInstallMethod": "guarded updates over the existing Composer installation; maintainer-confirmed live tests",
+  "runtimeLiveInstallVerified": false,
+  "runtimeInstallMethod": "0.1.17 verified on AufEinWort; 0.1.18 rename candidate tested locally",
   "previousComposerLiveInstallVerified": {
     "version": "0.1.9-test+2026-11-03",
     "date": "2026-11-03"

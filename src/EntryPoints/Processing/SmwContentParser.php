@@ -11,7 +11,7 @@ final class SmwContentParser extends ContentParser {
         // fragment or a serialized older main slot supplied by another job.
         $result = ( new InternalPageProcessor() )->prepare( $this->title );
         if ( $this->revision !== null && $this->revision->getId() !== $result->revision->getId() ) {
-            throw new ProcessingIncomplete( 'SemanticNeoWiki: stale SMW content-parse revision.' );
+            throw new ProcessingIncomplete( 'SemanticWikiSchema: stale SMW content-parse revision.' );
         }
         $this->revision = $result->revision;
         $this->parserOutput = $result->output;

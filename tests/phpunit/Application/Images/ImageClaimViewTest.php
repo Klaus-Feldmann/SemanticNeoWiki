@@ -4,7 +4,7 @@ declare( strict_types = 1 );
 namespace ProfessionalWiki\NeoWiki\Tests\Application\Images;
 use PHPUnit\Framework\TestCase;
 use NeoWikiBaseBridge\ImageClaimView;
-require_once __DIR__ . '/../../../../NeoWikiBaseBridge/src/ImageClaimView.php';
+require_once __DIR__ . '/../../../../SchemaBaseBridge/src/ImageClaimView.php';
 class ImageClaimViewTest extends TestCase {
 	private function claim( string $name, string $rank = 'normal' ): array {
 		return [ 'rank' => $rank, 'mainsnak' => [ 'snaktype' => 'value', 'datatype' => 'commonsMedia', 'datavalue' => [ 'type' => 'string', 'value' => $name ] ] ];

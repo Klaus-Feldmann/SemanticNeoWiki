@@ -1,4 +1,8 @@
-# SemanticNeoWiki releases
+# Semantic WikiSchema releases
+
+## 0.1.18 — 2026-11-06
+
+Renames the extension and its companion to Semantic WikiSchema and SchemaBaseBridge. The package installs in `extensions/SemanticWikiSchema`. See the [migration guide](publication/INSTALLATION.md) for the Composer, LocalSettings, Graph Explorer and MCP changes.
 
 ## 0.1.17 — 2026-11-06
 

@@ -8,8 +8,8 @@
 $wgUseParsoidParser = false;
 $wgUseParsoidLinksUpdate = false;
 
-wfLoadExtension( 'SemanticNeoWiki' );
-wfLoadExtension( 'NeoWikiBaseBridge', "$IP/extensions/SemanticNeoWiki/NeoWikiBaseBridge/extension.json" );
+wfLoadExtension( 'SemanticWikiSchema' );
+wfLoadExtension( 'SchemaBaseBridge', "$IP/extensions/SemanticWikiSchema/SchemaBaseBridge/extension.json" );
 $wgNeoWikiEnableLua = true;
 $wgNeoWikiAutoRenderMainSubject = false;
 $wgNeoWikiSubjectFirst = false;
@@ -34,7 +34,7 @@ $wgWBRepoSettings['siteGlobalID'] = 'aewi';
 // do not load both copies. UnlinkedWikibase must already be installed/loaded.
 $wgAewiWikidataAutoNamespaces = [ 0 ];
 $wgAewiWikidataSmwProperty = 'Wikidata';
-require_once "$IP/extensions/SemanticNeoWiki/integrations/registration/AewiWikidataRegistrierung.php";
+require_once "$IP/extensions/SemanticWikiSchema/integrations/registration/AewiWikidataRegistrierung.php";
 
 // Existing SMW SPARQLStore is a DIFFERENT dataset, not the graph above.
 // Keep these only where this SMW store is actually configured.

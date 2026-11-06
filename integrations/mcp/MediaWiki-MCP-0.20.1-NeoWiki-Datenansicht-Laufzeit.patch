@@ -23,7 +23,7 @@
  export const neowikiPack = {
      id: 'neowiki',
 -    extensionNames: ['NeoWiki'],
-+    extensionNames: ['NeoWiki', 'SemanticNeoWiki'],
++    extensionNames: ['NeoWiki', 'SemanticNeoWiki', 'SemanticWikiSchema'],
      tools: [
          neowikiListSchemas,
          neowikiGetSchema,
@@ -34,7 +34,7 @@
 +/** Optional read model; ordinary NeoWiki installations keep their existing tool set. */
 +export const neowikiBasePack = {
 +    id: 'neowikibase',
-+    extensionNames: ['NeoWikiBaseBridge'],
++    extensionNames: ['NeoWikiBaseBridge', 'SchemaBaseBridge'],
 +    tools: [neowikiGetDataView],
 +};
 --- /dev/null

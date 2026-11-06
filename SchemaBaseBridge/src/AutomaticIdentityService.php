@@ -28,7 +28,7 @@ final class AutomaticIdentityService {
 						'url' => $url, 'origin' => $value['origin'] ?? 'page' ];
 				} else {
 					if ( $status !== 'missing' && function_exists( 'wfDebugLog' ) ) {
-						wfDebugLog( 'NeoWikiBaseBridge', 'Identity source ' . $source . ': ' . $status );
+						wfDebugLog( 'SchemaBaseBridge', 'Identity source ' . $source . ': ' . $status );
 					}
 					$sources[$source] = [ 'source' => $source,
 						'status' => in_array( $status, [ 'missing', 'unavailable', 'error' ], true ) ? $status : 'error',
@@ -36,7 +36,7 @@ final class AutomaticIdentityService {
 				}
 			} catch ( Throwable ) {
 				if ( function_exists( 'wfDebugLog' ) ) {
-					wfDebugLog( 'NeoWikiBaseBridge', 'Identity lookup failed for source ' . $source );
+					wfDebugLog( 'SchemaBaseBridge', 'Identity lookup failed for source ' . $source );
 				}
 				$sources[$source] = [ 'source' => $source, 'status' => 'error', 'id' => null, 'url' => null, 'origin' => null ];
 			}

@@ -1,4 +1,4 @@
-# Semantic NeoWiki
+# Semantic WikiSchema
 
 A research-oriented, independent fork of [NeoWiki](https://github.com/ProfessionalWiki/NeoWiki): schema-based data entry, Wikidata and local Wikibase sources, optional Semantic MediaWiki annotations, knowledge graphs and AI access through MCP.
 
@@ -6,21 +6,23 @@ The main purpose of this fork is to automatically generate Semantic MediaWiki (S
 
 **Maintainer:** Klaus Feldmann / AufEinWort · **Contact:** [info@aufeinwort.info](mailto:info@aufeinwort.info) · **Research wiki:** [aufeinwort.info](https://aufeinwort.info/wiki/Spezial:Version)
 
-**This fork is not maintained or supported by Jeroen De Dauw or Professional Wiki.** Please report fork-specific issues in [this repository](https://github.com/Klaus-Feldmann/SemanticNeoWiki/issues), not to the original NeoWiki project. Original authorship and licenses are retained.
+**This fork is not maintained or supported by Jeroen De Dauw or Professional Wiki.** Please report fork-specific issues in [this repository](https://github.com/Klaus-Feldmann/SemanticWikiSchema/issues), not to the original NeoWiki project. Original authorship and licenses are retained.
+
+Semantic WikiSchema was previously published as Semantic NeoWiki. Existing configuration keys and API names retain their technical identifiers.
 
 ## Dynamic, schema-driven metadata from WikiData
 
-Semantic NeoWiki lets contributors define WikiData property mappings once in a shared schema, such as Person, instead of maintaining the same retrieval logic across individual articles, templates and Lua modules. When a page has a Wikidata item association, its schema provides the configured property values automatically. Adding a P-ID to the schema triggers background updates of the pages using that schema; contributors do not have to edit each article separately. Locally entered values can take precedence over retrieved values, preserving editorial decisions and research findings.
+Semantic WikiSchema lets contributors define WikiData property mappings once in a shared schema, such as Person, instead of maintaining the same retrieval logic across individual articles, templates and Lua modules. When a page has a Wikidata item association, its schema provides the configured property values automatically. Adding a P-ID to the schema triggers background updates of the pages using that schema; contributors do not have to edit each article separately. Locally entered values can take precedence over retrieved values, preserving editorial decisions and research findings.
 
-This structured workflow does not require [Semantic MediaWiki](https://www.mediawiki.org/wiki/Extension:Semantic_MediaWiki) to be installed. When SMW is installed, Semantic NeoWiki also automatically generates semantic annotations from the schema’s field names and values, including values retrieved through configured P-IDs from Wikidata or a local Wikibase. These annotations make the data available for semantic queries and tables.
+This structured workflow does not require [Semantic MediaWiki](https://www.mediawiki.org/wiki/Extension:Semantic_MediaWiki) to be installed. When SMW is installed, Semantic WikiSchema also automatically generates semantic annotations from the schema’s field names and values, including values retrieved through configured P-IDs from Wikidata or a local Wikibase. These annotations make the data available for semantic queries and tables.
 
 For Wikipedia, this offers a potential way to consolidate metadata tasks currently distributed across templates such as the German Wikipedia’s Normdaten and Personendaten, reducing repeated manual entry and maintenance. Less experienced contributors could work with a consistent data-entry form while experienced contributors maintain the shared schema. The current implementation demonstrates this workflow in a research wiki; replacing Wikipedia-specific templates would require mapping and validating their individual functions.
 
 ## Version and supported environment
 
-The current version is **SemanticNeoWiki 0.1.17+2026-11-06**, prepared for `master` and the named branch `semantic-0.1.17`. Earlier version branches remain unchanged. The fork remains based on NeoWiki 0.1.0; newer upstream changes are not implicitly merged. This is not a 1.0 release.
+Semantic WikiSchema 0.1.18 is based on the published 0.1.17 runtime and retains NeoWiki 0.1.0 as its upstream base.
 
-This runtime is in active use on the AufEinWort production research server. The current version was installed there as guarded updates over the existing Composer installation. The maintainer has confirmed automatic annotations, schema presets and the corrected handling of duplicate sort-key warnings in daily use. See [verification](publication/VERIFICATION.md) for the distinction between runtime and Composer-distribution checks.
+The 0.1.17 runtime was tested on AufEinWort after guarded updates over the existing Composer installation. See [verification](publication/VERIFICATION.md) for the distinction between runtime and Composer-distribution checks.
 
 Support is limited to the tested setup: **MediaWiki 1.47.0-wmf.24, PHP 8.3.36, the legacy parser, UnlinkedWikibase 3.0.0, Semantic MediaWiki 7.4.0, Semantic Scribunto 3.0.0, local Wikibase, Scribunto and a Fuseki/SPARQL-backed Graph Explorer.** Earlier MediaWiki versions and other parser/backend combinations are not supported or tested by this fork. Later versions require their own verification. Details are in [the environment snapshot](publication/TESTED-ENVIRONMENT.json).
 
@@ -49,10 +51,10 @@ In the MediaWiki root, merge the following into your existing `composer.local.js
 ```json
 {
   "repositories": [
-    { "type": "vcs", "url": "https://github.com/Klaus-Feldmann/SemanticNeoWiki" }
+    { "type": "vcs", "url": "https://github.com/Klaus-Feldmann/SemanticWikiSchema" }
   ],
   "require": {
-    "aufeinwort/semantic-neowiki": "dev-semantic-0.1.17"
+    "aufeinwort/semantic-wikischema": "dev-semantic-0.1.18"
   },
   "config": {
     "allow-plugins": { "composer/installers": true }
@@ -60,23 +62,23 @@ In the MediaWiki root, merge the following into your existing `composer.local.js
 }
 ```
 
-Use the MediaWiki root Composer workflow, which merges `composer.local.json`; do not run this local configuration file as a separate Composer project. An existing requirement for `neowiki/neowiki` must be removed for the switch. Remove an obsolete merge include of `extensions/NeoWiki/composer.json`, if present. Preserve existing compatibility work for Wikibase/DataTransfer; the fork does not automatically modify those packages.
+Use the MediaWiki root Composer workflow, which merges `composer.local.json`; do not run this local configuration file as a separate Composer project. For an existing installation, replace the previous package requirement (`aufeinwort/semantic-neowiki` or `neowiki/neowiki`) with the new one. See the migration guide for the corresponding Composer update command. Remove an obsolete merge include of `extensions/NeoWiki/composer.json`, if present. Preserve existing compatibility work for Wikibase/DataTransfer; the fork does not automatically modify those packages.
 
 Then, from the MediaWiki root:
 
 ```sh
-composer update aufeinwort/semantic-neowiki --with-dependencies --no-dev --prefer-dist --no-scripts
+composer update aufeinwort/semantic-wikischema --with-dependencies --no-dev --prefer-dist --no-scripts
 ```
 
-The package installs to `extensions/SemanticNeoWiki`. It conflicts with a simultaneously installed official `neowiki/neowiki` package. Back up Composer files, existing extension files, LocalSettings and deployment-specific graph configuration before changing a working wiki. The [installation and migration guide](publication/INSTALLATION.md) covers the rest.
+The package installs to `extensions/SemanticWikiSchema`. It conflicts with a simultaneously installed official `neowiki/neowiki` package. Back up Composer files, existing extension files, LocalSettings and deployment-specific graph configuration before changing a working wiki. The [installation and migration guide](publication/INSTALLATION.md) covers the rest.
 
 ## LocalSettings.php and existing data
 
 After the prerequisite extensions, use:
 
 ```php
-wfLoadExtension( 'SemanticNeoWiki' );
-wfLoadExtension( 'NeoWikiBaseBridge', "$IP/extensions/SemanticNeoWiki/NeoWikiBaseBridge/extension.json" );
+wfLoadExtension( 'SemanticWikiSchema' );
+wfLoadExtension( 'SchemaBaseBridge', "$IP/extensions/SemanticWikiSchema/SchemaBaseBridge/extension.json" );
 
 $wgUseParsoidParser = false;
 $wgUseParsoidLinksUpdate = false;
@@ -86,25 +88,25 @@ $wgNeoWikiSubjectFirst = false;
 // Optional AufEinWort registration helper; replace the old include, do not duplicate it:
 $wgAewiWikidataAutoNamespaces = [ 0 ];
 $wgAewiWikidataSmwProperty = 'Wikidata';
-require_once "$IP/extensions/SemanticNeoWiki/integrations/registration/AewiWikidataRegistrierung.php";
+require_once "$IP/extensions/SemanticWikiSchema/integrations/registration/AewiWikidataRegistrierung.php";
 ```
 
 Remove the former `wfLoadExtension( 'NeoWiki' )` and old Bridge include for the switch; never load both implementations. Existing schema/subject content models, namespace IDs, `mw.neowiki`, `neowiki*` APIs, `NeoWiki*` settings, custom hooks and `MediaWiki:NeoWiki` are deliberately retained. **Do not rename stored data or these settings just because the extension folder changed.**
 
-See the commented [LocalSettings example](publication/LocalSettings.SemanticNeoWiki.example.php), [graph configuration](graph-explorer/config.js), and [integration guide](publication/INSTALLATION.md). Keep the existing RDF base IRI and graph-store endpoints. The new graph page is under `/w/extensions/SemanticNeoWiki/graph-explorer/envendpoint.html` on a `/w` deployment; update old links/redirects deliberately. The SPARQL service remains external. The tested NeoWiki graph dataset (port 3331) and SMW SPARQLStore dataset (port 3030) are distinct; the example preserves that separation.
+See the commented [LocalSettings example](publication/LocalSettings.SemanticWikiSchema.example.php), [graph configuration](graph-explorer/config.js), and [integration guide](publication/INSTALLATION.md). Keep the existing RDF base IRI and graph-store endpoints. The new graph page is under `/w/extensions/SemanticWikiSchema/graph-explorer/envendpoint.html` on a `/w` deployment; update old links/redirects deliberately. The SPARQL service remains external. The tested NeoWiki graph dataset (port 3331) and SMW SPARQLStore dataset (port 3030) are distinct; the example preserves that separation.
 
 ## Included integration material
 
 - [SMW modules and templates](integrations/smw/README.md), with current wiki revision provenance. Their existing names remain NeoWiki. Import the two current query modules; preserve existing local configuration. An annotation template call is no longer needed.
 - [Wikidata registration helper](integrations/registration/README.md): AewiWikidataRegistrierung.php and its Magic Words file. Existing Q-registration templates can stay; the example helper's automatic title search uses German Wikipedia and is namespace-controlled.
 - [Historical optional SMW 7.3.1 statistics correction](integrations/smw/compatibility/README.md): exact-source patch for SPARQLStore, with a checked backup/apply script. It is not applied by Composer and must not be applied to SMW 7.4.0 on the basis of its older version alone.
-- [MCP source/runtime patch](integrations/mcp/README.md): complete Data-view tool and recognition of the SemanticNeoWiki extension name. Apply before changing extension identity if MCP must retain the existing NeoWiki tools. It targets MCP 0.20.1, with checked compatible 0.20.0 runtime files; it contains no authentication data.
+- [MCP source/runtime patch](integrations/mcp/README.md): complete Data-view tool and recognition of the SemanticWikiSchema extension name. Apply before changing extension identity if MCP must retain the existing NeoWiki tools. It targets MCP 0.20.1, with checked compatible 0.20.0 runtime files; it contains no authentication data.
 
 ## Credits, license and verification
 
-**NeoWikiBaseBridge** — Softwaredesign: [Klaus Feldmann / AufEinWort](https://aufeinwort.info/), Programmierung: ChatGPT/Sophos.
+**SchemaBaseBridge** — Softwaredesign: [Klaus Feldmann / AufEinWort](https://aufeinwort.info/), Programmierung: ChatGPT/Sophos.
 
-**SemanticNeoWiki** — Softwaredesign und Weiterentwicklung des Forks: [Klaus Feldmann / AufEinWort](https://aufeinwort.info/), Programmierung: ChatGPT/Sophos. Basiert auf NeoWiki von [Professional Wiki](https://professional.wiki/), [Jeroen De Dauw](https://www.entropywins.wtf/mediawiki), Morne Alberts, [Alistair3149](https://www.mediawiki.org/wiki/User:Alistair3149) und [weiteren Mitwirkenden](https://github.com/ProfessionalWiki/NeoWiki/graphs/contributors?all=1).
+**Semantic WikiSchema** — Softwaredesign und Weiterentwicklung des Forks: [Klaus Feldmann / AufEinWort](https://aufeinwort.info/), Programmierung: ChatGPT/Sophos. Basiert auf NeoWiki von [Professional Wiki](https://professional.wiki/), [Jeroen De Dauw](https://www.entropywins.wtf/mediawiki), Morne Alberts, [Alistair3149](https://www.mediawiki.org/wiki/User:Alistair3149) und [weiteren Mitwirkenden](https://github.com/ProfessionalWiki/NeoWiki/graphs/contributors?all=1).
 
 Original copyright notices and the GPL-2.0-or-later license remain unchanged; see [COPYING](COPYING). Publication does not imply endorsement by the original developers or OpenAI.
 
