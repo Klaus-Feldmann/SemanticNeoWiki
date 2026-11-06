@@ -67,7 +67,7 @@ index e9d51f5..116553f 100644
  export const neowikiPack: ExtensionPack = {
  	id: 'neowiki',
 -	extensionNames: ['NeoWiki'],
-+	extensionNames: ['NeoWiki', 'SemanticNeoWiki'],
++	extensionNames: ['NeoWiki', 'SemanticNeoWiki', 'SemanticWikiSchema'],
  	tools: [
  		neowikiListSchemas,
  		neowikiGetSchema,
@@ -83,7 +83,7 @@ index 0000000..56de83e
 +/** Optional read model; ordinary NeoWiki installations keep their existing tool set. */
 +export const neowikiBasePack: ExtensionPack = {
 +	id: 'neowikibase',
-+	extensionNames: ['NeoWikiBaseBridge'],
++	extensionNames: ['NeoWikiBaseBridge', 'SchemaBaseBridge'],
 +	tools: [neowikiGetDataView],
 +};
 diff --git a/src/tools/extensions/neowikibase/neowikibase-get-data-view.ts b/src/tools/extensions/neowikibase/neowikibase-get-data-view.ts
@@ -233,14 +233,14 @@ index c1d80b2..d6171d5 100644
 +	it('accepts original NeoWiki and the independent SemanticNeoWiki fork', () => {
  		const neowiki = extensionPacks.find((p) => p.id === 'neowiki');
 -		expect(neowiki?.extensionNames).toEqual(['NeoWiki']);
-+		expect(neowiki?.extensionNames).toEqual(['NeoWiki', 'SemanticNeoWiki']);
++		expect(neowiki?.extensionNames).toEqual(['NeoWiki', 'SemanticNeoWiki', 'SemanticWikiSchema']);
 +	});
 +
 +	it('allows the unchanged NeoWiki tool surface for SemanticNeoWiki', () => {
 +		const pack = extensionPacks.find((p) => p.id === 'neowiki');
 +		if (!pack) throw new Error('Missing NeoWiki pack');
 +		const identity: WikiInspection = {
-+			extensions: new Set(['SemanticNeoWiki']),
++			extensions: new Set(['SemanticWikiSchema']),
 +			reachable: true,
 +		};
 +		expect(packToolRefusal(pack, 'neowiki-get-subject', identity, 'research')).toBeUndefined();
@@ -385,7 +385,7 @@ index 0000000..6a73a24
 +		expect(schema.safeParse({ language: 'en-gb' }).success).toBe(true);
 +	});
 +	it('gates only the new tool on Bridge availability', () => {
-+		expect(neowikiBasePack.extensionNames).toEqual(['NeoWikiBaseBridge']);
++		expect(neowikiBasePack.extensionNames).toEqual(['NeoWikiBaseBridge', 'SchemaBaseBridge']);
 +		expect(neowikiBasePack.tools).toEqual([tool]);
 +		expect(tool.annotations?.readOnlyHint).toBe(true);
 +	});

@@ -43,4 +43,4 @@ No credentials or deployment configuration are included. The private-wiki discov
 
 ## SemanticNeoWiki name
 
-The normal NeoWiki tool pack accepts both NeoWiki and SemanticNeoWiki in siteinfo. Tool names, REST paths and stored data formats remain unchanged. The complete-view pack is still gated on NeoWikiBaseBridge. The new runtime patch therefore also changes dist/tools/extensions/neowiki/index.js. The installer safely accepts the earlier complete-view patch when the affected file hashes match; it then only changes files that still need updating.
+The normal NeoWiki tool pack accepts NeoWiki, SemanticNeoWiki and SemanticWikiSchema in siteinfo. Tool names, REST paths and stored data formats remain unchanged. The complete-view pack is gated on NeoWikiBaseBridge or SchemaBaseBridge. The new runtime patch therefore also changes dist/tools/extensions/neowiki/index.js. The installer safely accepts the earlier complete-view patch when the affected file hashes match; it then only changes files that still need updating.

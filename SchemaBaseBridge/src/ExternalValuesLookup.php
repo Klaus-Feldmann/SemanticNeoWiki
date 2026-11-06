@@ -90,7 +90,7 @@ final class ExternalValuesLookup {
 					}
 					array_push( $fields, ...$sourceFields );
 				} catch ( Throwable ) {
-					wfDebugLog( 'NeoWikiBaseBridge', 'Derived entity values unavailable for ' . $source );
+					wfDebugLog( 'SchemaBaseBridge', 'Derived entity values unavailable for ' . $source );
 					foreach ( $bindings as $name => $propertyId ) {
 						$fields[] = [ 'name' => $name, 'source' => $source, 'propertyId' => $propertyId, 'status' => 'unavailable', 'values' => [] ];
 					}

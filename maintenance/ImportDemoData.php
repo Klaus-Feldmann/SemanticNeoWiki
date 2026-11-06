@@ -36,7 +36,7 @@ class ImportDemoData extends Maintenance implements ImportPresenter {
 	public function __construct() {
 		parent::__construct();
 
-		$this->requireExtension( 'SemanticNeoWiki' );
+		$this->requireExtension( 'SemanticWikiSchema' );
 		$this->addDescription( 'Creates NeoWiki demo data, including schemas and subjects' );
 	}
 

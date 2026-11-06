@@ -367,7 +367,7 @@ class NeoWikiExtension {
 	public static function requireComposerLibraries( string $libraryClass ): void {
 		if ( !class_exists( $libraryClass ) ) {
 			throw new RuntimeException(
-				"NeoWiki's Composer libraries are missing. Add extensions/SemanticNeoWiki/composer.json to the merge-plugin " .
+				"NeoWiki's Composer libraries are missing. Add extensions/SemanticWikiSchema/composer.json to the merge-plugin " .
 				"include list in MediaWiki's composer.local.json, then run composer update --no-dev there."
 			);
 		}
@@ -406,11 +406,11 @@ class NeoWikiExtension {
 	 * @return array<string, mixed>
 	 */
 	public static function poweredByBadge( string $extensionAssetsPath, string $mediaWikiVersion ): array {
-		$images = $extensionAssetsPath . '/SemanticNeoWiki/resources/images';
+		$images = $extensionAssetsPath . '/SemanticWikiSchema/resources/images';
 		$badge = [
-			'src' => $images . '/poweredby_neowiki.svg',
-			'url' => 'https://github.com/Klaus-Feldmann/SemanticNeoWiki',
-			'alt' => 'Powered by SemanticNeoWiki (based on NeoWiki)',
+			'src' => $images . '/poweredby_semantic_wikischema.svg',
+			'url' => 'https://github.com/Klaus-Feldmann/SemanticWikiSchema',
+			'alt' => 'Powered by Semantic WikiSchema',
 			'lang' => 'en',
 		];
 
@@ -419,13 +419,13 @@ class NeoWikiExtension {
 		}
 
 		return array_merge( $badge, [
-			'src' => $images . '/poweredby_neowiki_compact.svg',
+			'src' => $images . '/poweredby_semantic_wikischema_compact.svg',
 			'width' => 25,
 			'height' => 25,
 			'sources' => [
 				[
 					'media' => '(min-width: 500px)',
-					'srcset' => $images . '/poweredby_neowiki.svg',
+					'srcset' => $images . '/poweredby_semantic_wikischema.svg',
 					'width' => 88,
 					'height' => 31,
 				],

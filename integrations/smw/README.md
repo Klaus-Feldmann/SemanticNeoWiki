@@ -1,6 +1,6 @@
 # Optional schema-driven Semantic MediaWiki annotations
 
-Requires the accompanying SemanticNeoWiki/NeoWikiBaseBridge, Scribunto and Semantic MediaWiki. Semantic Scribunto may remain installed but is not the annotation trigger. The shipped Lua modules/template names and documentation use German wiki namespace names (`Modul`, `Vorlage`) as in the tested wiki. An English-only installation must adapt module require names and page titles consistently; automated namespace localization is not claimed.
+Requires the accompanying SemanticWikiSchema/NeoWikiBaseBridge, Scribunto and Semantic MediaWiki. Semantic Scribunto may remain installed but is not the annotation trigger. The shipped Lua modules/template names and documentation use German wiki namespace names (`Modul`, `Vorlage`) as in the tested wiki. An English-only installation must adapt module require names and page titles consistently; automated namespace localization is not claimed.
 
 ## Import wiki pages
 

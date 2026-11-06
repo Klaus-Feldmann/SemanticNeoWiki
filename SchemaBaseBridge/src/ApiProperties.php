@@ -66,7 +66,7 @@ final class ApiProperties extends ApiBase {
             $this->getResult()->addValue( null, $this->getModuleName(), [ 'version' => 1,
 				'source' => $p['source'], 'mode' => $p['mode'], 'query' => $query, 'items' => $items ] );
 		} catch ( Throwable ) {
-			wfDebugLog( 'NeoWikiBaseBridge', 'Property lookup failed for source ' . $p['source'] );
+			wfDebugLog( 'SchemaBaseBridge', 'Property lookup failed for source ' . $p['source'] );
 			$this->dieWithError( 'neowikibasebridge-property-unavailable', 'unavailable' );
 		}
 	}
@@ -76,7 +76,7 @@ final class ApiProperties extends ApiBase {
 		$cache = $services->getMainWANObjectCache();
 		$agent = 'NeoWikiBaseBridge/0.4 (' . $services->getMainConfig()->get( 'Server' ) . ')';
 		return $cache->getWithSetCallback(
-			$cache->makeKey( 'NeoWikiBaseBridge', 'properties', hash( 'sha256', json_encode( $params ) ) ),
+			$cache->makeKey( 'SchemaBaseBridge', 'properties', hash( 'sha256', json_encode( $params ) ) ),
 			60,
 			static function () use ( $services, $params, $agent ): array {
 				$url = 'https://www.wikidata.org/w/api.php?' . http_build_query( $params + [ 'format' => 'json' ] );

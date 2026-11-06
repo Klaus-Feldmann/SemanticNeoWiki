@@ -5,11 +5,13 @@
   },
   "dist/tools/extensions/neowiki/index.js": {
     "before": "3ec1a968b6b6dece69c6f7b6c2370e8ee28ac2b321e22dc50db7b6070f546311",
-    "after": "e78ae58399560e88ce36ad379c3a4920b07fb730976a6d00c5557b817796d25b"
+    "after": "a63fdc69a4f0bbe4383fb1bf57955987e71d3b5942bc3cceb8c638f9e40e504a",
+    "previousPatched": "e78ae58399560e88ce36ad379c3a4920b07fb730976a6d00c5557b817796d25b"
   },
   "dist/tools/extensions/neowikibase/index.js": {
     "before": null,
-    "after": "3f7087e4086d460cf678363b363fd40d386a6e1343481b86c0545e7bec366d37"
+    "after": "4fe4612db3fbec59e4d78334fa227bad087007630049ff1f1a3010a40aa91769",
+    "previousPatched": "3f7087e4086d460cf678363b363fd40d386a6e1343481b86c0545e7bec366d37"
   },
   "dist/tools/extensions/neowikibase/neowikibase-get-data-view.js": {
     "before": null,

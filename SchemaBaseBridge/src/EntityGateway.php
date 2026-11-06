@@ -52,7 +52,7 @@ final class EntityGateway {
 				$services = MediaWikiServices::getInstance();
 				$cache = $services->getMainWANObjectCache();
 				$data = $cache->getWithSetCallback(
-					$cache->makeKey( 'NeoWikiBaseBridge', 'entity-view', hash( 'sha256', json_encode( $params ) ) ), 60,
+					$cache->makeKey( 'SchemaBaseBridge', 'entity-view', hash( 'sha256', json_encode( $params ) ) ), 60,
 					static function () use ( $services, $params ): array {
 						$url = 'https://www.wikidata.org/w/api.php?' . http_build_query( $params + [ 'format' => 'json' ] );
 						$raw = $services->getHttpRequestFactory()->get( $url, [ 'timeout' => 10, 'connectTimeout' => 3,

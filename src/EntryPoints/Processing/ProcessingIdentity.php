@@ -13,7 +13,7 @@ final class ProcessingIdentity {
     public static function get(): User {
         $user = User::newSystemUser( self::NAME, [ 'steal' => false ] );
         if ( $user === null ) {
-            throw new RuntimeException( 'SemanticNeoWiki: internal account name is already in use.' );
+            throw new RuntimeException( 'SemanticWikiSchema: internal account name is already in use.' );
         }
         return $user;
     }

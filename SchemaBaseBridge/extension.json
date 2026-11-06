@@ -1,5 +1,7 @@
 {
-	"name": "NeoWikiBaseBridge",
+	"name": "SchemaBaseBridge",
+	"url": "https://github.com/Klaus-Feldmann/SemanticWikiSchema",
+	"namemsg": "neowikibasebridge-name",
 	"version": "0.19.1+2026-11-05",
 	"author": "Softwaredesign: [https://aufeinwort.info/ Klaus Feldmann / AufEinWort], Programmierung: ChatGPT/Sophos.",
 	"type": "other",
@@ -7,7 +9,7 @@
 	"requires": {
 		"MediaWiki": ">= 1.47.0-wmf.24",
 		"extensions": {
-			"SemanticNeoWiki": "*"
+			"SemanticWikiSchema": "*"
 		}
 	},
 	"AutoloadNamespaces": {

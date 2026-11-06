@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="88" height="31" viewBox="0 0 88 31">
+  <title>Powered by Semantic WikiSchema</title>
+  <rect width="88" height="31" rx="4" fill="#24455b"/>
+  <text x="44" y="12" text-anchor="middle" fill="#fff" font-family="sans-serif" font-size="8">Powered by</text>
+  <text x="44" y="23" text-anchor="middle" fill="#fff" font-family="sans-serif" font-size="8" font-weight="bold">Semantic WikiSchema</text>
+</svg>

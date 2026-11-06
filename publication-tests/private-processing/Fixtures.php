@@ -33,7 +33,7 @@ function checkTest($condition,$message) {if(!$condition)throw new RuntimeExcepti
 $u=ProcessingIdentity::get();
 checkTest($u->isSystemUser() && $u->isAllowed('read') && !$u->isAllowed('edit') && !$u->isAllowed('delete'),'noninteractive read-only identity');
 
-$dir=$GLOBALS['IP'] . '/extensions/SemanticNeoWiki/integrations/smw/Wikiseiten/';
+$dir=$GLOBALS['IP'] . '/extensions/SemanticWikiSchema/integrations/smw/Wikiseiten/';
 foreach (['NeoWiki'=>'Modul-NeoWiki.lua','NeoWiki/API'=>'Modul-NeoWiki-API.lua','NeoWiki/config'=>'Modul-NeoWiki-config.lua'] as $name=>$file) {
  saveTestPage('Modul:'.$name,new MediaWiki\Extension\Scribunto\ScribuntoContent(file_get_contents($dir.$file)));
 }

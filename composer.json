@@ -1,5 +1,5 @@
 {
-	"name": "aufeinwort/semantic-neowiki",
+	"name": "aufeinwort/semantic-wikischema",
 	"type": "mediawiki-extension",
 	"license": "GPL-2.0-or-later",
 	"description": "Independent NeoWiki fork for research: Wikidata/Wikibase sources, schema-driven SMW annotations and MCP access.",
@@ -15,7 +15,7 @@
 		"SPARQL",
 		"Neo4j"
 	],
-	"homepage": "https://github.com/Klaus-Feldmann/SemanticNeoWiki",
+	"homepage": "https://github.com/Klaus-Feldmann/SemanticWikiSchema",
 	"authors": [
 		{
 			"name": "Professional.Wiki",
@@ -41,8 +41,8 @@
 		}
 	],
 	"support": {
-		"issues": "https://github.com/Klaus-Feldmann/SemanticNeoWiki/issues",
-		"source": "https://github.com/Klaus-Feldmann/SemanticNeoWiki",
+		"issues": "https://github.com/Klaus-Feldmann/SemanticWikiSchema/issues",
+		"source": "https://github.com/Klaus-Feldmann/SemanticWikiSchema",
 		"email": "info@aufeinwort.info"
 	},
 	"require": {
@@ -75,7 +75,7 @@
 	"scripts": {
 		"phpunit": [
 			"Composer\\Config::disableProcessTimeout",
-			"cd ${MW_INSTALL_PATH:-../..} && if [ -f phpunit.xml.template ]; then composer phpunit:config; fi && vendor/bin/phpunit -c extensions/SemanticNeoWiki/phpunit.xml.dist --bootstrap tests/phpunit/bootstrap.php"
+			"cd ${MW_INSTALL_PATH:-../..} && if [ -f phpunit.xml.template ]; then composer phpunit:config; fi && vendor/bin/phpunit -c extensions/SemanticWikiSchema/phpunit.xml.dist --bootstrap tests/phpunit/bootstrap.php"
 		],
 		"dbschema": [
 			"php ../../maintenance/run.php generateSchemaSql --json sql/neowiki_rebuild_runs.json --sql sql/mysql/neowiki_rebuild_runs.sql --type mysql",
@@ -106,12 +106,13 @@
 		}
 	},
 	"extra": {
-		"installer-name": "SemanticNeoWiki",
+		"installer-name": "SemanticWikiSchema",
 		"branch-alias": {
-			"dev-semantic-0.1.17": "0.1.x-dev"
+			"dev-semantic-0.1.18": "0.1.x-dev"
 		}
 	},
 	"conflict": {
-		"neowiki/neowiki": "*"
+		"neowiki/neowiki": "*",
+		"aufeinwort/semantic-neowiki": "*"
 	}
 }

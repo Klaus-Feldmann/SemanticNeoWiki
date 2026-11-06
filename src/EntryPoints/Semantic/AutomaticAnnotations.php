@@ -20,7 +20,7 @@ use ProfessionalWiki\NeoWiki\EntryPoints\Processing\ProcessingIncomplete;
 final class AutomaticAnnotations {
     public function apply(Title $title, ParserOutput $output, ?Parser $parser, Schema $schema, PageSubjects $pageSubjects, Subject $subject, User $user, \Closure $resolveSchema): void {
         if ($parser === null || !$parser->getTitle()->isSamePageAs($title)) {
-            throw new ProcessingIncomplete('SemanticNeoWiki: missing full revision parser context.');
+            throw new ProcessingIncomplete('SemanticWikiSchema: missing full revision parser context.');
         }
         $recorder = new RevisionDependencies($title,$output);
         $context = new DerivativeContext(RequestContext::getMain());
@@ -37,7 +37,7 @@ final class AutomaticAnnotations {
             $recorder->recordDependencyOnSchema($current->getSchemaReference());
             $reader = FieldSnapshot::reader($currentSchema,$current,static function() use($title,$current,$language,$context,$recorder): array {
                 if (!class_exists(\NeoWikiBaseBridge\ExternalValuesLookup::class)) {
-                    throw new ProcessingIncomplete('SemanticNeoWiki: source binding requires NeoWikiBaseBridge.');
+                    throw new ProcessingIncomplete('SemanticWikiSchema: source binding requires SchemaBaseBridge.');
                 }
                 return (new \NeoWikiBaseBridge\ExternalValuesLookup($context))->read($title,[
                     'pageid'=>$title->getArticleID(),'subject'=>$current->id->text,'language'=>$language,'presentation'=>false

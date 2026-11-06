@@ -18,7 +18,7 @@ final class ProcessingContext {
     public static function current(): ?self { return self::$active; }
 
     public function run( callable $callback ): mixed {
-        if ( self::$active !== null ) { throw new RuntimeException( 'SemanticNeoWiki: recursive internal processing.' ); }
+        if ( self::$active !== null ) { throw new RuntimeException( 'SemanticWikiSchema: recursive internal processing.' ); }
         self::$active = $this;
         try { return $callback(); } finally { self::$active = null; }
     }

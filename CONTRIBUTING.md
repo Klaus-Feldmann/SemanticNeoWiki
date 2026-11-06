@@ -1,4 +1,4 @@
-# Contributing to SemanticNeoWiki
+# Contributing to SemanticWikiSchema
 
 Use a focused branch and describe a concrete research workflow, the change and the verification. Separate NeoWiki code, the optional SMW wiki pages and the MCP-server patch. Preserve own/source identities, existing author credits and third-party licenses. Never commit credentials, local wiki settings, research corpora, dependency directories or deployment backups.
 

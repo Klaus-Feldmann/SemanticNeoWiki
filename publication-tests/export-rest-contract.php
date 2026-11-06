@@ -49,6 +49,6 @@ namespace {
  \Harness\State::$sourceError=true;$r=$page->run(42);check($r->status===503 && !isset($r->headers['Content-Disposition']),'no incomplete download');\Harness\State::$sourceError=false;
  $bad=new \NeoWikiBaseBridge\ExportPageDataViewApi(['format'=>'json','language'=>'../../'],$context);check($bad->run(42)->status===400,'bad language');
  $out=new \MediaWiki\Output\OutputPage();\NeoWikiBaseBridge\Hooks::onBeforePageDisplay($out);check($out->config['wgNeoWikiCompleteExport']===true,'frontend flag registered');
- $routes=json_decode(file_get_contents(__DIR__.'/../NeoWikiBaseBridge/extension.json'),true)['RestRoutes'];check(count($routes)===2 && $routes[0]['method']==='GET','read-only routes registered');
+ $routes=json_decode(file_get_contents(__DIR__.'/../SchemaBaseBridge/extension.json'),true)['RestRoutes'];check(count($routes)===2 && $routes[0]['method']==='GET','read-only routes registered');
  echo "OK: 19 REST export contracts plus existing 18 read-view contracts (stand-in host services)\n";
 }

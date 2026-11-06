@@ -26,7 +26,7 @@ class RebuildSubjectPageIndex extends LoggedUpdateMaintenance {
 		parent::__construct();
 
 		$this->setBatchSize( DatabaseSubjectPageIndexRebuilder::DEFAULT_BATCH_SIZE );
-		$this->requireExtension( 'SemanticNeoWiki' );
+		$this->requireExtension( 'SemanticWikiSchema' );
 		$this->addDescription(
 			'Rebuilds the subject -> page index from the Subjects every page currently holds. ' .
 			'Run this after merging page histories, which can write a revision the index is not told about.'

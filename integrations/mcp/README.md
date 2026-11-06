@@ -6,4 +6,4 @@ Source checkout: git apply --check, apply the Quellcode.patch, then npm ci --ign
 
 The patch preserves existing authentication and configuration. It contains no account/token material and does not bundle AufEinWort's independently maintained private-wiki discovery adapter. The current combined workflow was tested with that existing adapter. Do not apply blindly to a later MCP release. The underlying project's license is preserved in LICENSE-UPSTREAM.
 
-The patch also preserves the existing NeoWiki tool set after renaming the extension to SemanticNeoWiki; apply it before changing the wiki extension identity. The expanded runtime manifest covers four files.
+The patch recognizes SemanticWikiSchema and SchemaBaseBridge, as well as the earlier extension identities. Apply it before switching the wiki extension names. The runtime installer accepts the verified official baseline and the previous four-file patch.
