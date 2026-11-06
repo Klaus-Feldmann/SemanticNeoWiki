@@ -76,12 +76,35 @@ describe( 'read-only derived entity values in the data view', () => {
 		expect( w.findAll( 'a' ).some( ( a ) => a.attributes( 'href' )?.includes( 'www.wikidata.org' ) ) ).toBe( false );
 		w.unmount();
 	} );
-	it( 'omits missing statements rather than showing empty fields', async () => {
+	it( 'shows an explicit source-missing status without inventing a value', async () => {
 		currentField.status = 'missing';
 		currentField.values = [];
 		const { wrapper: w } = show();
 		await flushPromises();
-		expect( w.find( 'dt' ).exists() ).toBe( false );
+		expect( w.find( 'dt' ).exists() ).toBe( true );
+		expect( w.text() ).toContain( 'neowiki-derived-missing' );
+		expect( w.text() ).not.toContain( 'Mensch' );
+		w.unmount();
+	} );
+	it( 'shows source unavailability separately from a confirmed missing value', async () => {
+		currentField.status = 'unavailable';
+		currentField.values = [];
+		const { wrapper: w } = show();
+		await flushPromises();
+		expect( w.text() ).toContain( 'neowiki-derived-unavailable' );
+		expect( w.text() ).not.toContain( 'neowiki-derived-missing' );
+		w.unmount();
+	} );
+	it( 'renders language-tagged source text without converting it into a page link', async () => {
+		currentField = { ...field,
+			values: [ { kind: 'text', value: 'Avram Noam Chomsky', language: 'en', rank: 'normal' } ] };
+		const { wrapper: w } = show();
+		await flushPromises();
+		const text = w.find( '[lang="en"]' );
+		expect( text.exists() ).toBe( true );
+		expect( text.text() ).toContain( 'Avram Noam Chomsky' );
+		expect( w.find( 'a[href="https://www.wikidata.org/wiki/Property:P31"]' ).exists() ).toBe( true );
+		expect( w.findAll( 'a' ).some( ( a ) => a.text() === 'Avram Noam Chomsky' ) ).toBe( false );
 		w.unmount();
 	} );
 	it( 'does not assign the current page entity to a different subject', async () => {

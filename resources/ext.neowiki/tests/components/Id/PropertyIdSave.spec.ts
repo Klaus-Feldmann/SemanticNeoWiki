@@ -8,7 +8,7 @@ import IdLookup from '@/components/Id/IdLookup.vue';
 import { createTestWrapper, setupMwMock } from '../../VueTestHelpers';
 import { newTextProperty } from '@/domain/propertyTypes/Text';
 vi.mock( '@/persistence/PropertyIdLookup', () => ( { lookupPropertyIds: vi.fn().mockResolvedValue( [
-	{ id: 'P31', label: 'ist ein(e)', description: 'Klasse', url: 'https://www.wikidata.org/wiki/Property:P31' },
+	{ id: 'P31', label: 'ist ein(e)', description: 'Klasse', datatype: 'wikibase-item', compatible: true, url: 'https://www.wikidata.org/wiki/Property:P31' },
 ] ) } ) );
 function blocker( wrapper: VueWrapper ): string | null {
 	return ( wrapper.vm as unknown as { unparseableInputMessage(): string | null } ).unparseableInputMessage();

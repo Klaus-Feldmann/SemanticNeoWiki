@@ -1,5 +1,9 @@
 # SemanticNeoWiki releases
 
+## 0.1.17 — 2026-11-06
+
+Runtime verified on the existing AufEinWort installation after guarded updates. Dependent subjects referenced by the main subject on the same page contribute to automatic SMW annotations. The bundled Graph Explorer accepts language-tagged Wikidata text values.
+
 ## 0.1.13 — 2026-11-04
 
 Current research-workflow snapshot with automatic SMW processing, schema presets and consistent parser-warning handling. Existing field configuration and individual Lua queries are retained. Runtime confirmed on the documented AufEinWort installation; Composer packaging checked locally; GitHub retrieval follows publication.

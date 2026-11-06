@@ -18,6 +18,12 @@ test('own and derived values remain separate, neither DTO nor graph props mutate
 test('unknown native properties retained; missing derived field does not hide own values',()=>{const d=response();d.fields[0].status='missing';d.fields[0].values=[];const r=rows(d,[native('Klassifizierung','Eigen'),native('Alt','Unverändert')]);assert.equal(r[0].own[0].text,'Eigen');assert.equal(r[1].name,'Alt');});
 test('disabled label is not linked; saved P-ID is not linked as a local value',()=>{const d=response();d.presentation.definitions[0].wikiLink.label=false;const r=rows(d,[native('Klassifizierung','P31')]);assert.equal(r[0].labelHref,null);assert.equal(r[0].own[0].href,null);});
 test('multiple values, somevalue and novalue remain distinct',()=>{const d=response();d.fields[0].values.push({kind:'somevalue'},{kind:'novalue'});assert.deepEqual(rows(d)[0].values.map(v=>v.text),['Mensch','Unbekannter Wert','Kein Wert']);});
+test('language-tagged source text keeps its value, language, rank, source ID, and local link policy',()=>{
+ const d=response();d.presentation.definitions[0].externalProperty.id='P1477';d.fields[0].propertyId='P1477';
+ d.fields[0].values=[{kind:'text',value:'Avram Noam Chomsky',language:'en',rank:'normal',statementId:'Q9049$source'}];
+ const value=rows(d)[0].values[0];assert.equal(value.text,'Avram Noam Chomsky');assert.equal(value.language,'en');
+ assert.equal(value.rank,'normal');assert.equal(value.statementId,'Q9049$source');assert.equal(value.href,origin+'/wiki/Avram_Noam_Chomsky');
+});
 test('mismatched subject, historical scope and wrong source bindings never used',()=>{
  const d=response();d.mainSubjectId='sOther';assert.equal(readPresentation(d,12,sid,origin),null);d.mainSubjectId=sid;d.scope='historical';assert.throws(()=>readPresentation(d,12,sid,origin));d.scope='current';d.fields[0].source='wikibase-local';assert.throws(()=>readPresentation(d,12,sid,origin));
 });

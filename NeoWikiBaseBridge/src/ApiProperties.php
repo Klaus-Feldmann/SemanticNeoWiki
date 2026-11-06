@@ -59,7 +59,11 @@ final class ApiProperties extends ApiBase {
 			$items = $p['mode'] === 'resolve'
 				? PropertyResults::fromEntity( $data, $query, $language, $link )
 				: PropertyResults::fromSearch( $data, $link );
-			$this->getResult()->addValue( null, $this->getModuleName(), [ 'version' => 1,
+			if ($p['fieldtype'] !== null) {
+                foreach ($items as &$item) { $item['compatible']=isset($item['datatype']) ? PropertyDatatypePolicy::supports($p['fieldtype'],$item['datatype']) : null; }
+                unset($item);
+            }
+            $this->getResult()->addValue( null, $this->getModuleName(), [ 'version' => 1,
 				'source' => $p['source'], 'mode' => $p['mode'], 'query' => $query, 'items' => $items ] );
 		} catch ( Throwable ) {
 			wfDebugLog( 'NeoWikiBaseBridge', 'Property lookup failed for source ' . $p['source'] );
@@ -92,7 +96,8 @@ final class ApiProperties extends ApiBase {
 
 	public function getAllowedParams(): array {
 		return [
-			'source' => [ self::PARAM_TYPE => [ 'wikidata', 'wikibase-local' ], self::PARAM_REQUIRED => true ],
+			'fieldtype'=>[self::PARAM_TYPE=>'string',self::PARAM_DFLT=>null],
+            'source' => [ self::PARAM_TYPE => [ 'wikidata', 'wikibase-local' ], self::PARAM_REQUIRED => true ],
 			'query' => [ self::PARAM_TYPE => 'string', self::PARAM_REQUIRED => true ],
 			'mode' => [ self::PARAM_TYPE => [ 'search', 'resolve' ], self::PARAM_DFLT => 'search' ],
 			'language' => [ self::PARAM_TYPE => 'string', self::PARAM_DFLT => $this->getLanguage()->getCode() ],

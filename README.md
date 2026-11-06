@@ -18,7 +18,7 @@ For Wikipedia, this offers a potential way to consolidate metadata tasks current
 
 ## Version and supported environment
 
-The current version is **SemanticNeoWiki 0.1.13+2026-11-04**, prepared for `master` and the named branch `semantic-0.1.13`. Earlier version branches remain unchanged. The fork remains based on NeoWiki 0.1.0; newer upstream changes are not implicitly merged. This is not a 1.0 release.
+The current version is **SemanticNeoWiki 0.1.17+2026-11-06**, prepared for `master` and the named branch `semantic-0.1.17`. Earlier version branches remain unchanged. The fork remains based on NeoWiki 0.1.0; newer upstream changes are not implicitly merged. This is not a 1.0 release.
 
 This runtime is in active use on the AufEinWort production research server. The current version was installed there as guarded updates over the existing Composer installation. The maintainer has confirmed automatic annotations, schema presets and the corrected handling of duplicate sort-key warnings in daily use. See [verification](publication/VERIFICATION.md) for the distinction between runtime and Composer-distribution checks.
 
@@ -52,7 +52,7 @@ In the MediaWiki root, merge the following into your existing `composer.local.js
     { "type": "vcs", "url": "https://github.com/Klaus-Feldmann/SemanticNeoWiki" }
   ],
   "require": {
-    "aufeinwort/semantic-neowiki": "dev-semantic-0.1.13"
+    "aufeinwort/semantic-neowiki": "dev-semantic-0.1.17"
   },
   "config": {
     "allow-plugins": { "composer/installers": true }

@@ -38,7 +38,6 @@
 	"neowiki-schema-label": "Names a subject's schema. $1 is the schema name or a link to it. Also used as the accessible name of the schema badge, whose visible text is the bare name.",
 	"neowiki-cypher-raw-error-json-encode": "Error message shown when JSON encoding of query results fails.",
 	"neowiki-cypher-raw-error-not-configured": "Error shown on the <code>{{#cypher_raw}}</code> parser function when the wiki has no Neo4j database configured.",
-
 	"neowiki-cypher-error-permission-denied": "Error shown on the <code>{{#cypher_raw}}</code> parser function when the user the page is parsed for lacks the <code>neowiki-query</code> right.",
 	"neowiki-cypher-error-empty-query": "Error shown on the <code>{{#cypher_raw}}</code> parser function and the <code>nw.query()</code> Lua function when the supplied Cypher query is empty or only whitespace.",
 	"neowiki-cypher-error-write-query": "Error shown on the <code>{{#cypher_raw}}</code> parser function and the <code>nw.query()</code> Lua function when the query contains a write operation. Cypher queries from wikitext are restricted to read-only.",
@@ -47,27 +46,22 @@
 	"neowiki-cypher-error-timeout": "Error shown when a Cypher query run from wikitext exceeds the allowed time limit. $1 is the verbatim Neo4j-supplied detail and is not translatable.",
 	"neowiki-cypher-error-backend-unavailable": "Error shown when the graph database backend cannot be reached for a Cypher query run from wikitext. The underlying connection detail is intentionally omitted.",
 	"neowiki-cypher-error-internal": "Generic fallback error shown for a Cypher query run from wikitext that fails for a reason not covered by the more specific cases. $1 is the verbatim underlying detail and is not translatable.",
-
 	"neowiki-sparql-raw-error-json-encode": "Error message shown when JSON encoding of SPARQL query results fails.",
 	"neowiki-sparql-raw-error-not-configured": "Error shown on the <code>{{#sparql_raw}}</code> parser function when the wiki has no SPARQL store configured.",
-
 	"neowiki-sparql-error-permission-denied": "Error shown on the <code>{{#sparql_raw}}</code> parser function when the user the page is parsed for lacks the <code>neowiki-query</code> right.",
 	"neowiki-sparql-error-empty-query": "Error shown on the <code>{{#sparql_raw}}</code> parser function and the <code>nw.sparqlQuery()</code> Lua function when the supplied SPARQL query is empty or only whitespace.",
 	"neowiki-sparql-error-syntax": "Error shown when the SPARQL store rejects a query run from wikitext (a 4xx response, most commonly a syntax error). $1 is the verbatim store-supplied detail and is not translatable.",
 	"neowiki-sparql-error-store-unavailable": "Error shown when the SPARQL store cannot be reached for a query run from wikitext (a 5xx response or a transport error). The underlying connection detail is intentionally omitted.",
 	"neowiki-sparql-error-internal": "Generic fallback error shown for a SPARQL query run from wikitext that fails for a reason not covered by the more specific cases. $1 is the verbatim underlying detail and is not translatable.",
-
 	"neowiki-view-error-extra-positional": "Error shown when {{#view}} is called with more than one positional argument. $1 is the offending extra argument value.",
 	"neowiki-view-error-conflicting-subject": "Error shown when {{#view}} receives a Subject ID as both a positional argument and a named <code>subject=</code> argument.",
 	"neowiki-view-error-unknown-arg": "Error shown when {{#view}} receives an unrecognized named argument. $1 is the offending argument name.",
 	"neowiki-main-subject-error-argument": "Error shown where {{#main_subject}} stands when it is called with an argument. Parameters:\n* $1 - the first argument given",
-
 	"neowiki-page-tools-label": "Heading for the NeoWiki section in the MediaWiki sidebar (shown as a group label in legacy skins and inside the page tools menu in modern Vector).",
 	"neowiki-page-tools-create-subject": "Label for the link in the NeoWiki section of the sidebar that opens the Subject creator on the page being viewed, with that page preselected. The dialog creates the page's Main Subject if it has none, or another Subject otherwise. Pages that cannot open the creator link to [[Special:CreateSubject]] instead, under {{msg-mw|neowiki-sidebar-create-subject}}, which reads the same.",
 	"neowiki-page-tools-edit-json": "Label for the sidebar link that navigates to Special:NeoJson for the current page. Only visible when development UIs are enabled.",
 	"neowiki-page-tools-view-json": "Read-only counterpart of neowiki-page-tools-edit-json: label for the sidebar link to Special:NeoJson, shown to users who lack edit permission. Only visible when development UIs are enabled.",
 	"neowiki-page-tools-rdf": "Label for the sidebar link that opens the current page's RDF export (Turtle serialization of the page's Subjects), served by the per-page RDF REST endpoint. Shown on every existing content page.",
-
 	"neowiki-subject-creator-schema-field": "Label of the field in the 'create subject' dialog that picks the Subject's schema. Not shown; read out by screen readers.",
 	"neowiki-subject-creator-no-schemas": "Shown in the 'create subject' dialog in place of the schema field, on a wiki that has no schemas yet, to a user who may not create one.",
 	"neowiki-subject-creator-page-field": "Label of the field group in the 'create subject' dialog that picks which page the Subject goes on.",
@@ -93,7 +87,6 @@
 	"neowiki-subject-creator-page-read-error": "Error shown at the page field of the 'create subject' dialog when the chosen page's Subjects could not be read. Parameters:\n* $1 - the page title",
 	"neowiki-subject-creator-id-in-use": "Error shown when the 'create subject' dialog, opened from a red link, could not create the subject the link points to, because the wiki already holds a subject with that ID. That subject may be on a page the user may not read, so the message must not say whether the user can see it or who created it. Parameters:\n* $1 - the subject ID",
 	"neowiki-createsubject-button": "Label of the button that opens the 'create subject' dialog: the main button on [[Special:NeoWiki]], and the button on [[Special:CreateSubject]] that reopens the dialog after it was closed.",
-
 	"neowiki-schema-editor-summary-default": "Default edit summary used when updating a schema via the UI.",
 	"neowiki-schema-editor-success": "Success notification shown after updating a schema. $1 is the schema name.",
 	"neowiki-schema-editor-error": "Error notification title shown when updating a schema fails. $1 is the schema name.",
@@ -111,14 +104,12 @@
 	"neowiki-schema-editor-description-add": "Label of the button that starts writing a description for a schema that has none, shown in the schema editor dialog header.",
 	"neowiki-schema-subjects-are-dependent": "Shown read-only on the page of a schema that declares its subjects dependent, in the schema editor, and in the schema creator where this was decided for the user. That declaration is made when a schema is created and cannot be changed.",
 	"neowiki-schema-editor-no-properties-dependent": "Text of the schema editor's property pane for a schema that declares its subjects dependent and has no property definitions yet. Such a schema has no Label row, since dependent subjects have no label.",
-
 	"neowiki-subject-generated-name": "The name shown for a subject that has no label of its own and is not named after its page, so nobody chose its name. $1 is the subject's identifier, such as s1ab2cd3ef4gh5i. The round brackets mark the whole string as a stand-in the system supplied rather than a name someone typed, as in {{msg-mw|Blanknamespace}}; use whichever brackets your language uses for that.",
 	"neowiki-relation-target-not-found-title": "Tooltip of the red link shown for a relation value whose target subject the wiki cannot show the reader, either because no subject has that ID or because it is on a page the reader may not read. $1 is the subject's identifier, such as s1ab2cd3ef4gh5i, which is also the link text. The counterpart of {{msg-mw|Red-link-title}}, but word it so it neither asserts the subject is absent nor mentions permissions: each would be wrong in one of the two cases.",
 	"neowiki-dependent-subject-name": "The name of a dependent subject, which has no label of its own, such as \"Birth of Pablo Picasso\". $1 is the name of its schema, a word the wiki's own users chose. $2 is the name of its host subject: a name someone chose, its identifier in brackets ({{msg-mw|Neowiki-subject-generated-name}}) where nobody did, or a name composed with this message where the host subject is a dependent subject too, as in \"Record of Birth of Pablo Picasso\". Both are in an unknown language and grammatical gender, so do not inflect them, do not change their case, and make no word agree with them.",
 	"neowiki-dependent-subject-identified-name": "The name of a dependent subject where several named after the same host subject can be listed together, on the Data tab and in the delete confirmation, as in \"Attendance of Rijksmuseum (Year: 2024)\". Parameters:\n* $1 - its name ({{msg-mw|neowiki-dependent-subject-name}})\n* $2 - the name of the first property, in schema order, it holds a value for, a word the wiki's own users chose\n* $3 - that value, as text",
 	"neowiki-search-hit-subject": "Names the subject a search result matched, shown above the matching values. $1 is the subject's name and $2 the name of its schema: both are words the wiki's own users chose, in an unknown language and grammatical gender, so do not inflect them, do not change their case, and make no word agree with them. The round brackets set the schema name apart from the subject's name; use whichever brackets your language uses for that.",
 	"neowiki-search-hit-property-path": "In a search result, joins the names of two properties: $1 that of a relation property, or two or more already joined this way, and $2 that of a property of the dependent subject it holds, as in \"Birth › Place\". Both are words the wiki's own users chose, so do not inflect them.",
-
 	"neowiki-subject-editor-title": "Title of the subject editor dialog, and its accessible name. Names the task rather than a subject: the dialog can edit several at once, and each one is named by the pane that edits it.",
 	"neowiki-subject-editor-label": "Label of the field in the subject creator and editor where a subject being created is given its label: its name or title. The interface adds \"(optional)\" after this text. Use the same word for \"label\" as in {{msg-mw|neowiki-subject-editor-label-field}}.",
 	"neowiki-subject-editor-label-field": "Accessibility label for the input shown in place of the dialog title while renaming a subject in the subject editor dialog.",
@@ -162,7 +153,6 @@
 	"neowiki-page-picker-no-results": "Message shown in the page picker dropdown when no pages match the search query.",
 	"neowiki-page-picker-create-hint": "Label of the unpickable option at the bottom of the page picker dropdown, shown while the user has typed nothing, telling them that typing a title offers a page that does not exist yet.",
 	"neowiki-page-picker-create-named": "Label of the option at the bottom of the page picker dropdown that picks a page which does not exist yet. Parameters:\n* $1 - the page title the user typed",
-
 	"neowiki-schema-creator-title": "Title of the dialog for creating a new schema.",
 	"neowiki-schema-creator-duplicate-title": "Title of the dialog for creating a new schema when it opens prefilled with a copy of an existing one, from {{msg-mw|neowiki-schemas-duplicate}} on [[Special:Schemas]]. 'Duplicate' is a verb.\n\nParameters:\n* $1 - the name of the schema being duplicated",
 	"neowiki-schema-creator-button": "Label of the button in the toolbar of [[Special:Schemas]] that opens the dialog for creating a schema.",
@@ -178,7 +168,6 @@
 	"neowiki-schema-creator-success": "Success notification shown after creating a schema. $1 is the schema name.",
 	"neowiki-schema-creator-error": "Error notification title shown when creating a schema fails. $1 is the schema name.",
 	"neowiki-schema-creator-summary-default": "Default edit summary used when creating a schema via the UI.",
-
 	"neowiki-schemas-column-name": "Column header for schema name in the schemas table on [[Special:Schemas]].",
 	"neowiki-schemas-column-description": "Column header for schema description in the schemas table on [[Special:Schemas]].",
 	"neowiki-schemas-column-subjects": "Header of the column in the schema table on [[Special:Schemas]] that links to each schema's subjects, saying how many there are for readers who may see counts. It also holds the button that creates a subject of that schema.\n{{Identical|Subjects}}",
@@ -217,14 +206,11 @@
 	"neowiki-sidebar-create-subject": "Label for the link in the NeoWiki section of the sidebar that navigates to [[Special:CreateSubject]], where a Subject is created together with a page of its own by default, or added to a page picked there. Shown only where {{msg-mw|neowiki-page-tools-create-subject}} is not, so a page carries one Create subject entry rather than two; the two read the same.",
 	"neowiki-schema-create-subject": "Label of the button that opens the 'create subject' dialog with a Schema chosen. Used on the Schema's own page, on [[Special:Subjects]] filtered to a Schema, and where {{#create_subject}} names a Schema.\nParameters:\n* $1 - the Schema name",
 	"neowiki-schema-subject-count": "Link to [[Special:Subjects]] for one schema, saying how many subjects it has. Shown on each Schema card and table row on [[Special:Schemas]].\n\nParameters:\n* $1 - the number of subjects, formatted for the user's language",
-
 	"neowiki-edit-schema": "Label of the button that opens the schema editor on a schema's own page, and the accessible name and tooltip of the edit button on each Schema card and table row on [[Special:Schemas]].",
-
 	"neowiki-close-confirmation-title": "Title of the confirmation dialog shown when closing a dialog with unsaved changes.",
 	"neowiki-close-confirmation-message": "Message in the confirmation dialog asking the user to confirm discarding unsaved changes.",
 	"neowiki-close-confirmation-discard": "Label for the destructive button that discards unsaved changes and closes the dialog.",
 	"neowiki-close-confirmation-keep-editing": "Label for the button that dismisses the confirmation and returns to editing.",
-
 	"neowiki-schema-invalid": "Error message shown when saving an invalid Schema. Parameters:\n* $1 - number of validation errors\n* $2 - semicolon-separated list of the errors: {{msg-mw|neowiki-schema-invalid-detail}} for a structural error, or a message such as {{msg-mw|neowiki-property-name-reserved}} for a property name",
 	"neowiki-schema-invalid-detail": "One line of detail for a single Schema validation error. Parameters:\n* $1 - JSON pointer to the location of the error\n* $2 - the validation error message",
 	"neowiki-schema-name-invalid": "Error message shown when a Schema page title is not a valid schema name (empty or reserved). Parameters:\n* $1 - the reason the name is invalid",
@@ -245,7 +231,6 @@
 	"neowiki-mapping-invalid": "Error message shown when saving a structurally or semantically invalid ontology Mapping. Parameters:\n* $1 - number of validation errors\n* $2 - semicolon-separated list of {{msg-mw|neowiki-mapping-invalid-detail}}, one per error",
 	"neowiki-mapping-invalid-detail": "One line of detail for a single Mapping validation error. Parameters:\n* $1 - JSON pointer to the location of the error\n* $2 - the validation error message",
 	"neowiki-mapping-name-invalid": "Error message shown when a Mapping page title is not a valid mapping name (empty or the reserved name \"native\"). Parameters:\n* $1 - the reason the name is invalid",
-
 	"neowiki-edit-layout": "Aria label for the edit button on a Layout page.",
 	"neowiki-layout-display-schema": "Label for the schema field in the layout display.",
 	"neowiki-layout-display-view-type": "Label for the view type field in the layout display.",
@@ -256,11 +241,9 @@
 	"neowiki-layout-display-no-rules": "Message shown when a layout has no display rules, meaning all schema properties are shown in their default order.",
 	"neowiki-layout-display-no-rules-dependent": "Shown instead of {{msg-mw|neowiki-layout-display-no-rules}} on a layout's page and in its editor when the layout's schema has relation properties whose values are dependent subjects, which a view without display rules leaves out. Parameters:\n* $1 - the names of those properties, separated by {{msg-mw|comma-separator}}\n* $2 - the number of those properties, for PLURAL",
 	"neowiki-layout-sidebar-all-layouts": "Label for the link in the NeoWiki section of the sidebar on Layout pages that navigates to [[Special:Layouts]].",
-
 	"neowiki-editing-layout": "Title of the dialog for editing a layout. $1 is the layout name.",
 	"neowiki-save-layout": "Label for the save button in the layout editor dialog.",
 	"neowiki-edit-summary-help-text-layout": "Help text shown below the edit summary in the layout editor dialog.",
-
 	"neowiki-delete-confirm-title": "Title of the confirmation dialog shown before deleting a NeoWiki page (Schema, Layout, or Mapping). $1 is the entity name.",
 	"neowiki-delete-confirm-message": "Body of the delete confirmation dialog. $1 is the entity type noun (see neowiki-schema-noun etc.) followed by the entity name in bold, e.g. \"schema '''Foo'''\".",
 	"neowiki-delete-confirm-button": "Label for the button that confirms deletion in the delete confirmation dialog.",
@@ -285,14 +268,12 @@
 	"neowiki-layout-editor-success": "Success notification shown after updating a layout. $1 is the layout name.",
 	"neowiki-layout-editor-error": "Error notification title shown when updating a layout fails. $1 is the layout name.",
 	"neowiki-layout-editor-schema-fetch-error": "Error message shown in the layout editor when the schema properties could not be loaded.",
-
 	"neowiki-special-layouts": "Title and description of the [[Special:Layouts]] page. Also the title of its card on [[Special:NeoWiki]].",
 	"neowiki-layouts-column-name": "Column header for layout name in the layouts list table on [[Special:Layouts]].",
 	"neowiki-layouts-column-schema": "Column header for the schema name in the layouts list table on [[Special:Layouts]].",
 	"neowiki-layouts-column-type": "Column header for the view type in the layouts list table on [[Special:Layouts]].",
 	"neowiki-layouts-column-description": "Column header for layout description in the layouts list table on [[Special:Layouts]].",
 	"neowiki-layouts-empty": "Message shown when no layouts exist yet on [[Special:Layouts]].",
-
 	"neowiki-special-mappings": "Title and description of the [[Special:Mappings]] page, which lists the ontology mapping pages. Also the title of its card on [[Special:NeoWiki]].",
 	"neowiki-mappings-column-name": "Column header for mapping name in the mappings list table on [[Special:Mappings]].",
 	"neowiki-mappings-column-schemas": "Column header for the mapped schemas in the mappings list table on [[Special:Mappings]]. The cell lists the mapped Schema names followed by their count.",
@@ -312,7 +293,6 @@
 	"neowiki-mapping-creator-summary-default": "Default edit summary used when creating a mapping via the UI.",
 	"neowiki-edit-mapping": "Aria label for the edit button on a Mapping row in the mappings list.",
 	"neowiki-mapping-delete": "Aria label for the delete button on a Mapping row in the mappings list.",
-
 	"neowiki-mapping-page-version": "Format version shown as a subtle line at the top of the read view of a Mapping page. Parameters:\n* $1 - the mapping format version number",
 	"neowiki-mapping-page-schemas-heading": "Heading for the overview table on the read view of a Mapping page that lists the mapped Schemas, each linked to its Schema page.",
 	"neowiki-mapping-page-schema-column": "Column header for the Schema name in the mapped-schemas overview table on a Mapping page.",
@@ -324,7 +304,6 @@
 	"neowiki-mapping-page-namespace-column": "Column header for the namespace IRI in the prefixes table on a Mapping page.",
 	"neowiki-mapping-unsupported-version": "Warning shown above the JSON of a Mapping page written in a format version this NeoWiki cannot read. Parameters:\n* $1 - the format version found on the page",
 	"neowiki-mapping-docs-pointer": "Notice shown above the editor on a page in the Mapping namespace. Parameters:\n* $1 - the URL of the Mapping format documentation",
-
 	"neowiki-layout-creator-title": "Title of the dialog for creating a new layout.",
 	"neowiki-layout-creator-button": "Label for the button that opens the layout creation dialog on [[Special:Layouts]].",
 	"neowiki-layout-creator-name-field": "Label for the layout name input field in the layout creation dialog.",
@@ -338,7 +317,6 @@
 	"neowiki-layout-creator-success": "Success notification shown after creating a layout. $1 is the layout name.",
 	"neowiki-layout-creator-error": "Error notification title shown when creating a layout fails. $1 is the layout name.",
 	"neowiki-layout-creator-summary-default": "Default edit summary used when creating a layout via the UI.",
-
 	"neowiki-layout-delete": "Aria label for the delete button on a Layout row in the layouts list.",
 	"neowiki-property-type-select": "Label for the select/dropdown property type shown in the property type selector.",
 	"neowiki-property-editor-name-required": "Error shown under the property name field in the schema editor when the name is empty.",
@@ -414,7 +392,6 @@
 	"neowiki-boolean-true": "Label shown in the value display for a boolean property whose value is true (e.g. in the infobox or schema-table 'Initial value' column).",
 	"neowiki-boolean-false": "Label shown in the value display for a boolean property whose value is false (e.g. in the infobox or schema-table 'Initial value' column).",
 	"neowiki-select-unknown-option": "Placeholder shown in a select-property display when a stored option ID cannot be resolved to a label (e.g. the option was removed from the Schema).",
-
 	"neowiki-managesubjects-tab": "Label for the Data tab that appears alongside the standard action tabs (View, Edit, History) on content pages, linking to the Subject management page.",
 	"neowiki-managesubjects-title": "Title of the Subject management page. $1 is the prefixed page title (e.g. 'Berlin').",
 	"neowiki-managesubjects-not-applicable": "Error shown when the Subject management page is opened on a page that cannot have Subjects (e.g. a Special page or a non-existent page).",
@@ -519,7 +496,6 @@
 	"neowiki-config-editor-language-added": "Announced to screen reader users when a language is added to the list in the form on the MediaWiki:NeoWiki configuration page.\n\nParameters:\n* $1 - the language's name, or its language tag when MediaWiki has no name for it",
 	"neowiki-config-editor-language-moved": "Announced to screen reader users when a language moves up or down the list in the form on the MediaWiki:NeoWiki configuration page.\n\nParameters:\n* $1 - the language's name, or its language tag when MediaWiki has no name for it\n* $2 - its new position in the list, starting at 1\n* $3 - how many languages the list holds",
 	"neowiki-config-editor-language-removed": "Announced to screen reader users when a language is removed from the list in the form on the MediaWiki:NeoWiki configuration page.\n\nParameters:\n* $1 - the language's name, or its language tag when MediaWiki has no name for it",
-
 	"neowiki-special-graphstores": "Title and description of the [[Special:GraphStores]] page, which reports and rebuilds the wiki's graph stores. Also the title of its card on [[Special:NeoWiki]].",
 	"neowiki-graphstores-intro": "Introduction shown above the store table on [[Special:GraphStores]].",
 	"neowiki-graphstores-nostores": "Shown on [[Special:GraphStores]] instead of the introduction and the store table when no graph store is configured.",
@@ -574,5 +550,8 @@
 	"neowiki-overview-configuration-description": "Description of the card on [[Special:NeoWiki]] that leads to [[MediaWiki:NeoWiki]].",
 	"neowiki-overview-schemas-description": "Description of the card on [[Special:NeoWiki]] that leads to [[Special:Schemas]]. A schema defines a type of subject, such as Person, and its properties.",
 	"neowiki-overview-first-steps": "Note on [[Special:NeoWiki]], below the button for creating a subject, shown while the wiki has no subjects yet. Only users who may create a subject page see it. \"Create subject\" is the button's label, {{msg-mw|neowiki-createsubject-button}}.",
-	"neowiki-main-page-text": "Wikitext of the Main Page that NeoWiki's Docker setup writes in place of MediaWiki's own ({{msg-mw|mainpagetext}} and {{msg-mw|mainpagedocfooter}}) when it installs a wiki. {{#create_subject: page=new}} renders the button the text refers to, labelled {{msg-mw|neowiki-create-subject-default-label}}. Keep the wiki markup, {{#create_subject: page=new}}, the page names and the URLs unchanged; translate the link labels and the headings."
+	"neowiki-main-page-text": "Wikitext of the Main Page that NeoWiki's Docker setup writes in place of MediaWiki's own ({{msg-mw|mainpagetext}} and {{msg-mw|mainpagedocfooter}}) when it installs a wiki. {{#create_subject: page=new}} renders the button the text refers to, labelled {{msg-mw|neowiki-create-subject-default-label}}. Keep the wiki markup, {{#create_subject: page=new}}, the page names and the URLs unchanged; translate the link labels and the headings.",
+	"neowiki-derived-missing": "Status in a schema-bound source field when the source was successfully queried and has no statement for the property. This is distinct from an unavailable source; it is not a field value.",
+	"neowiki-property-datatype": "Label introducing the source datatype of a property ID in the schema editor.",
+	"neowiki-property-datatype-invalid": "Error preventing a schema save when a new or changed source property cannot be resolved or its datatype is incompatible with the selected NeoWiki field type. $1 gives the field, property ID, and/or datatype."
 }

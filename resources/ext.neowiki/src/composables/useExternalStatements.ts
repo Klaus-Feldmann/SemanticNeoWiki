@@ -4,7 +4,7 @@ import type { Subject } from '@/domain/Subject';
 import type { PropertyDefinition } from '@/domain/PropertyDefinition';
 
 export interface DatePart { text: string; yearTitle?: string }
-export interface ExternalEntityValue { kind: 'entity' | 'image' | 'time' | 'novalue' | 'somevalue'; parts?: DatePart[]; calendar?: string; precision?: number; year?: number; month?: number; day?: number; displayDate?: { year: number; month?: number; day?: number }; sourceTime?: Record<string, unknown>; id?: string; label?: string; url?: string; reference?: string; filename?: string; repository?: string }
+export interface ExternalEntityValue { kind: 'entity' | 'text' | 'image' | 'time' | 'novalue' | 'somevalue'; value?: string; language?: string; rank?: string; statementId?: string | null; parts?: DatePart[]; calendar?: string; precision?: number; year?: number; month?: number; day?: number; displayDate?: { year: number; month?: number; day?: number }; sourceTime?: Record<string, unknown>; id?: string; label?: string; url?: string; reference?: string; filename?: string; repository?: string }
 export interface ExternalField {
 	name: string; source: 'wikidata' | 'wikibase-local'; propertyId: string;
 	propertyLabel?: string; propertyUrl?: string | null;
@@ -81,12 +81,16 @@ export function useExternalStatements( subject: Ref<Subject>, definitions: Ref<P
 					throw new Error( 'Invalid derived property' );
 				}
 				for ( const value of field.values ) {
-					if ( ![ 'entity', 'image', 'time', 'novalue', 'somevalue' ].includes( value.kind ) || ( value.kind === 'entity' &&
+					if ( ![ 'entity', 'text', 'image', 'time', 'novalue', 'somevalue' ].includes( value.kind ) || ( value.kind === 'entity' &&
 						( typeof value.id !== 'string' || !/^Q[1-9][0-9]*$/.test( value.id ) || value.id !== value.id.trim() ||
 							typeof value.label !== 'string' || !safeLink( field.source, value.id, value.url, false ) ) ) ) {
 						throw new Error( 'Invalid derived value' );
 					}
-					if ( value.kind === 'time' && ( definition.type !== 'historicalDate' ||
+                    if ( value.kind === 'text' && ( typeof value.value !== 'string' || !value.value.trim() ||
+                        ( value.language !== undefined && !/^[a-z][a-z0-9-]{0,39}$/.test( value.language ) ) ) ) {
+                        throw new Error( 'Invalid derived text' );
+                    }
+                    if ( value.kind === 'time' && ( definition.type !== 'historicalDate' ||
 						!Array.isArray( value.parts ) || value.parts.length === 0 || value.parts.length > 3 ||
 						!value.parts.every( ( part ) => typeof part.text === 'string' && part.text.length <= 128 &&
 							( part.yearTitle === undefined || /^[1-9][0-9]{0,3}(?: BC| v\. Chr\.)?$/.test( part.yearTitle ) ) ) ||

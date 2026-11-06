@@ -11,7 +11,7 @@ import { type ImageProperty, ImageType } from '@/domain/propertyTypes/Image';
 import { newTextProperty } from '@/domain/propertyTypes/Text';
 import { newStringValue } from '@/domain/Value';
 import { createTestWrapper, setupMwMock } from '../../VueTestHelpers';
-vi.mock( '@/persistence/PropertyIdLookup', () => ( { lookupPropertyIds: vi.fn().mockResolvedValue( [ { id: 'P18', label: 'Bild', description: '', url: 'https://www.wikidata.org/wiki/Property:P18' } ] ) } ) );
+vi.mock( '@/persistence/PropertyIdLookup', () => ( { lookupPropertyIds: vi.fn().mockResolvedValue( [ { id: 'P18', datatype: 'commonsMedia', compatible: true, label: 'Bild', description: '', url: 'https://www.wikidata.org/wiki/Property:P18' } ] ) } ) );
 vi.mock( '@/persistence/ImageLookup', async ( original ) => ( { ...await original<object>(), resolveImage: vi.fn().mockResolvedValue( null ) } ) );
 const property = (): ImageProperty => new ImageType().createPropertyDefinitionFromJson( { ...newTextProperty( { name: 'Bild' } ), type: 'image' }, { imageSource: 'commons' } );
 describe( 'four ordered image sources', () => {

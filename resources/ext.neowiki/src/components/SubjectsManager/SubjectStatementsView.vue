@@ -94,7 +94,7 @@ const displayProperties = computed<DisplayProperty[]>( () => {
 		// Own image references take precedence, including when their preview is temporarily unavailable.
 		const external = [ 'image', 'historicalDate' ].includes( propertyDefinition.type ) && value?.type === ValueType.String && value.parts.length > 0 ?
 			undefined : fields.value.get( propertyDefinition.name.toString() );
-		if ( value !== undefined || ( external && external.status !== 'missing' ) ) {
+		if ( value !== undefined || external !== undefined ) {
 			result.push( { propertyDefinition, value, external } );
 		}
 	}

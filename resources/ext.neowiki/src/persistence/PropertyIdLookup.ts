@@ -1,17 +1,17 @@
 import type { ExternalProperty } from '@/domain/PropertyDefinition';
 
 export type IdSource = ExternalProperty['source'];
-export interface IdSuggestion { id: string; label: string; description: string; url: string }
+export interface IdSuggestion { id: string; label: string; description: string; url: string; datatype?: string; compatible?: boolean | null }
 
 /** Sources share a selection contract; neither labels nor numeric IDs identify a source. */
 export async function lookupPropertyIds(
-	source: IdSource, query: string, mode: 'search' | 'resolve', signal: AbortSignal,
+	source: IdSource, query: string, mode: 'search' | 'resolve', signal: AbortSignal, fieldType?: string,
 ): Promise<IdSuggestion[]> {
 	const url = new URL( mw.util.wikiScript( 'api' ), window.location.href );
 	const normalized = /^p[1-9][0-9]*$/i.test( query.trim() ) ? query.trim().toUpperCase() : query.trim();
 	url.search = new URLSearchParams( { action: 'neowikibaseproperties', source, query: normalized, mode,
 		language: String( mw.config.get( 'wgUserLanguage' ) || mw.config.get( 'wgContentLanguage' ) || 'de' ),
-		format: 'json', formatversion: '2' } ).toString();
+		...( fieldType ? { fieldtype: fieldType } : {} ), format: 'json', formatversion: '2' } ).toString();
 	const controller = new AbortController();
 	const abort = (): void => controller.abort();
 	signal.addEventListener( 'abort', abort, { once: true } );
@@ -39,7 +39,8 @@ export async function lookupPropertyIds(
 					target.origin !== window.location.origin ) ) {
 				throw new Error( 'Invalid property target' );
 			}
-			return { id: item.id, label: item.label || item.id, description: item.description, url: target.href };
+			return { id: item.id, label: item.label || item.id, description: item.description, url: target.href,
+                ...( typeof item.datatype === 'string' ? { datatype: item.datatype, compatible: item.compatible } : {} ) };
 		} );
 	} finally {
 		clearTimeout( timer );
