@@ -102,7 +102,8 @@ final class DataViewRdfProjector {
 	private function valueTerm( string $type, array $value, ?string $source = null ): ?RdfTerm {
 		$kind = $value['kind'] ?? $type;
 		if ( in_array( $kind, [ 'novalue', 'somevalue' ], true ) ) { return null; }
-		if ( $kind === 'entity' ) {
+		if ($kind === 'text') { return $this->literal($value['value'],$value['language'] ?? null); }
+        if ( $kind === 'entity' ) {
 			$uri = $source !== null && $this->entityIriLookup !== null ? ( $this->entityIriLookup )( $source, $value['id'] ) : null;
 			if ( $uri === null && $source === 'wikidata' && preg_match( '/\AQ[1-9][0-9]*\z/', $value['id'] ) === 1 ) {
 				$uri = 'http://www.wikidata.org/entity/' . $value['id'];

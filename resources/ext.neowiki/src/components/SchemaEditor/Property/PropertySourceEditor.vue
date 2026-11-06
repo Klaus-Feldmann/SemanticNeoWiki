@@ -29,6 +29,7 @@
 				<IdLookup
 					ref="input"
 					:source="source"
+                    :field-type="property.type"
 					:model-value="property.externalProperty?.id ?? null"
 					@update:model-value="choose" />
 				<template #help-text>

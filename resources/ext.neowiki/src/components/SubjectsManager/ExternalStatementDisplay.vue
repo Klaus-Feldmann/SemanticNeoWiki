@@ -21,13 +21,17 @@
 				:parts="value.parts || []"
 				:property="property"
 				:title="value.calendar" />
-			<a
-				v-else-if="value.kind === 'entity'"
+            <span v-else-if="value.kind === 'text'" :lang="value.language">
+                <a v-if="textHref( value )" :href="textHref( value )">{{ value.value }}</a><span v-else>{{ value.value }}</span>
+                <small v-if="value.language"> ({{ value.language }})</small>
+            </span>
+            <a
+                v-else-if="value.kind === 'entity'"
 				:href="valueHref( value )"
 				:title="value.id">{{ value.label }}</a>
 			<span v-else>{{ $i18n( 'neowiki-derived-' + value.kind ).text() }}</span>
 		</span></span>
-		<span v-else-if="field.status !== 'missing'">{{ wordSeparator }}{{ $i18n( 'neowiki-derived-' + field.status ).text() }}</span>
+		<span v-else>{{ wordSeparator }}{{ $i18n( 'neowiki-derived-' + field.status ).text() }}</span>
 	</div>
 </template>
 
@@ -42,6 +46,10 @@ const props = defineProps<{ field: ExternalField; property: PropertyDefinition }
 // Keep a normal wrapping space despite template whitespace condensation.
 const wordSeparator = ' ';
 const hasImages = computed( () => props.field.values.some( ( value ) => value.kind === 'image' ) );
+function textHref( value: ExternalEntityValue ): string | undefined {
+    return props.property.wikiLink?.externalTarget === 'local' && props.property.wikiLink?.values !== false && value.value ?
+        wikiPageUrl( value.value, props.property.wikiLink.namespace ) ?? undefined : undefined;
+}
 function valueHref( value: ExternalEntityValue ): string | undefined {
 	if ( props.property.wikiLink?.externalTarget === 'local' && value.label?.trim() && value.label.trim() !== value.id ) {
 		return wikiPageUrl( value.label, props.property.wikiLink.namespace ) ?? value.url;

@@ -1,0 +1,115 @@
+{
+  "Q9049": [
+    {
+      "mainsnak": {
+        "snaktype": "value",
+        "property": "P1477",
+        "hash": "b1163667d07123a2d8faf4362b0aa4081de53f69",
+        "datavalue": {
+          "value": {
+            "text": "Avram Noam Chomsky",
+            "language": "en"
+          },
+          "type": "monolingualtext"
+        },
+        "datatype": "monolingualtext"
+      },
+      "type": "statement",
+      "id": "Q9049$ffcabf51-47ee-4655-2cd7-b8983309738c",
+      "rank": "normal"
+    }
+  ],
+  "Q43746": [
+    {
+      "mainsnak": {
+        "snaktype": "value",
+        "property": "P1477",
+        "hash": "f5a26f12ad3e4a0f0ee6fb305a1ae8e4876126a5",
+        "datavalue": {
+          "value": {
+            "text": "Giovanni Fidanza",
+            "language": "it"
+          },
+          "type": "monolingualtext"
+        },
+        "datatype": "monolingualtext"
+      },
+      "type": "statement",
+      "id": "Q43746$96e2d387-4f78-ace9-4636-1ec67065f1dd",
+      "rank": "normal",
+      "references": [
+        {
+          "hash": "75a169ee054248f8deda9498d5d973eeb40948c8",
+          "snaks": {
+            "P248": [
+              {
+                "snaktype": "value",
+                "property": "P248",
+                "hash": "42e658999f6f00e789463dc206b1844bb7fc815f",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 4041526,
+                    "id": "Q4041526"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              }
+            ],
+            "P7305": [
+              {
+                "snaktype": "value",
+                "property": "P7305",
+                "hash": "5178fd47c343e98a74837ca953d4d8f88ac8f492",
+                "datavalue": {
+                  "value": "3879359",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              }
+            ],
+            "P854": [
+              {
+                "snaktype": "value",
+                "property": "P854",
+                "hash": "3de70f6b5a7d8092a10898ce235222bae8986bcb",
+                "datavalue": {
+                  "value": "https://encyklopedia.pwn.pl/haslo/Bonawentura;3879359.html",
+                  "type": "string"
+                },
+                "datatype": "url"
+              }
+            ]
+          },
+          "snaks-order": [
+            "P248",
+            "P7305",
+            "P854"
+          ]
+        }
+      ]
+    }
+  ],
+  "Q76509": [
+    {
+      "mainsnak": {
+        "snaktype": "value",
+        "property": "P1477",
+        "hash": "3b7732fcdad5497f6d6edb838b240a4ad2b0bbd2",
+        "datavalue": {
+          "value": {
+            "text": "Karl Theodor Jaspers",
+            "language": "de"
+          },
+          "type": "monolingualtext"
+        },
+        "datatype": "monolingualtext"
+      },
+      "type": "statement",
+      "id": "Q76509$49fe12b3-4751-12ed-b8a2-8ef340d1ff56",
+      "rank": "normal"
+    }
+  ],
+  "Q188332": []
+}

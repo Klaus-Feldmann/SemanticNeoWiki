@@ -59,6 +59,19 @@ final class DataViewRdfProjectorTest extends TestCase {
   self::assertSame('https://example.org/wiki/Q5',$values[self::BASE.'/prop/Lokale_Klasse']->value);
  }
 
+ public function testLanguageTaggedSourceTextRemainsAnRdfLanguageLiteral():void {
+  $view=$this->view();
+  $view['subjects'][0]['fields'][]=$this->field('Geburtsname','text',[],[
+   'source'=>'wikidata','propertyId'=>'P1477','values'=>[['kind'=>'text','value'=>'Avram Noam Chomsky','language'=>'en','rank'=>'normal']]
+  ]);
+  $quads=(new DataViewRdfProjector(new RdfNamespaces(self::BASE)))->project($view)->asArray();
+  $direct=array_values(array_filter($quads,static fn($q)=>$q->subject->value===self::BASE.'/entity/sF1FCQPNcwQdw4B'&&$q->predicate->value===self::BASE.'/prop/Geburtsname'));
+  self::assertCount(1,$direct);
+  self::assertInstanceOf(Literal::class,$direct[0]->object);
+  self::assertSame('Avram Noam Chomsky',$direct[0]->object->lexicalForm);
+  self::assertSame('en',$direct[0]->object->languageTag);
+ }
+
  public function testRelationsAndSeveralSubjectsRemainDistinct():void {
   $view=$this->view();$target='sF16iHXBMTQdHDY';
   $view['subjects'][]=['id'=>$target,'displayName'=>'Ziel','schema'=>'Person','isMainSubject'=>false,'fields'=>[]];

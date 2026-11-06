@@ -1,9 +1,9 @@
 name: SemanticNeoWiki candidate checks
 on:
   push:
-    branches: [master, semantic-0.1.13]
+    branches: [master, semantic-0.1.17]
   pull_request:
-    branches: [master, semantic-0.1.13]
+    branches: [master, semantic-0.1.17]
   workflow_dispatch:
 permissions:
   contents: read

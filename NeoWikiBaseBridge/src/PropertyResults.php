@@ -34,6 +34,6 @@ final class PropertyResults {
 			return [];
 		}
 		return [ [ 'id' => $id, 'label' => $row['labels'][$language]['value'] ?? $id,
-			'description' => $row['descriptions'][$language]['value'] ?? '', 'url' => $url ] ];
+			'description' => $row['descriptions'][$language]['value'] ?? '', 'url' => $url, 'datatype'=>$row['datatype'] ?? null ] ];
 	}
 }

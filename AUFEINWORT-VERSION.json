@@ -1,31 +1,30 @@
 {
   "name": "SemanticNeoWiki",
-  "testedNeoWikiVersion": "0.1.13+2026-11-04",
-  "bridgeVersion": "0.18.1-private-processing-test+2026-11-04",
-  "prepared": "2026-11-04",
+  "testedNeoWikiVersion": "0.1.17+2026-11-06",
+  "bridgeVersion": "0.19.1+2026-11-05",
+  "prepared": "2026-11-06",
   "upstreamBase": {
     "repository": "ProfessionalWiki/NeoWiki",
     "commit": "92cf0e347d40899647cdbb1312c4f0dc09768ae3",
     "version": "0.1.0"
   },
-  "forkMasterAtPreparation": "4f1fae6916d8c467c4f84b0e57ce9930e0eeb130",
-  "branch": "semantic-0.1.13",
+  "forkMasterAtPreparation": "7e42aa94",
+  "branch": "semantic-0.1.17",
   "extensionName": "SemanticNeoWiki",
-  "extensionVersion": "0.1.13+2026-11-04",
+  "extensionVersion": "0.1.17+2026-11-06",
   "composerPackage": "aufeinwort/semantic-neowiki",
   "minimumMediaWiki": "1.47.0-wmf.24",
   "composerLiveInstallVerified": false,
   "contact": "info@aufeinwort.info",
-  "composerLocalInstallVerified": true,
+  "composerLocalInstallVerified": false,
   "publicationBranches": [
     "master",
-    "semantic-0.1.13"
+    "semantic-0.1.17"
   ],
   "runtimeLiveInstallVerified": true,
   "runtimeInstallMethod": "guarded updates over the existing Composer installation; maintainer-confirmed live tests",
   "previousComposerLiveInstallVerified": {
     "version": "0.1.9-test+2026-11-03",
     "date": "2026-11-03"
-  },
-  "composerLocalInstallMethod": "isolated Composer path repository; expected extension path and PHP autoload verified; no MediaWiki boot"
+  }
 }

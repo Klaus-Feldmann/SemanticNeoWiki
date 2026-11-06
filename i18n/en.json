@@ -690,5 +690,8 @@
 	"neowiki-wikitext-remove": "Remove wikitext",
 	"neowiki-auto-identity-page": "This page",
 	"neowiki-managesubjects-export-complete": "Complete data view",
-	"neowiki-managesubjects-export-stored-projection": "$1 (stored values)"
+	"neowiki-managesubjects-export-stored-projection": "$1 (stored values)",
+	"neowiki-derived-missing": "Not specified in the source.",
+	"neowiki-property-datatype": "Source datatype:",
+	"neowiki-property-datatype-invalid": "Property assignment cannot be saved: $1. The source datatype must be available and supported by the selected field type."
 }

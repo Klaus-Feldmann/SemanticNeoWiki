@@ -1,6 +1,6 @@
 {
 	"name": "NeoWikiBaseBridge",
-	"version": "0.18.1-private-processing-test+2026-11-04",
+	"version": "0.19.1+2026-11-05",
 	"author": "Softwaredesign: [https://aufeinwort.info/ Klaus Feldmann / AufEinWort], Programmierung: ChatGPT/Sophos.",
 	"type": "other",
 	"manifest_version": 2,

@@ -67,10 +67,20 @@ class SchemaContentHandler extends JsonContentHandler {
 			);
 		}
 
-		return $status;
-	}
+        if ($status->isOK() && class_exists(\NeoWikiBaseBridge\SchemaPropertyBindings::class)) {
+            try {
+                $old=\MediaWiki\MediaWikiServices::getInstance()->getRevisionLookup()->getRevisionByTitle($title);
+                $oldContent=$old?->getContent('main');
+                $previous=$oldContent instanceof SchemaContent ? json_decode($oldContent->getText(),true) : [];
+                \NeoWikiBaseBridge\SchemaPropertyBindings::validate(json_decode($content->getText(),true),$previous ?? [],\MediaWiki\Context\RequestContext::getMain());
+            } catch (\Throwable $e) {
+                $status->fatal('neowiki-property-datatype-invalid',$e->getMessage());
+            }
+        }
+        return $status;
+    }
 
-	/**
+    /**
 	 * Read from the JSON rather than from the Schema it holds, which leaves out integer names.
 	 */
 	private function checkPropertyNames( StatusValue $status, string $json ): void {

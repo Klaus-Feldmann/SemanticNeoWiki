@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-$vendor = getenv('NEOWIKI_TEST_VENDOR') ?: __DIR__ . '/../../publication-tests/dependencies/vendor/autoload.php';
-if (is_file($vendor)) { require_once $vendor; }
-
-
 spl_autoload_register(static function (string $class): void {
     $testPrefix = 'ProfessionalWiki\\NeoWiki\\Tests\\';
     if (str_starts_with($class, $testPrefix)) {

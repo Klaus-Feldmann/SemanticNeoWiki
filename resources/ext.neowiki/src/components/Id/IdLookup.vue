@@ -18,7 +18,9 @@
 				target="_blank"
 				rel="noopener noreferrer">{{ selectedItem.label }}</a>
 		</p>
-		<p v-if="modelValue" class="ext-neowiki-id-saved">
+        <p v-if="selectedItem?.datatype">{{ $i18n( 'neowiki-property-datatype' ).text() }} {{ selectedItem.datatype }}</p>
+        <CdxMessage v-if="datatypeError" type="error" inline>{{ datatypeError }}</CdxMessage>
+        <p v-if="modelValue" class="ext-neowiki-id-saved">
 			{{ $i18n( 'neowiki-id-saved' ).text() }} <code>{{ modelValue }}</code>
 		</p>
 		<CdxMessage
@@ -41,11 +43,18 @@ import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import { CdxLookup, CdxMessage } from '@wikimedia/codex';
 import { lookupPropertyIds, type IdSource, type IdSuggestion } from '@/persistence/PropertyIdLookup';
 
-const props = defineProps<{ source: IdSource; modelValue: string | null }>();
+const props = defineProps<{ source: IdSource; modelValue: string | null; fieldType?: string }>();
 const emit = defineEmits<{ 'update:modelValue': [ string | null ] }>();
 const inputText = ref<string | number>( '' );
 const selectedItem = ref<IdSuggestion | null>( null );
 const selectedSource = ref<IdSource | null>( null );
+const checkedFieldType = ref<string | undefined>();
+const originalBinding = { source: props.source, id: props.modelValue, fieldType: props.fieldType };
+function lookup( query: string, mode: 'search' | 'resolve', signal: AbortSignal ): Promise<IdSuggestion[]> {
+    return props.fieldType ? lookupPropertyIds( props.source, query, mode, signal, props.fieldType ) : lookupPropertyIds( props.source, query, mode, signal );
+}
+const datatypeError = computed( () => props.fieldType && selectedItem.value?.datatype && selectedItem.value.compatible === false ?
+    mw.message( 'neowiki-property-datatype-invalid', selectedItem.value.id + ': ' + selectedItem.value.datatype + ' → ' + props.fieldType ).text() : null );
 const results = ref<IdSuggestion[]>( [] );
 const busy = ref( false );
 const failed = ref( false );
@@ -72,11 +81,11 @@ function cancel(): number {
 }
 onBeforeUnmount( cancel );
 
-watch( () => [ props.source, props.modelValue ], async () => {
+watch( () => [ props.source, props.modelValue, props.fieldType ], async () => {
 	const ticket = cancel();
 	failed.value = false;
 	results.value = [];
-	if ( selectedSource.value === props.source && selectedItem.value?.id === props.modelValue ) {
+	if ( selectedSource.value === props.source && selectedItem.value?.id === props.modelValue && checkedFieldType.value === props.fieldType ) {
 		return;
 	}
 	// A persisted ID is already a confirmed selection. Label resolution enriches it;
@@ -91,10 +100,11 @@ watch( () => [ props.source, props.modelValue ], async () => {
 	controller = new AbortController();
 	busy.value = true;
 	try {
-		const found = await lookupPropertyIds( props.source, props.modelValue, 'resolve', controller.signal );
+		const found = await lookup( props.modelValue, 'resolve', controller.signal );
 		if ( ticket === sequence ) {
 			resolving = false;
 			selectedItem.value = found[ 0 ] ?? selectedItem.value;
+            checkedFieldType.value = props.fieldType;
 			selectedSource.value = props.source;
 			inputText.value = found[ 0 ]?.label ?? props.modelValue;
 			failed.value = found.length === 0;
@@ -133,7 +143,7 @@ watch( inputText, ( value ) => {
 	timer = setTimeout( async () => {
 		controller = new AbortController();
 		try {
-			const found = await lookupPropertyIds( props.source, text, 'search', controller.signal );
+			const found = await lookup( text, 'search', controller.signal );
 			if ( ticket === sequence ) {
 				results.value = found;
 				searched.value = true;
@@ -150,7 +160,7 @@ watch( inputText, ( value ) => {
 	}, 300 );
 } );
 
-function selectItem( id: string | number | null ): void {
+async function selectItem( id: string | number | null ): Promise<void> {
 	if ( id === null ) {
 		return; // Codex clears its selection while typing; typing is not a confirmed replacement.
 	}
@@ -163,9 +173,33 @@ function selectItem( id: string | number | null ): void {
 	selectedSource.value = props.source;
 	inputText.value = item.label;
 	failed.value = false;
-	emit( 'update:modelValue', item.id );
+    if ( props.fieldType ) {
+        const ticket = sequence;
+        controller = new AbortController();
+        busy.value = true;
+        try {
+            const found = await lookup( item.id, 'resolve', controller.signal );
+            if ( ticket !== sequence ) { return; }
+            selectedItem.value = found[ 0 ] ?? item;
+            checkedFieldType.value = props.fieldType;
+            failed.value = found.length === 0;
+        } catch {
+            if ( ticket === sequence ) { failed.value = true; }
+        } finally {
+            if ( ticket === sequence ) { busy.value = false; }
+        }
+        if ( failed.value || datatypeError.value || selectedItem.value?.compatible !== true ) { return; }
+    }
+    emit( 'update:modelValue', item.id );
 }
 function unparseableInputMessage(): string | null {
+    if ( props.fieldType && ( props.modelValue || selectedItem.value ) ) {
+        if ( datatypeError.value ) { return datatypeError.value; }
+        if ( originalBinding.id && originalBinding.id === props.modelValue && originalBinding.source === props.source && originalBinding.fieldType === props.fieldType && !unmatched.value ) { return null; }
+        if ( busy.value || failed.value || !selectedItem.value?.datatype || selectedItem.value.compatible !== true ) {
+            return mw.message( 'neowiki-id-unavailable' ).text();
+        }
+    }
 	// An unchanged stored reference survives a temporary outage or a deleted remote property.
 	const unchanged = props.modelValue !== null &&
 		( String( inputText.value ).trim() === '' || String( inputText.value ) === props.modelValue || ( selectedItem.value?.id === props.modelValue && !unmatched.value ) );

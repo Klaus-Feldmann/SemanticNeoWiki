@@ -45,13 +45,15 @@ final class ExternalValuesLookup {
 			$gateway = new EntityGateway( $this->context );
 			$identities = new PageIdentityLookup();
 			foreach ( $groups as $source => $bindings ) {
+				$sourceFields = [];
 				try {
 					$identity = $source === 'wikidata' ? $identities->wikidata( $title ) : $identities->wikibase( $title, $this->context->getAuthority() );
 					if ( ( $identity['status'] ?? null ) !== 'resolved' ) {
 						foreach ( $bindings as $name => $propertyId ) {
-							$fields[] = [ 'name' => $name, 'source' => $source, 'propertyId' => $propertyId,
-								'status' => ( $identity['status'] ?? '' ) === 'missing' ? 'missing' : 'unavailable', 'values' => [] ];
+							$sourceFields[] = [ 'name' => $name, 'source' => $source, 'propertyId' => $propertyId,
+								'status' => 'unavailable', 'values' => [] ];
 						}
+						array_push( $fields, ...$sourceFields );
 						continue;
 					}
 					$entityId = $identity['id'];
@@ -66,11 +68,13 @@ final class ExternalValuesLookup {
 						$claims = EntityStatementView::claims( $entities[$entityId] ?? [], $propertyId );
 						$isImage = ( $fieldTypes[$name] ?? '' ) === 'image';
 						$isTime = ( $fieldTypes[$name] ?? '' ) === 'historicalDate';
-						$supported = ( $property['datatype'] ?? '' ) === ( $isImage ? 'commonsMedia' : ( $isTime ? 'time' : 'wikibase-item' ) );
+						$datatype = $property['datatype'] ?? '';
+                        $isText = in_array($datatype,['monolingualtext','string','external-id'],true);
+                        $supported = PropertyDatatypePolicy::supports($fieldTypes[$name] ?? '',$datatype);
 						$status = !isset( $entities[$entityId] ) || $property === [] ? 'unavailable' :
 							( $claims === [] ? 'missing' : ( $supported ? 'resolved' : 'unsupported' ) );
-						$values = $status === 'resolved' && !$isTime ? ( $isImage ? ImageClaimView::values( $claims ) :
-							EntityStatementView::values( $claims, $targets, $p['language'], fn ( string $id ): ?string => $gateway->url( $source, $id ) ) ) : [];
+						$values = $status === 'resolved' && !$isTime ? ( $isImage ? ImageClaimView::values( $claims ) : ( $isText ? TextClaimView::values($claims,$datatype) :
+							EntityStatementView::values( $claims, $targets, $p['language'], fn ( string $id ): ?string => $gateway->url( $source, $id ) ) ) ) : [];
 						if ( $status === 'resolved' && !$isTime && $values === [] ) { $status = 'unavailable'; }
 						$timeResult = null;
 						if ( $isTime && $supported && isset( $entities[$entityId] ) ) {
@@ -79,11 +83,12 @@ final class ExternalValuesLookup {
 							$status = $timeResult['status'];
 							$values = $timeResult['values'];
 						}
-						$fields[] = [ 'name' => $name, 'source' => $source, 'entityId' => $entityId, 'propertyId' => $propertyId,
+						$sourceFields[] = [ 'name' => $name, 'source' => $source, 'entityId' => $entityId, 'propertyId' => $propertyId,
 							'propertyLabel' => $property['labels'][$p['language']]['value'] ?? $propertyId,
-							'propertyUrl' => $gateway->url( $source, $propertyId ), 'status' => $status, 'values' => $values,
+							'propertyUrl' => $gateway->url( $source, $propertyId ), 'datatype'=>$datatype, 'status' => $status, 'values' => $values,
 							...( $timeResult === null ? [] : [ 'candidates' => $timeResult['candidates'], 'reason' => $timeResult['reason'] ?? null ] ) ];
 					}
+					array_push( $fields, ...$sourceFields );
 				} catch ( Throwable ) {
 					wfDebugLog( 'NeoWikiBaseBridge', 'Derived entity values unavailable for ' . $source );
 					foreach ( $bindings as $name => $propertyId ) {

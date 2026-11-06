@@ -15,6 +15,9 @@ final class AnnotationPlanner {
         if (!is_array($names)) { throw new InvalidArgumentException('NeoWiki/config: schema mapping must be a table'); }
         $rows=[];$objects=[];$seen=[];$formatter=new SmwValueFormatter();
         foreach($result['fields'] as $field) {
+            if ($field['type'] === 'relation' && ($field['status'] ?? '') === 'deferred-relation') {
+                continue;
+            }
             $occupied=$field['values']!==[] || $field['hasStoredValues'];
             if($occupied && !in_array($field['type'],['page','text','select','url','number','boolean','historicalDate','date','dateTime'],true)) { throw new InvalidArgumentException('Unsupported occupied field: '.$field['name']); }
             if($field['values']===[]) { continue; }

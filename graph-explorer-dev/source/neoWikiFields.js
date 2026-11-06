@@ -53,6 +53,8 @@ export function readPresentation(data, pageId, subjectId, origin) {
         if (!/^Q[1-9][0-9]*$/.test(value.id) || typeof value.label !== 'string') throw new Error('Invalid value entity');
         const url = safeUrl(value.url, origin, field.source === 'wikibase-local');
         if (!url || (field.source === 'wikidata' && url !== 'https://www.wikidata.org/wiki/' + value.id)) throw new Error('Invalid value source URL');
+      } else if (value.kind === 'text') {
+        if(typeof value.value!=='string'||!value.value.trim()||(value.language!==undefined&&!/^[a-z][a-z0-9-]{0,39}$/.test(value.language)))throw new Error('Invalid text value');
       } else if (value.kind === 'time') {
         if(def.type!=='historicalDate' || !validDateParts(value.parts) || ![9,10,11].includes(value.precision) || !['julian','gregorian'].includes(value.calendar)) throw new Error('Invalid time value');
       } else if (value.kind === 'image') {
@@ -125,10 +127,13 @@ export function orderedRows(presentation, nativeProps, origin) {
     const values = external?.status === 'resolved' ? external.values.map(value => ({
       parts:value.kind==='time'?value.parts:null,
       reference: value.kind === 'image' ? value.reference : null,
-      text: value.kind === 'time' ? value.label : value.kind === 'entity' ? value.label || value.id : value.kind === 'image' ? value.filename : value.kind === 'somevalue' ? 'Unbekannter Wert' : 'Kein Wert',
-      href: value.kind === 'entity' ? (def.wikiLink?.externalTarget === 'local' && value.label?.trim() && value.label.trim() !== value.id ?
+      language:value.kind==='text'?value.language:null,
+      rank:value.rank||null,
+      statementId:value.statementId||null,
+      text: value.kind === 'text' ? value.value : value.kind === 'time' ? value.label : value.kind === 'entity' ? value.label || value.id : value.kind === 'image' ? value.filename : value.kind === 'somevalue' ? 'Unbekannter Wert' : 'Kein Wert',
+      href: value.kind === 'text' ? (def.wikiLink?.externalTarget==='local' && def.wikiLink?.values!==false ? localPageUrl(value.value,def.wikiLink?.namespace||'',presentation.pageUrlTemplate,origin) : null) : value.kind === 'entity' ? (def.wikiLink?.externalTarget === 'local' && value.label?.trim() && value.label.trim() !== value.id ?
         localPageUrl(value.label, def.wikiLink?.namespace || '', presentation.pageUrlTemplate, origin) || value.url : value.url) : null,
-    })) : external?.status==='manual' ? [{text:presentation.language?.startsWith('en')?'Please enter your own date.':'Bitte eigene Datierung eingeben.',href:null}] : [];
+    })) : own.length ? [] : external ? [{text:({missing:['Not specified in the source.','In der Quelle nicht angegeben.'],unavailable:['Source retrieval unavailable.','Quellenabruf nicht verfügbar.'],unsupported:['Unsupported source datatype.','Quelldatentyp nicht unterstützt.'],manual:['Please enter your own date.','Bitte eigene Datierung eingeben.']}[external.status]||['',''])[presentation.language?.startsWith('en')?0:1],href:null}] : [];
     if (def.type==='url' && Array.isArray(def.ownUrls) && own.length) {
       for (const entry of def.ownUrls) {
         const caption = entry.caption?.trim();
@@ -180,7 +185,7 @@ export function createNeoWikiFields(React, options = {}) {
         h('div',{className:CLASS+'-values'},
           ...row.own.map((v,i)=>h('div',{className:CLASS+'-value',key:'own'+i},
             v.caption?h('span',null,link(v.caption,v.captionHref),': '):null, row.values.length?h('span',{style:{fontSize:'10px'}},'Eigene Angabe: '):null,v.parts?h('span',null,...v.parts.map((part,i)=>h('span',{key:i},link(part.text,part.yearTitle&&row.yearLinks?localPageUrl(part.yearTitle,row.namespace,this.state.presentation.pageUrlTemplate,origin):null)))):row.image&&v.reference?h(ImageFileLink,{reference:v.reference,onChange:this.props.onChange}):link(v.text,v.href))),
-          ...row.values.map((v,i)=>h('div',{className:CLASS+'-value',key:'external'+i,title:SOURCE_NAMES[row.source]},v.parts?h('span',null,...v.parts.map((part,i)=>h('span',{key:i},link(part.text,part.yearTitle&&row.yearLinks?localPageUrl(part.yearTitle,row.namespace,this.state.presentation.pageUrlTemplate,origin):null)))):row.image&&v.reference?h(ImageFileLink,{reference:v.reference,onChange:this.props.onChange}):link(v.text,v.href)))
+          ...row.values.map((v,i)=>h('div',{className:CLASS+'-value',key:'external'+i,title:SOURCE_NAMES[row.source],lang:v.language},v.parts?h('span',null,...v.parts.map((part,i)=>h('span',{key:i},link(part.text,part.yearTitle&&row.yearLinks?localPageUrl(part.yearTitle,row.namespace,this.state.presentation.pageUrlTemplate,origin):null)))):row.image&&v.reference?h(ImageFileLink,{reference:v.reference,onChange:this.props.onChange}):link(v.text,v.href)))
         ))));
     }
   };

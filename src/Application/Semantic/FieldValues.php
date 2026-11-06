@@ -15,6 +15,15 @@ final class FieldValues {
     public function __construct(private array $schema, private array $subject, private \Closure $readExternal) {}
 
     public function collect(?string $name = null, string $origin = 'all', string $language = 'de', bool $includeImages = false): array {
+        return $this->collectInternal($name,$origin,$language,$includeImages,false);
+    }
+
+    /** Scalar SMW projection only. Relation identity stays in the snapshot, never coerced to text. */
+    public function collectForAnnotations(string $language = 'de'): array {
+        return $this->collectInternal(null,'all',$language,false,true);
+    }
+
+    private function collectInternal(?string $name, string $origin, string $language, bool $includeImages, bool $forAnnotations): array {
         if (!in_array($origin, ['all','own','external'], true)) { throw new InvalidArgumentException('Unknown origin'); }
         $fields = []; $found = false;
         foreach ($this->schema['properties'] as $definition) {
@@ -23,6 +32,15 @@ final class FieldValues {
             if ($type === 'wikitext' || $type === 'image' && !$includeImages) { continue; }
             $found = true;
             $stored = $this->subject['statements'][$definition['name']]['values'] ?? [];
+            if ($forAnnotations && $type === 'relation') {
+                // Do not resolve targets or publish relation annotations in this processing stage.
+                $fields[] = ['name'=>$definition['name'],'type'=>$type,'values'=>[],
+                    'hasStoredValues'=>$stored !== [],'status'=>'deferred-relation',
+                    'externalProperty'=>$definition['externalProperty'] ?? null,
+                    'targetSchemas'=>$definition['targetSchemas'] ?? [],
+                    'rawStatement'=>$this->subject['statements'][$definition['name']] ?? null,'reason'=>null];
+                continue;
+            }
             $own = $origin === 'external' ? [] : array_values(array_filter($stored,
                 static fn($v) => $v !== null && (!is_string($v) || trim($v) !== '')));
             $values = []; $seen = [];
@@ -78,6 +96,9 @@ final class FieldValues {
                     if ($value['kind'] === 'time' && $type === 'historicalDate') {
                         if (!is_array($value['sourceTime'] ?? null) || !is_string($value['label'] ?? null)) { throw new InvalidArgumentException('Invalid time'); }
                         $add($value['label'],$remote['source'],$value);
+                    } elseif ($value['kind'] === 'text') {
+                        if (!is_string($value['value'] ?? null) || trim($value['value']) === '') { throw new InvalidArgumentException('Invalid external text: '.$definition['name']); }
+                        $add($value['value'],$remote['source'],$value);
                     } elseif ($value['kind'] === 'entity') {
                         if (!is_string($value['label'] ?? null) || $value['label'] === '' || $value['label'] === $value['id']) { throw new InvalidArgumentException('Missing entity label'); }
                         $add($value['label'],$remote['source'],$value);

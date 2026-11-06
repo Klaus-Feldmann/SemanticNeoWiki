@@ -57,8 +57,12 @@ final class InternalPageProcessor {
             if ( isset( $raw['mainSubject'] ) && $subject === null ) {
                 throw new ProcessingIncomplete( 'SemanticNeoWiki: main subject could not be resolved.' );
             }
-            if ( $subject !== null ) {
-                $reference = $subject->getSchemaReference();
+            $schemas = [];
+            $resolveSchema = static function ( \ProfessionalWiki\NeoWiki\Domain\Schema\SchemaReference $reference ) use ( $services, $user, &$dependencies, &$schemas ): \ProfessionalWiki\NeoWiki\Domain\Schema\Schema {
+                $key = $reference->getText();
+                if ( isset( $schemas[$key] ) ) {
+                    return $schemas[$key];
+                }
                 if ( !$reference->isLocal() ) { throw new ProcessingIncomplete( 'SemanticNeoWiki: remote schema processing is not supported.' ); }
                 $schemaTitle = Title::makeTitleSafe( NeoWikiExtension::NS_SCHEMA, $reference->name->getText() );
                 if ( !$schemaTitle || !$user->authorizeRead( 'read', $schemaTitle ) ) {
@@ -79,6 +83,10 @@ final class InternalPageProcessor {
                     throw new ProcessingIncomplete( 'SemanticNeoWiki: invalid or unavailable schema.' );
                 }
                 $dependencies[] = [ 'namespace' => $schemaTitle->getNamespace(), 'title' => $schemaTitle->getDBkey(), 'revision' => $schemaRevision->getId() ];
+                return $schemas[$key] = $schema;
+            };
+            if ( $subject !== null ) {
+                $schema = $resolveSchema( $subject->getSchemaReference() );
             }
             if ( $subjects !== null ) {
                 // Lua reads both by page and by Subject ID. A stale index or a denied lookup must
@@ -105,7 +113,7 @@ final class InternalPageProcessor {
             }
             if ( $subject !== null && $schema !== null && $services->hasService( 'SMW.ParserDataFactory' ) ) {
                 ( new \ProfessionalWiki\NeoWiki\EntryPoints\Semantic\AutomaticAnnotations() )->apply(
-                    $title, $output, $context->parser, $schema, $subject, $user
+                    $title, $output, $context->parser, $schema, $subjects, $subject, $user, $resolveSchema
                 );
             }
             foreach ( $output->getLinkList( ParserOutputLinkTypes::TEMPLATE ) as $link ) {

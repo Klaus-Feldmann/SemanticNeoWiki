@@ -61,3 +61,7 @@ The publication copy passed 3,740 Data UI tests in 230 files, and 509 isolated P
 These results do not certify a stable 1.0 release or a clean installation on a second research server. No GitHub push or CI run is claimed by this local preparation.
 
 An isolated Composer path-repository install of the prepared 0.1.13 working tree succeeded in `extensions/SemanticNeoWiki`; Composer autoload resolved the new AnnotationPlanner class from that installed directory. This checks the current package locally, not retrieval of an unpublished GitHub branch or a new MediaWiki server boot.
+
+## Publication 0.1.17, 2026-11-06
+
+Runtime verified on the existing AufEinWort installation after guarded updates. Dependent subjects referenced by the main subject on the same page contribute to automatic SMW annotations. The bundled Graph Explorer accepts language-tagged Wikidata text values. Kurt Gödel’s dependent field `Einordnung` was verified in SMW by the maintainer. The prepared runtime files were compared with the tested baseline and update payload. The full Composer package for this version has yet to be deployed on the production server.

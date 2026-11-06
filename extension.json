@@ -1,6 +1,6 @@
 {
 	"name": "SemanticNeoWiki",
-	"version": "0.1.13+2026-11-04",
+	"version": "0.1.17+2026-11-06",
 	"author": "Softwaredesign und Weiterentwicklung des Forks: [https://aufeinwort.info/ Klaus Feldmann / AufEinWort], Programmierung: ChatGPT/Sophos. Basiert auf NeoWiki von [https://professional.wiki/ Professional Wiki], [https://www.entropywins.wtf/mediawiki Jeroen De Dauw], Morne Alberts, [https://www.mediawiki.org/wiki/User:Alistair3149 Alistair3149] und [https://github.com/ProfessionalWiki/NeoWiki/graphs/contributors?all=1 weiteren Mitwirkenden].",
 	"url": "https://github.com/Klaus-Feldmann/SemanticNeoWiki",
 	"license-name": "GPL-2.0-or-later",
@@ -1182,6 +1182,7 @@
 				"neowiki-id-saved",
 				"neowiki-derived-own",
 				"neowiki-derived-loading",
+				"neowiki-derived-missing",
 				"neowiki-derived-unavailable",
 				"neowiki-derived-unsupported",
 				"neowiki-derived-novalue",
